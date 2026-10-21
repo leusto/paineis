@@ -1,0 +1,1351 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Bancada de PLN</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: bancada de laboratório — cabeçalho fixo com as 5 etapas do pipeline; cada etapa = painel de controles + área de resultados */
+:root{
+  --bg:#eef2f1; --surface:#ffffff; --surface-2:#e4eae8; --fg:#14201d; --muted:#586763; --line:#cfd8d5;
+  --accent:#0d7068; --accent-ink:#0a5751; --on-accent:#ffffff;
+  --mark:#f6d55c; --mark-ink:#3b2e00; --removed:#b42318;
+  --c1:#2563eb; --c2:#d97706; --c3:#15803d; --c4:#c026d3; --c5:#0e7490; --c6:#b91c1c;
+  --font-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --font-body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1514; --surface:#162120; --surface-2:#1f2c2a; --fg:#e2ebe8; --muted:#94a5a0; --line:#2b3a37;
+  --accent:#34c4b4; --accent-ink:#6fe0d2; --on-accent:#05221f;
+  --mark:#705a12; --mark-ink:#ffeaa8; --removed:#f87171;
+  --c1:#6c9cff; --c2:#f5a524; --c3:#4ade80; --c4:#e879f9; --c5:#38bdf8; --c6:#fb7185;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1514; --surface:#162120; --surface-2:#1f2c2a; --fg:#e2ebe8; --muted:#94a5a0; --line:#2b3a37;
+  --accent:#34c4b4; --accent-ink:#6fe0d2; --on-accent:#05221f;
+  --mark:#705a12; --mark-ink:#ffeaa8; --removed:#f87171;
+  --c1:#6c9cff; --c2:#f5a524; --c3:#4ade80; --c4:#e879f9; --c5:#38bdf8; --c6:#fb7185;
+  color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--font-body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.wrap{max-width:1220px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:1.45rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.6rem;font-weight:700}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 24px;padding-block:12px 0}
+.brand{display:flex;flex-direction:column;gap:2px;min-width:0}
+.brand small{color:var(--muted);font-size:.82rem}
+.status{margin-left:auto;font-family:var(--font-mono);font-size:.78rem;color:var(--muted)}
+.steps{display:flex;gap:2px;overflow-x:auto;width:100%;margin-top:6px;scrollbar-width:thin}
+.steps button{flex:0 0 auto;display:flex;align-items:center;gap:8px;border:0;background:none;color:var(--muted);font:500 .9rem var(--font-body);padding:10px 14px;border-bottom:3px solid transparent;cursor:pointer}
+.steps button .n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;border:1.5px solid currentColor;font:600 .75rem var(--font-mono)}
+.steps button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--accent)}
+.steps button[aria-selected="true"] .n{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.steps .arrow{align-self:center;color:var(--line)}
+main.wrap{padding-block:24px 64px}
+.sec-head{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;max-width:75ch}
+.sec-head .eyebrow{font:600 .72rem var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.sec-head p{color:var(--muted)}
+.layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start}
+.stack{display:flex;flex-direction:column;gap:20px;min-width:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.layout,.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.panel-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px}
+.panel-head p{color:var(--muted);font-size:.88rem;flex-basis:100%}
+.controls{gap:16px}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.ctl label,.lbl{font:600 .72rem var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:.92rem;cursor:pointer}
+.check input{margin-top:4px;accent-color:var(--accent)}
+.check small{display:block;color:var(--muted);font-size:.8rem;line-height:1.35}
+input[type=text],input[type=number],select,textarea{font:inherit;font-size:.92rem;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 9px;width:100%;min-width:0}
+textarea{resize:vertical;line-height:1.45}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.btn{font:500 .88rem var(--font-body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:6px;padding:7px 12px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{border:0;background:var(--surface);color:var(--muted);font:500 .85rem var(--font-body);padding:6px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.try{border:1px dashed var(--accent);border-radius:8px;padding:12px 14px;background:color-mix(in srgb,var(--accent) 6%,var(--surface));font-size:.9rem;display:flex;flex-direction:column;gap:6px}
+.try .lbl{color:var(--accent-ink)}
+.try ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px}
+.note{font-size:.85rem;color:var(--muted)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--font-mono)}
+/* corpus */
+.doc-row{display:grid;grid-template-columns:2.6em 9.5em minmax(0,1fr) 2em;gap:8px;align-items:start;padding-block:8px;border-top:1px solid var(--line)}
+.doc-row:first-child{border-top:0}
+.doc-id{font:600 .8rem var(--font-mono);padding-top:9px;display:flex;align-items:center;gap:5px}
+.icon-btn{border:0;background:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:4px;line-height:1;border-radius:4px}
+.icon-btn:hover{color:var(--removed)}
+@media (max-width:600px){.doc-row{grid-template-columns:2.6em minmax(0,1fr) 2em}.doc-row textarea{grid-column:1/-1}}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kv div{background:var(--surface-2);border-radius:7px;padding:10px 12px}
+.kv b{display:block;font:600 1.35rem var(--font-display);font-variant-numeric:tabular-nums}
+.kv span{font-size:.78rem;color:var(--muted)}
+/* tokens */
+.toks{display:flex;flex-wrap:wrap;gap:5px}
+.tok{font:400 .82rem var(--font-mono);padding:2px 7px;border:1px solid var(--line);border-radius:4px;background:var(--bg);display:inline-flex;flex-direction:column;line-height:1.3;max-width:100%;overflow-wrap:anywhere}
+.tok small{font-size:.66rem;opacity:.75;text-decoration:line-through}
+.tok.ch{background:var(--mark);color:var(--mark-ink);border-color:transparent}
+.tok.rm{color:var(--removed);text-decoration:line-through;border-style:dashed;background:transparent;opacity:.8}
+.stepcard{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.stepcard.off{opacity:.55}
+.sc-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sc-n{font:600 .75rem var(--font-mono);width:22px;height:22px;display:inline-grid;place-items:center;border-radius:50%;background:var(--surface-2)}
+.sc-count{margin-left:auto;font:.78rem var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.pill{font:600 .68rem var(--font-mono);text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.pill.on{background:color-mix(in srgb,var(--accent) 18%,var(--surface));color:var(--accent-ink)}
+.sc-desc{font-size:.84rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+/* bars */
+.bars{display:flex;flex-direction:column;gap:5px}
+.bar{display:grid;grid-template-columns:minmax(70px,36%) minmax(0,1fr) 4.2em;gap:8px;align-items:center;font-size:.82rem}
+.bar .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--font-mono)}
+.bar .track{height:12px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--accent);border-radius:3px}
+.bar .v{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.78rem}
+.bar.dim{opacity:.5}
+.bar.best .t{font-weight:600}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.cols>div{min-width:0;display:flex;flex-direction:column;gap:8px}
+/* tables */
+.scroll{overflow-x:auto;max-width:100%}
+table.heat{border-collapse:collapse;font-size:.76rem;font-variant-numeric:tabular-nums}
+table.heat th,table.heat td{border:1px solid var(--surface);padding:0}
+table.heat th{font:500 .72rem var(--font-mono);color:var(--muted);padding:4px 6px;white-space:nowrap;text-align:left}
+table.heat thead th{vertical-align:bottom;max-width:7em;overflow:hidden;text-overflow:ellipsis}
+table.heat td button{all:unset;display:block;box-sizing:border-box;min-width:3.6em;padding:6px 4px;text-align:center;font-family:var(--font-mono);cursor:pointer}
+table.heat td button:focus-visible{outline:2px solid var(--fg);outline-offset:-2px}
+table.heat td.sel button{outline:2px solid var(--fg);outline-offset:-2px}
+table.sim{border-collapse:collapse}
+table.sim td{width:14px;height:14px;padding:0;border:1px solid var(--surface)}
+table.sim th{padding:0 3px;border:0}
+table.conf{border-collapse:collapse;font-size:.8rem;font-variant-numeric:tabular-nums}
+table.conf th,table.conf td{padding:6px 8px;border:1px solid var(--line);text-align:center}
+table.conf th{font:500 .74rem var(--font-mono);color:var(--muted)}
+.simgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+.simgrid>div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.score{font:600 .9rem var(--font-mono)}
+.formula{font-family:var(--font-mono);font-size:.84rem;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:12px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;overflow-x:auto}
+.formula dt{color:var(--muted)}
+.formula dd{margin:0}
+.formula .res{font-weight:600;color:var(--accent-ink)}
+.docquote{font-size:.88rem;border-left:3px solid var(--line);padding-left:10px;color:var(--muted)}
+.results{display:flex;flex-direction:column;gap:6px}
+.res-item{display:grid;grid-template-columns:2.8em minmax(0,1fr) 3.4em;gap:8px;font-size:.82rem;align-items:start;padding:6px 0;border-top:1px solid var(--line)}
+.res-item .sc{font-family:var(--font-mono);text-align:right;font-variant-numeric:tabular-nums}
+.res-item .txt{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.clusters{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.cluster{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;font-size:.82rem}
+.cluster h4{margin:0;font:600 .8rem var(--font-mono)}
+.cluster div{display:flex;gap:6px;align-items:baseline}
+.cluster div span:last-child{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0;color:var(--muted)}
+svg text{font-family:var(--font-mono)}
+.empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:8px;font-size:.9rem}
+.pipe-note{font:.8rem var(--font-mono);color:var(--muted);background:var(--surface-2);border-radius:6px;padding:6px 10px;overflow-wrap:anywhere}
+.pipe-note:empty{display:none}
+.btn.sm{font-size:.8rem;padding:5px 9px}
+.howto{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:5px;font-size:.88rem;max-width:75ch}
+.howread,.lsa-explain{display:flex;flex-direction:column;gap:6px;font-size:.88rem;max-width:80ch;flex-basis:100%}
+.howread p{color:var(--fg)}
+table.sim th.bl,table.sim td.bl{border-left:2px solid var(--muted)}
+table.sim tr.bt td,table.sim tr.bt th{border-top:2px solid var(--muted)}
+table.themes td{text-align:left;font-size:.8rem}
+table.themes td.n{text-align:right;font-family:var(--font-mono)}
+.acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
+.act{gap:10px}
+.act .code{font:600 .75rem var(--font-mono);color:var(--accent-ink);letter-spacing:.06em}
+.act .meta{display:flex;flex-wrap:wrap;gap:6px}
+.act h4{margin:0;font:600 .8rem var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.act ol,.act ul{margin:0;padding-left:1.25em;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.act table.conf{font-size:.78rem}
+.act table.conf td{min-width:4.5em;height:1.8em}
+.guided{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.guided>div{display:flex;flex-direction:column;gap:8px;min-width:0}
+.guided ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:5px;font-size:.88rem}
+.linkbtn{all:unset;cursor:pointer;color:var(--accent-ink);font:600 .82rem var(--font-body);text-decoration:underline;text-underline-offset:3px}
+.linkbtn:focus-visible{outline:2px solid var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <h1>Bancada de PLN</h1>
+      <small>Oficina introdutória · do texto bruto ao aprendizado de máquina</small>
+    </div>
+    <div class="status" id="status"></div>
+    <nav class="steps" role="tablist" aria-label="Etapas do laboratório">
+      <button role="tab" data-tab="corpus"><span class="n">1</span>Corpus</button><span class="arrow" aria-hidden="true">›</span>
+      <button role="tab" data-tab="preprocessamento"><span class="n">2</span>Pré-processamento</button><span class="arrow" aria-hidden="true">›</span>
+      <button role="tab" data-tab="vetorizacao"><span class="n">3</span>Vetorização (BoW · TF-IDF)</button><span class="arrow" aria-hidden="true">›</span>
+      <button role="tab" data-tab="embeddings"><span class="n">4</span>Embeddings</button><span class="arrow" aria-hidden="true">›</span>
+      <button role="tab" data-tab="aplicacoes"><span class="n">5</span>Aplicações</button><span class="arrow" aria-hidden="true">›</span>
+      <button role="tab" data-tab="atividades"><span class="n">6</span>Atividades</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- 1 CORPUS -->
+<section class="tab" id="tab-corpus" role="tabpanel">
+  <div class="sec-head">
+    <span class="eyebrow">Etapa 1 de 6</span>
+    <h2>Corpus de trabalho</h2>
+    <p>Cada linha é um documento com um rótulo de classe. Edite, cole ou acrescente textos: todas as etapas seguintes são recalculadas automaticamente. Os rótulos são usados apenas para colorir gráficos e avaliar agrupamento e classificação.</p>
+  </div>
+  <div class="layout">
+    <aside class="stack">
+      <div class="panel">
+        <h3>Resumo do corpus</h3>
+        <div id="corpusStats"></div>
+      </div>
+    </aside>
+    <div class="panel">
+      <div class="toolbar">
+        <button class="btn primary" id="addDoc">Adicionar documento</button>
+        <button class="btn" id="toggleBulk" aria-expanded="false">Colar em lote</button>
+        <button class="btn" id="resetDocs">Restaurar corpus de exemplo</button>
+      </div>
+      <div id="bulkBox" class="stack" hidden>
+        <div class="ctl">
+          <label for="bulkText">Um documento por linha, no formato <span class="mono">rótulo | texto</span></label>
+          <textarea id="bulkText" rows="6" placeholder="Esporte | O time venceu a final nos pênaltis.&#10;Economia | A inflação desacelerou em setembro."></textarea>
+        </div>
+        <div class="toolbar">
+          <button class="btn" id="bulkAppend">Acrescentar ao corpus</button>
+          <button class="btn" id="bulkReplace">Substituir o corpus</button>
+          <span class="note" id="bulkMsg"></span>
+        </div>
+      </div>
+      <div id="docList"></div>
+      <datalist id="labelList"></datalist>
+    </div>
+  </div>
+</section>
+
+<!-- 2 PRÉ-PROCESSAMENTO -->
+<section class="tab" id="tab-preprocessamento" role="tabpanel" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Etapa 2 de 6</span>
+    <h2>Pré-processamento passo a passo</h2>
+    <p>Ligue e desligue cada etapa do pipeline. À direita, o documento escolhido mostra o efeito de cada etapa: <span class="tok ch" style="display:inline">alterado</span> e <span class="tok rm" style="display:inline">removido</span>. Abaixo, o impacto no corpus inteiro.</p>
+    <p><b>As escolhas desta etapa valem para todas as abas seguintes</b> (vetorização, embeddings e aplicações). Uma faixa no topo das abas 3, 4 e 5 lembra qual pipeline está em uso.</p>
+  </div>
+  <div class="layout">
+    <aside class="stack">
+      <div class="panel controls">
+        <div class="ctl">
+          <span class="lbl">Predefinições</span>
+          <div class="toolbar">
+            <button class="btn" data-preset="none">Nenhuma</button>
+            <button class="btn" data-preset="basic">Básico</button>
+            <button class="btn" data-preset="full">Completo</button>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="o-lower" data-opt="lower"><span>1 · Minúsculas<small>“Saúde” e “saúde” viram o mesmo termo.</small></span></label>
+        <label class="check"><input type="checkbox" id="o-accents" data-opt="accents"><span>2 · Remover acentos<small>“ação” → “acao”. Une grafias, mas perde distinções.</small></span></label>
+        <label class="check"><input type="checkbox" id="o-nums" data-opt="nums"><span>3 · Remover tokens com números<small>Atenção: “5G” e “2” saem juntos.</small></span></label>
+        <label class="check"><input type="checkbox" id="o-punct" data-opt="punct"><span>4 · Remover pontuação<small>“brasileiro.” → “brasileiro”.</small></span></label>
+        <label class="check"><input type="checkbox" id="o-stop" data-opt="stop"><span>5 · Remover stopwords<small>Lista de ~120 palavras funcionais do português.</small></span></label>
+        <div class="ctl">
+          <label for="o-minLen">6 · Comprimento mínimo do token</label>
+          <input type="number" id="o-minLen" data-opt="minLen" min="1" max="6">
+          <small class="note">1 = desligada. Remove tokens curtos como “a”, “é”, “só”. Com as stopwords ligadas quase nada sobra para remover. Para ver o efeito no card 6 ao lado, desligue a etapa 5 e use 3.</small>
+        </div>
+        <div class="ctl">
+          <label for="o-stem">7 · Normalização morfológica</label>
+          <select id="o-stem" data-opt="stem">
+            <option value="none">Nenhuma</option>
+            <option value="light">Radicalização (stemming simplificado)</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+    <div class="stack">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Rastro de um documento</h3>
+          <div class="ctl" style="min-width:min(100%,360px)"><select id="preDoc" data-ui="preDoc" aria-label="Documento"></select></div>
+        </div>
+        <div id="trace" class="stack" style="gap:10px"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Impacto no corpus inteiro</h3><p>Tamanho do vocabulário (termos distintos) e total de tokens depois de cada etapa. Etapas desligadas aparecem esmaecidas.</p></div>
+        <div class="cols" id="funnel"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Termos mais frequentes: antes × depois</h3><p>Sem pré-processamento, o topo da lista é dominado por palavras funcionais.</p></div>
+        <div class="cols" id="topCompare"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 VETORIZAÇÃO -->
+<section class="tab" id="tab-vetorizacao" role="tabpanel" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Etapa 3 de 6</span>
+    <h2>Do texto ao vetor: BoW, TF e TF-IDF</h2>
+    <p>Cada documento vira uma linha numa matriz documento × termo. Na versão binária marcamos só presença (1) ou ausência (0); no BoW (bag of words) contamos ocorrências; no TF dividimos pelo tamanho do documento; no TF-IDF penalizamos termos que aparecem em muitos documentos. Clique em uma célula para ver o cálculo.</p>
+    <p class="pipe-note"></p>
+  </div>
+  <div class="layout">
+    <aside class="stack">
+      <div class="panel controls">
+        <div class="ctl">
+          <label for="o-ngram">Unidades (n-gramas)</label>
+          <select id="o-ngram" data-opt="ngram">
+            <option value="1">Unigramas</option>
+            <option value="2">Unigramas + bigramas</option>
+          </select>
+        </div>
+        <div class="ctl">
+          <label for="o-minDf">Frequência mínima em documentos (min df)</label>
+          <input type="number" id="o-minDf" data-opt="minDf" min="1" max="10">
+        </div>
+        <div class="ctl">
+          <span class="lbl">Valor exibido na matriz</span>
+          <div class="seg" id="heatMode">
+            <button data-mode="bin">Binário</button><button data-mode="bow">BoW</button><button data-mode="tf">TF</button><button data-mode="tfidf">TF-IDF</button>
+          </div>
+          <small class="note">Binário: o termo aparece (1) ou não (0). BoW: quantas vezes aparece. TF: contagem ÷ tamanho do documento. TF-IDF: TF ponderado pela raridade do termo no corpus.</small>
+        </div>
+        <div class="ctl">
+          <label for="heatOrder">Colunas mostradas</label>
+          <select id="heatOrder" data-ui="heatOrder">
+            <option value="df">Termos mais frequentes (df)</option>
+            <option value="tfidf">Maior peso TF-IDF somado</option>
+          </select>
+        </div>
+        <div class="ctl">
+          <label for="heatN">Número de colunas</label>
+          <input type="number" id="heatN" data-ui="heatN" min="4" max="40">
+        </div>
+        <div id="sparsity"></div>
+      </div>
+    </aside>
+    <div class="stack">
+      <div class="panel">
+        <div class="panel-head"><h3>Matriz documento × termo</h3><p id="heatCaption"></p></div>
+        <div class="scroll" id="heat"></div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <h3>Cálculo do TF-IDF na célula selecionada</h3>
+          <div id="worked"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Peso do termo: BoW × TF-IDF</h3><p>Termos de maior peso no mesmo documento.</p></div>
+          <div class="ctl"><select id="vecDoc" data-ui="vecDoc" aria-label="Documento"></select></div>
+          <div class="cols" id="docTop"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>IDF: termos comuns × termos raros</h3><p>idf = ln((1 + N) / (1 + df)) + 1. Quanto mais documentos contêm o termo, menor o peso.</p></div>
+        <div class="cols" id="idf"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 EMBEDDINGS -->
+<section class="tab" id="tab-embeddings" role="tabpanel" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Etapa 4 de 6</span>
+    <h2>Embeddings: vetores densos de significado</h2>
+    <p>BoW e TF-IDF são esparsos e tratam cada palavra como independente. Embeddings comprimem o texto em poucas dimensões aprendidas a partir do contexto. Aqui eles são treinados no próprio corpus, no navegador: <b>LSA</b> (SVD da matriz TF-IDF) e <b>vetores de palavras PPMI-SVD</b> (coocorrência numa janela, a mesma intuição do Word2Vec).</p>
+    <p class="pipe-note"></p>
+  </div>
+  <div class="layout">
+    <aside class="stack">
+      <div class="panel controls">
+        <div class="ctl">
+          <label for="o-lsaK">LSA · dimensões (k)</label>
+          <input type="number" id="o-lsaK" data-opt="lsaK" min="1" max="15">
+          <small class="note">Quantos temas latentes manter. Afeta a representação “LSA”.</small>
+        </div>
+        <div class="ctl">
+          <label for="o-wdim">Vetores de palavras · dimensões</label>
+          <input type="number" id="o-wdim" data-opt="wdim" min="2" max="30">
+          <small class="note">Tamanho de cada vetor de palavra.</small>
+        </div>
+        <div class="ctl">
+          <label for="o-win">Janela de contexto (± palavras)</label>
+          <input type="number" id="o-win" data-opt="win" min="1" max="6">
+          <small class="note">Quantas palavras antes e depois de cada palavra contam como contexto. Use as setas do campo ou digite de 1 a 6. Janela 1 capta vizinhos imediatos; janelas maiores captam o assunto do texto. Afeta os vizinhos “PPMI-SVD” e a representação “Vetores de palavras”.</small>
+        </div>
+        <p class="note">Modelos pré-treinados (Word2Vec, FastText, BERT) aprendem com bilhões de palavras e não rodam offline nesta página. Com um corpus de poucas frases os embeddings ficam ruidosos, e isso também é uma lição: qualidade depende de dados.</p>
+      </div>
+    </aside>
+    <div class="stack">
+      <div class="panel">
+        <div class="panel-head"><h3>O que é LSA (Análise Semântica Latente)</h3></div>
+        <div class="lsa-explain">
+          <p>O LSA parte da matriz TF-IDF da etapa 3 e aplica a <b>decomposição em valores singulares (SVD)</b>. A SVD encontra poucas direções, os <b>temas latentes</b>, que resumem quais palavras costumam aparecer nos mesmos documentos.</p>
+          <p>Cada documento deixa de ter uma coluna por palavra e passa a ser descrito por k números: o quanto ele se alinha a cada tema. <span id="lsaDims"></span> Palavras que nunca aparecem juntas, mas dividem os mesmos vizinhos, ficam próximas nesse espaço.</p>
+          <p class="note">A tabela mostra as palavras que definem cada tema no corpus atual. O sinal (+/−) de cada tema é arbitrário: o que importa é que as palavras de um mesmo polo andam juntas.</p>
+        </div>
+        <div class="scroll" id="themes"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Similaridade cosseno entre documentos</h3><div class="howread"><span class="lbl">Como ler</span>
+          <p>Os quatro quadros mostram o <b>mesmo corpus</b> em quatro representações. Em cada quadro, uma célula compara dois documentos (linha × coluna): quanto mais escura, maior a similaridade cosseno, de 0 a 1. A diagonal é cada documento comparado consigo mesmo.</p>
+          <p>Linhas e colunas estão ordenadas por classe (bolinhas coloridas) e separadas por traços. Uma boa representação forma um bloco escuro por classe sobre a diagonal e fica clara fora deles. Passe o mouse sobre uma célula para ver o par e o valor.</p>
+          <p>O <b>índice de separação</b> resume cada quadro: similaridade média dentro das classes menos a média entre classes. Quanto maior, melhor.</p></div></div>
+        <div class="simgrid" id="simgrid"></div>
+        <div class="legend" id="simLegend"></div>
+      </div>
+      <div class="grid2">
+        <div class="panel">
+          <div class="panel-head"><h3>Vizinhos de uma palavra</h3><p>No BoW/TF-IDF toda palavra é ortogonal às outras (similaridade 0). Em embeddings, palavras de contextos parecidos ficam próximas.</p></div>
+          <div class="ctl"><label for="nbWord">Palavra</label><input type="text" id="nbWord" data-ui="nbWord" list="vocabList" autocomplete="off"></div>
+          <datalist id="vocabList"></datalist>
+          <div class="cols" id="neighbors"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Comparar dois documentos</h3><p>Escolha os documentos A e B nas listas ou clique em um par sugerido. As barras mostram a similaridade cosseno do par em cada representação; abaixo aparecem os termos que os dois compartilham.</p></div>
+          <div class="toolbar" id="pairSuggest">
+            <button class="btn sm" data-a="12" data-b="16">D13 × D17 · mesma classe, palavras em comum</button>
+            <button class="btn sm" data-a="19" data-b="22">D20 × D23 · mesma classe, nenhuma palavra em comum</button>
+            <button class="btn sm" data-a="14" data-b="6">D15 × D7 · classes diferentes, ambos sobre aplicativo</button>
+            <button class="btn sm" data-a="11" data-b="8">D12 × D9 · “celular” × “celulares”</button>
+          </div>
+          <div class="grid2" style="gap:10px">
+            <select id="pairA" data-ui="pairA" aria-label="Documento A"></select>
+            <select id="pairB" data-ui="pairB" aria-label="Documento B"></select>
+          </div>
+          <div id="pair" class="stack" style="gap:10px"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>LSA: variância explicada por dimensão</h3><p>Quanto da “energia” da matriz TF-IDF cada componente captura. As k primeiras (em destaque) formam o embedding.</p></div>
+        <div id="variance"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 APLICAÇÕES -->
+<section class="tab" id="tab-aplicacoes" role="tabpanel" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Etapa 5 de 6</span>
+    <h2>Aplicações: visualizar, agrupar, classificar e buscar</h2>
+    <p>As mesmas quatro representações alimentam tarefas clássicas. Mude o pré-processamento na etapa 2 e volte aqui para ver o efeito no resultado final.</p>
+    <p class="pipe-note"></p>
+  </div>
+  <div class="stack">
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel-head">
+          <h3>Mapa 2D dos documentos (PCA)</h3>
+          <select id="mapRep" data-ui="mapRep" aria-label="Representação" style="width:auto"></select>
+          <p id="mapCaption"></p>
+        </div>
+        <div id="map"></div>
+        <div class="legend" id="mapLegend"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Busca por similaridade</h3></div>
+        <ol class="howto">
+          <li>Digite uma frase no campo <b>Consulta</b> ou clique em um dos exemplos.</li>
+          <li>A consulta passa pelo mesmo pré-processamento da etapa 2. Os tokens resultantes aparecem logo abaixo do campo, junto com as palavras que não existem no vocabulário.</li>
+          <li>A consulta vira um vetor em cada representação. Cada coluna lista os 4 documentos mais parecidos, com a similaridade cosseno à direita (0 = nada em comum, 1 = idêntico).</li>
+          <li>Compare as colunas. BoW e TF-IDF só encontram documentos que tenham as mesmas palavras. LSA e vetores de palavras podem trazer documentos do mesmo assunto escritos com outras palavras.</li>
+        </ol>
+        <div class="ctl"><label for="query">Consulta</label><input type="text" id="query" data-ui="query" autocomplete="off"></div>
+        <div class="toolbar" id="querySuggest"><span class="lbl" style="align-self:center">Exemplos</span>
+          <button class="btn sm" data-q="vacina para idosos">vacina para idosos</button>
+          <button class="btn sm" data-q="celular com câmera">celular com câmera</button>
+          <button class="btn sm" data-q="preço dos alimentos">preço dos alimentos</button>
+          <button class="btn sm" data-q="juros altos para empresas">juros altos para empresas</button>
+          <button class="btn sm" data-q="treino">treino</button>
+          <button class="btn sm" data-q="futebol">futebol</button>
+        </div>
+        <div id="queryInfo" class="note"></div>
+        <div class="cols" id="search"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Agrupamento (k-means, sem rótulos)</h3>
+        <div class="toolbar" style="align-items:center">
+          <label class="lbl" for="kmK">k</label><input type="number" id="kmK" data-ui="kmK" min="2" max="10" style="width:5em">
+          <select id="kmRep" data-ui="kmRep" aria-label="Representação" style="width:auto"></select>
+        </div>
+        <p>O algoritmo não vê os rótulos; as cores mostram a classe verdadeira. Pureza = fração de documentos que pertencem à classe majoritária do seu grupo.</p>
+      </div>
+      <div class="layout" style="grid-template-columns:minmax(0,1fr) 300px">
+        <div class="clusters" id="clusters"></div>
+        <div class="stack" style="gap:8px"><span class="lbl">Pureza por representação</span><div id="purity"></div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Classificação supervisionada</h3><p>Validação leave-one-out: cada documento é classificado por um modelo treinado com todos os outros. kNN usa os 3 vizinhos mais próximos por cosseno; Naive Bayes multinomial usa as contagens (BoW).</p></div>
+      <div class="grid2">
+        <div class="stack" style="gap:8px"><span class="lbl">Acurácia</span><div id="accuracy"></div><p class="note" id="baseline"></p></div>
+        <div class="stack" style="gap:8px">
+          <div class="toolbar" style="align-items:center"><label class="lbl" for="clsSel">Matriz de confusão</label><select id="clsSel" data-ui="cls" style="width:auto"></select></div>
+          <div class="scroll" id="confusion"></div>
+          <div id="errors" class="note"></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h3>Termos característicos de cada classe</h3><p>Média do TF-IDF dos documentos da classe. Uma forma simples de análise exploratória de texto.</p></div>
+      <div class="cols" id="classTerms"></div>
+    </div>
+  </div>
+</section>
+<!-- 6 ATIVIDADES -->
+<section class="tab" id="tab-atividades" role="tabpanel" hidden>
+  <div class="sec-head">
+    <span class="eyebrow">Etapa 6 de 6</span>
+    <h2>Atividades: exploração em sala e tarefas</h2>
+    <p>A primeira parte reúne explorações rápidas para fazer durante a oficina, organizadas por etapa. A segunda traz tarefas para casa com procedimento, tabela de registro e perguntas para o relatório. Antes de cada tarefa, clique em “Restaurar corpus de exemplo” na etapa 1 para que todos partam da mesma configuração.</p>
+  </div>
+  <div class="stack">
+    <div class="panel">
+      <div class="panel-head"><h3>Parte A · Exploração guiada em sala</h3><p>Cerca de 5 minutos por bloco. Discuta as respostas com a turma antes de passar ao próximo.</p></div>
+      <div class="guided">
+        <div><span class="lbl">Etapa 1 · Corpus</span><ul>
+          <li>Acrescente um texto ambíguo (por exemplo, um aplicativo de saúde) e veja em que classe ele cai na etapa 5.</li>
+          <li>Escreva dois textos sobre o mesmo assunto sem nenhuma palavra em comum. Quais representações percebem a semelhança?</li>
+        </ul><button class="linkbtn" data-goto="corpus">Ir para a etapa 1</button></div>
+        <div><span class="lbl">Etapa 2 · Pré-processamento</span><ul>
+          <li>Use a predefinição “Nenhuma” e depois “Básico”. Quanto o vocabulário encolhe?</li>
+          <li>Desligue só “Minúsculas”. Por que “O” e “A” voltam ao resultado final mesmo com stopwords ligadas?</li>
+          <li>Ative a radicalização e procure “trein” no D2, D4 e D8. Isso ajuda ou atrapalha?</li>
+        </ul><button class="linkbtn" data-goto="preprocessamento">Ir para a etapa 2</button></div>
+        <div><span class="lbl">Etapa 3 · Vetorização</span><ul>
+          <li>Alterne Binário, BoW e TF-IDF na matriz. Onde a contagem difere da presença?</li>
+          <li>Clique na célula de uma palavra comum e de uma rara do mesmo documento e compare o idf.</li>
+          <li>Ative bigramas: o que acontece com a dimensão e com a esparsidade?</li>
+        </ul><button class="linkbtn" data-goto="vetorizacao">Ir para a etapa 3</button></div>
+        <div><span class="lbl">Etapa 4 · Embeddings</span><ul>
+          <li>Leia a tabela de temas do LSA. Que assunto cada tema parece representar?</li>
+          <li>Clique no par “D20 × D23”. Por que BoW dá zero e o LSA não?</li>
+          <li>Procure os vizinhos de “juros” com janela 1 e com janela 5.</li>
+        </ul><button class="linkbtn" data-goto="embeddings">Ir para a etapa 4</button></div>
+        <div><span class="lbl">Etapa 5 · Aplicações</span><ul>
+          <li>Busque “futebol”, palavra ausente do corpus. O que cada método devolve, e por quê?</li>
+          <li>Rode o k-means com k = 2 e k = 6. Os grupos ainda fazem sentido?</li>
+          <li>Na matriz de confusão do kNN · BoW, leia os documentos errados. O que eles têm em comum?</li>
+        </ul><button class="linkbtn" data-goto="aplicacoes">Ir para a etapa 5</button></div>
+      </div>
+    </div>
+
+    <div class="panel-head" style="padding-top:8px"><h3>Parte B · Tarefas para casa</h3><p>Cada tarefa indica as etapas envolvidas, o procedimento, uma tabela para registrar os resultados e as perguntas que devem ser respondidas no relatório.</p></div>
+    <div class="acts">
+
+      <article class="panel act">
+        <span class="code">TAREFA 1</span>
+        <h3>Quanto o pré-processamento importa?</h3>
+        <div class="meta"><span class="pill on">Etapas 2 e 5</span><span class="pill">20 min</span></div>
+        <p><b>Objetivo.</b> Medir o efeito de cada configuração de limpeza no vocabulário e no desempenho final.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Na etapa 2, aplique a predefinição “Nenhuma”. Anote o vocabulário final (gráfico de impacto).</li>
+          <li>Na etapa 5, anote a acurácia do kNN · TF-IDF e a pureza do LSA (k-means com k = 4).</li>
+          <li>Repita para “Básico” e “Completo”.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Configuração</th><th>Vocabulário</th><th>Acurácia kNN · TF-IDF</th><th>Pureza LSA</th></tr></thead><tbody><tr><th>Nenhuma</th><td></td><td></td><td></td></tr><tr><th>Básico</th><td></td><td></td><td></td></tr><tr><th>Completo</th><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Mais limpeza sempre melhora o resultado? Justifique com os números.</li><li>Em que tipo de aplicação você <i>não</i> removeria stopwords? (Pense em negações como “não”.)</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 2</span>
+        <h3>Radicalização: ganhos e colisões</h3>
+        <div class="meta"><span class="pill on">Etapas 2, 3 e 5</span><span class="pill">25 min</span></div>
+        <p><b>Objetivo.</b> Identificar quando reduzir palavras ao radical une variações úteis e quando mistura significados diferentes.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Com a predefinição “Básico”, busque “vacina para idosos” e “celular com câmera” (etapa 5). Anote o documento em 1º lugar e o escore no BoW.</li>
+          <li>Ligue a radicalização e repita as buscas.</li>
+          <li>Na etapa 3, ordene as colunas por df e encontre ao menos 3 radicais que juntam palavras de classes diferentes (exemplo: “trein”).</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Consulta</th><th>1º lugar sem radical (escore)</th><th>1º lugar com radical (escore)</th></tr></thead><tbody><tr><th>vacina para idosos</th><td></td><td></td></tr><tr><th>celular com câmera</th><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Liste as colisões encontradas e as palavras originais de cada uma.</li><li>Lematização (reduzir “treinaram” a “treinar”) resolveria essas colisões? Por quê?</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 3</span>
+        <h3>Anatomia do TF-IDF</h3>
+        <div class="meta"><span class="pill on">Etapa 3</span><span class="pill">20 min</span></div>
+        <p><b>Objetivo.</b> Calcular o TF-IDF à mão e confirmar com o painel.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Escolha o D1. Selecione um termo que aparece em muitos documentos e um que aparece só no D1.</li>
+          <li>Calcule idf = ln((1 + N) / (1 + df)) + 1 para cada um com uma calculadora.</li>
+          <li>Clique nas células correspondentes e compare com o cálculo exibido.</li>
+          <li>Compare a lista de maior peso do D1 no BoW e no TF-IDF.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Termo</th><th>contagem</th><th>df</th><th>idf (seu cálculo)</th><th>TF-IDF (painel)</th></tr></thead><tbody><tr><th>comum:</th><td></td><td></td><td></td><td></td></tr><tr><th>raro:</th><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Por que o TF-IDF final depende de todos os outros termos do documento? (Dica: norma L2.)</li><li>Em que situação a representação binária seria preferível ao BoW?</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 4</span>
+        <h3>Quantas dimensões bastam no LSA?</h3>
+        <div class="meta"><span class="pill on">Etapas 4 e 5</span><span class="pill">25 min</span></div>
+        <p><b>Objetivo.</b> Relacionar o número de temas latentes (k) com a qualidade das representações.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Com o corpus de exemplo e a predefinição “Básico”, varie k do LSA em 1, 2, 3, 4, 6, 10 e 15.</li>
+          <li>Para cada k, anote o índice de separação do LSA (etapa 4) e a pureza do LSA no k-means (etapa 5).</li>
+          <li>Faça um gráfico de linha com os dois indicadores em função de k.</li>
+          <li>Para k = 4, dê um nome a cada tema da tabela de temas latentes.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>k</th><th>1</th><th>2</th><th>3</th><th>4</th><th>6</th><th>10</th><th>15</th></tr></thead><tbody><tr><th>Separação</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>Pureza</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Por que um k muito pequeno perde informação e um k muito grande volta a se parecer com o TF-IDF?</li><li>Qual a relação entre o melhor k e o número de classes do corpus?</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 5</span>
+        <h3>Janela de contexto e vizinhos semânticos</h3>
+        <div class="meta"><span class="pill on">Etapa 4</span><span class="pill">20 min</span></div>
+        <p><b>Objetivo.</b> Entender como o tamanho da janela muda o que o modelo considera “palavras parecidas”.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Na etapa 4, digite “juros” no campo de vizinhos. Anote os 3 primeiros vizinhos PPMI-SVD com janela 1, 2, 4 e 6.</li>
+          <li>Repita para “hospital” e “time”.</li>
+          <li>Para cada janela, anote o índice de separação de “Vetores de palavras”.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Janela</th><th>vizinhos de “juros”</th><th>vizinhos de “hospital”</th><th>Separação</th></tr></thead><tbody><tr><th>1</th><td></td><td></td><td></td></tr><tr><th>2</th><td></td><td></td><td></td></tr><tr><th>4</th><td></td><td></td><td></td></tr><tr><th>6</th><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Janelas pequenas e grandes capturam tipos diferentes de semelhança. Descreva a diferença com exemplos.</li><li>Por que os vizinhos ficam ruidosos neste corpus e o que mudaria com milhões de textos?</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 6</span>
+        <h3>Sinônimos e o problema do vocabulário</h3>
+        <div class="meta"><span class="pill on">Etapas 1 e 4</span><span class="pill">25 min</span></div>
+        <p><b>Objetivo.</b> Mostrar a limitação das representações esparsas quando o mesmo assunto é escrito com palavras diferentes.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Use os quatro pares sugeridos na etapa 4 e anote a similaridade em cada representação.</li>
+          <li>Na etapa 1, crie dois novos documentos sobre o mesmo assunto, com o mesmo rótulo e sem nenhuma palavra de conteúdo em comum.</li>
+          <li>Compare esse novo par na etapa 4.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Par</th><th>BoW</th><th>TF-IDF</th><th>LSA</th><th>Vetores de palavras</th></tr></thead><tbody><tr><th>D13 × D17</th><td></td><td></td><td></td><td></td></tr><tr><th>D20 × D23</th><td></td><td></td><td></td><td></td></tr><tr><th>D15 × D7</th><td></td><td></td><td></td><td></td></tr><tr><th>D12 × D9</th><td></td><td></td><td></td><td></td></tr><tr><th>Seu par</th><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Em quais pares os embeddings superam o TF-IDF? Em quais erram (por exemplo, aproximando classes diferentes)?</li><li>De onde o LSA tira a semelhança entre documentos que não compartilham palavras?</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 7</span>
+        <h3>Avaliando um buscador</h3>
+        <div class="meta"><span class="pill on">Etapa 5</span><span class="pill">25 min</span></div>
+        <p><b>Objetivo.</b> Avaliar a busca por similaridade como um sistema de recuperação de informação.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Escreva 5 consultas próprias, uma ou duas por classe, incluindo ao menos uma com palavra ausente do corpus.</li>
+          <li>Para cada consulta e representação, verifique se o 1º resultado pertence à classe esperada.</li>
+          <li>Calcule a taxa de acerto do 1º resultado (precisão@1) de cada representação.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Consulta</th><th>Classe esperada</th><th>BoW</th><th>TF-IDF</th><th>LSA</th><th>Vetores</th></tr></thead><tbody><tr><th>1</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>2</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>3</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>4</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>5</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>Precisão@1</th><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Qual representação você usaria num buscador real? Considere qualidade, custo e explicabilidade.</li><li>Como sistemas atuais de busca semântica (RAG) resolvem a falta de dados que limita este laboratório?</li></ul>
+      </article>
+
+      <article class="panel act">
+        <span class="code">TAREFA 8</span>
+        <h3>Rótulos errados e robustez dos classificadores</h3>
+        <div class="meta"><span class="pill on">Etapas 1 e 5</span><span class="pill">20 min</span></div>
+        <p><b>Objetivo.</b> Observar como erros de rotulação afetam o aprendizado supervisionado e não afetam o agrupamento.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Anote a acurácia de todos os classificadores com o corpus original.</li>
+          <li>Na etapa 1, troque o rótulo de 2 documentos de classes diferentes entre si. Anote as acurácias.</li>
+          <li>Troque mais 2 (4 no total) e anote de novo.</li>
+          <li>Verifique se os grupos do k-means mudaram.</li>
+        </ol>
+        <h4>Registro</h4>
+        <div class="scroll"><table class="conf"><thead><tr><th>Rótulos trocados</th><th>kNN · TF-IDF</th><th>kNN · LSA</th><th>Naive Bayes</th></tr></thead><tbody><tr><th>0</th><td></td><td></td><td></td></tr><tr><th>2</th><td></td><td></td><td></td></tr><tr><th>4</th><td></td><td></td><td></td></tr></tbody></table></div>
+        <h4>Perguntas</h4>
+        <ul><li>Por que o k-means não muda quando os rótulos mudam, mas a pureza sim?</li><li>Que cuidados de anotação você adotaria num projeto real?</li></ul>
+      </article>
+
+      <article class="panel act" style="border-color:var(--accent)">
+        <span class="code">DESAFIO FINAL</span>
+        <h3>Seu próprio corpus</h3>
+        <div class="meta"><span class="pill on">Todas as etapas</span><span class="pill">em grupo</span></div>
+        <p><b>Objetivo.</b> Aplicar o pipeline completo a um problema escolhido pelo grupo.</p>
+        <h4>Procedimento</h4>
+        <ol>
+          <li>Monte um corpus com pelo menos 30 textos curtos e 3 classes (manchetes, avaliações de produtos, resumos de artigos, mensagens de atendimento).</li>
+          <li>Carregue os textos com “Colar em lote” na etapa 1, no formato <span class="mono">rótulo | texto</span>.</li>
+          <li>Teste ao menos 3 configurações de pipeline e 2 valores de k do LSA.</li>
+          <li>Escolha a melhor combinação de representação e classificador e justifique.</li>
+        </ol>
+        <h4>Perguntas</h4>
+        <ul><li>Quais classes se confundem mais e por quê?</li><li>Que palavras caracterizam cada classe (etapa 5, termos característicos)?</li><li>O que você mudaria para levar este sistema a produção?</li></ul>
+      </article>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h3>Parte C · Orientações de entrega</h3></div>
+      <ol class="howto">
+        <li>Relatório de 3 a 5 páginas com as tabelas preenchidas e capturas de tela que sustentem cada resposta.</li>
+        <li>Indique em cada tarefa a configuração usada (a faixa de pipeline no topo das abas 3, 4 e 5 resume isso).</li>
+        <li>Responda às perguntas com base nos números observados, não em definições de livro.</li>
+        <li>Para o desafio final, anexe o corpus em texto (um documento por linha, no formato <span class="mono">rótulo | texto</span>).</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------------- dados de exemplo ---------------- */
+const SAMPLE = [
+  {label:'Esporte', text:'O Palmeiras venceu o clássico por 2 a 1 e assumiu a liderança do campeonato brasileiro. O time marcou o gol da vitória nos acréscimos.'},
+  {label:'Esporte', text:'A seleção feminina de vôlei treinou saques e bloqueios antes da final do torneio. A equipe busca o título inédito.'},
+  {label:'Esporte', text:'O técnico elogiou a atuação do goleiro, que defendeu um pênalti no jogo de domingo. O time segue invicto no campeonato.'},
+  {label:'Esporte', text:'Corredores amadores treinam para a maratona de São Paulo com treinos longos aos domingos. A prova reúne milhares de atletas.'},
+  {label:'Esporte', text:'O atacante marcou dois gols e foi eleito o melhor jogador da partida. A torcida lotou o estádio para a final.'},
+  {label:'Esporte', text:'A equipe de basquete perdeu o jogo em casa e caiu na classificação do campeonato. O técnico pediu mais treino de defesa.'},
+  {label:'Tecnologia', text:'A nova versão do aplicativo usa inteligência artificial para traduzir mensagens em tempo real. Os dados ficam armazenados na nuvem.'},
+  {label:'Tecnologia', text:'Pesquisadores treinaram um modelo de linguagem com milhões de textos em português. O modelo de inteligência artificial responde perguntas.'},
+  {label:'Tecnologia', text:'A rede 5G promete internet mais rápida para celulares e sensores conectados. As operadoras ampliam a cobertura nas cidades.'},
+  {label:'Tecnologia', text:'A empresa lançou um processador mais eficiente, que reduz o consumo de energia dos computadores e acelera o aplicativo de vídeo.'},
+  {label:'Tecnologia', text:'Ataques de hackers expuseram dados de usuários de uma rede social. Especialistas recomendam senhas fortes e autenticação em dois fatores.'},
+  {label:'Tecnologia', text:'O novo celular tem câmera com inteligência artificial e bateria que dura dois dias. O aparelho chega às lojas em novembro.'},
+  {label:'Saúde', text:'O Ministério da Saúde ampliou a campanha de vacinação contra a gripe para crianças e idosos. A vacina está disponível nos postos.'},
+  {label:'Saúde', text:'Médicos recomendam atividade física regular e alimentação equilibrada para prevenir doenças do coração.'},
+  {label:'Saúde', text:'O hospital adotou um aplicativo que agenda consultas e exames pelo celular. Os pacientes recebem os resultados dos exames online.'},
+  {label:'Saúde', text:'Dormir mal por longos períodos aumenta o risco de ansiedade e de doenças. Médicos indicam rotina regular de sono.'},
+  {label:'Saúde', text:'O hospital registrou aumento de pacientes com sintomas de gripe. Os médicos reforçam a importância da vacina para idosos.'},
+  {label:'Saúde', text:'Um estudo mostrou que caminhar trinta minutos por dia reduz o risco de doenças do coração e melhora a saúde mental.'},
+  {label:'Economia', text:'O Banco Central manteve a taxa de juros e sinalizou cautela diante da inflação. O mercado esperava o corte dos juros.'},
+  {label:'Economia', text:'As exportações de soja e minério cresceram e ajudaram a balança comercial no trimestre. O resultado anima o mercado.'},
+  {label:'Economia', text:'O dólar caiu 1,5% após a divulgação de dados positivos sobre o emprego. A bolsa subiu com a alta das empresas de energia.'},
+  {label:'Economia', text:'Pequenas empresas recorrem ao crédito para pagar salários, mas os juros altos encarecem os empréstimos.'},
+  {label:'Economia', text:'A inflação de setembro ficou abaixo do esperado, puxada pela queda no preço dos alimentos e da energia.'},
+  {label:'Economia', text:'O governo anunciou um programa de crédito para empresas que investirem em tecnologia e gerarem emprego.'}
+];
+const DEFAULT_OPTS = {lower:true, accents:false, nums:true, punct:true, stop:true, minLen:2, stem:'none', ngram:1, minDf:1, lsaK:4, wdim:8, win:2};
+const REPS = ['bow','tfidf','lsa','wemb'];
+const REP_NAME = {bow:'BoW (contagens)', tfidf:'TF-IDF', lsa:'LSA (embedding de documento)', wemb:'Média de vetores de palavras'};
+const REP_SHORT = {bow:'BoW', tfidf:'TF-IDF', lsa:'LSA', wemb:'Vetores de palavras'};
+
+const STOP_RAW = 'a à ao aos aquela aquelas aquele aqueles aquilo as às até com como contra da das de dela dele deles depois do dos e é ela elas ele eles em entre era eram essa essas esse esses esta está estão estas este estes eu foi foram há isso isto já lhe lhes mais mas me mesmo meu meus minha minhas muito muitos na nas nem no nos nós num numa o os ou para pela pelas pelo pelos por porque pois qual quais quando que quem se sem ser seu seus sua suas só sobre também te tem têm um uma umas uns você vocês ainda antes após diante onde são ter seja sido sendo será serão havia tinha nosso nossa cada outro outra outros outras toda todo todos todas mesma seus aí lá aqui assim então';
+const deacc = s => s.normalize('NFD').replace(/[̀-ͯ]/g,'');
+const STOP = new Set(); STOP_RAW.split(/\s+/).forEach(w => { STOP.add(w); STOP.add(deacc(w)); });
+
+/* ---------------- estado ---------------- */
+const KEY = 'bancada-pln-v1';
+let saved = null;
+try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e) {}
+let docs = (saved && Array.isArray(saved.docs) && saved.docs.length) ? saved.docs : SAMPLE.map(d => ({...d}));
+let opts = Object.assign({}, DEFAULT_OPTS, saved && saved.opts || {});
+const ui = {tab:'corpus', preDoc:0, heatMode:'tfidf', heatOrder:'df', heatN:12, cell:null, vecDoc:0, nbWord:'celular', pairA:14, pairB:6, mapRep:'tfidf', kmK:4, kmRep:'tfidf', cls:'knn:tfidf', query:'vacina para idosos'};
+function save(){ try { localStorage.setItem(KEY, JSON.stringify({docs, opts})); } catch(e) {} }
+
+/* ---------------- utilidades ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = (v, d=2) => Number.isFinite(v) ? v.toLocaleString('pt-BR', {minimumFractionDigits:d, maximumFractionDigits:d}) : '–';
+const pct = v => Number.isFinite(v) ? Math.round(v*100) + '%' : '–';
+const sum = a => { let s = 0; for (const v of a) s += v; return s; };
+const dot = (a,b) => { let s = 0; for (let i = 0; i < a.length; i++) s += a[i]*b[i]; return s; };
+const norm = a => Math.sqrt(dot(a,a));
+const l2 = a => { const n = norm(a); return n > 0 ? Array.from(a, v => v/n) : Array.from(a, () => 0); };
+const short = (s, n=60) => s.length > n ? s.slice(0, n-1) + '…' : s;
+function mulberry32(a){ return function(){ a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gram(X){ const n = X.length, G = Array.from({length:n}, () => new Array(n).fill(0)); for (let i = 0; i < n; i++) for (let j = i; j < n; j++) G[i][j] = G[j][i] = dot(X[i], X[j]); return G; }
+const cosMatrix = X => gram(X.map(l2));
+
+function jacobi(A0){
+  const n = A0.length; const A = A0.map(r => Array.from(r)); const V = Array.from({length:n}, (_, i) => { const r = new Array(n).fill(0); r[i] = 1; return r; });
+  for (let sweep = 0; sweep < 80; sweep++){
+    let off = 0; for (let p = 0; p < n; p++) for (let q = p+1; q < n; q++) off += A[p][q]*A[p][q];
+    if (off < 1e-20) break;
+    for (let p = 0; p < n; p++) for (let q = p+1; q < n; q++){
+      const apq = A[p][q]; if (Math.abs(apq) < 1e-15) continue;
+      const theta = (A[q][q] - A[p][p]) / (2*apq);
+      const t = (theta >= 0 ? 1 : -1) / (Math.abs(theta) + Math.sqrt(theta*theta + 1));
+      const c = 1/Math.sqrt(t*t + 1), s = t*c;
+      for (let k = 0; k < n; k++){ const akp = A[k][p], akq = A[k][q]; A[k][p] = c*akp - s*akq; A[k][q] = s*akp + c*akq; }
+      for (let k = 0; k < n; k++){ const apk = A[p][k], aqk = A[q][k]; A[p][k] = c*apk - s*aqk; A[q][k] = s*apk + c*aqk; }
+      for (let k = 0; k < n; k++){ const vkp = V[k][p], vkq = V[k][q]; V[k][p] = c*vkp - s*vkq; V[k][q] = s*vkp + c*vkq; }
+    }
+  }
+  const order = [...Array(n).keys()].sort((a,b) => A[b][b] - A[a][a]);
+  return {values: order.map(i => A[i][i]), vectors: V.map(row => order.map(i => row[i]))};
+}
+function orth(Q){
+  for (let i = 0; i < Q.length; i++){
+    for (let j = 0; j < i; j++){ const d = dot(Q[i], Q[j]); for (let k = 0; k < Q[i].length; k++) Q[i][k] -= d*Q[j][k]; }
+    const n = norm(Q[i]); for (let k = 0; k < Q[i].length; k++) Q[i][k] = n > 1e-12 ? Q[i][k]/n : 0;
+  }
+}
+const matVec = (M, q) => M.map(r => dot(r, q));
+function topEig(M, k){
+  const n = M.length; k = Math.min(k, n); if (!k) return {values:[], vecs:[]};
+  const rng = mulberry32(7); let Q = Array.from({length:k}, () => Array.from({length:n}, () => rng() - .5));
+  orth(Q);
+  for (let it = 0; it < 70; it++){ Q = Q.map(q => matVec(M, q)); orth(Q); }
+  const MQ = Q.map(q => matVec(M, q));
+  const T = Q.map(qi => MQ.map(mq => dot(qi, mq)));
+  const e = jacobi(T);
+  const vecs = []; for (let c = 0; c < k; c++){ const v = new Array(n).fill(0); for (let i = 0; i < k; i++){ const w = e.vectors[i][c]; for (let j = 0; j < n; j++) v[j] += w*Q[i][j]; } vecs.push(v); }
+  return {values: e.values, vecs};
+}
+
+/* ---------------- pré-processamento ---------------- */
+const STEM = (() => {
+  const plural = [['ões','ão'],['ães','ão'],['ãos','ão'],['ais','al'],['éis','el'],['eis','el'],['óis','ol'],['ns','m'],['res','r'],['s','']];
+  const noun = ['amentos','imentos','amento','imento','adoras','adores','adora','ador','ações','ação','uções','ução','ções','ção','idades','idade','ismos','ismo','istas','ista','áveis','íveis','ável','ível','âncias','ância','ências','ência','ezas','eza','osas','osos','osa','oso','ivas','ivos','iva','ivo','icas','icos','ica','ico'].map(s => [s,'']);
+  const verb = ['aríamos','eríamos','iríamos','ássemos','aremos','eremos','iremos','ávamos','aram','eram','iram','avam','ando','endo','indo','asse','esse','isse','aria','eria','iria','ava','ado','ido','ada','ida','ar','er','ir','ou','am','em','ia'].map(s => [s,'']);
+  const vowel = [['a',''],['e',''],['o','']];
+  const widen = list => { const out = [...list]; list.forEach(([s,r]) => { const d = deacc(s); if (d !== s) out.push([d, deacc(r)]); }); return out.sort((a,b) => b[0].length - a[0].length); };
+  return {plural:widen(plural), adverb:[['mente','']], noun:widen(noun), verb:widen(verb), vowel};
+})();
+function applyGroup(w, rules, minStem){ for (const [s,r] of rules) if (w.endsWith(s) && w.length - s.length >= minStem) return [w.slice(0, -s.length) + r, true]; return [w, false]; }
+function stemPT(w){
+  if (w.length < 4) return w;
+  if (w.endsWith('s') && !w.endsWith('ss')) [w] = applyGroup(w, STEM.plural, 2);
+  let ch;
+  [w] = applyGroup(w, STEM.adverb, 3);
+  [w, ch] = applyGroup(w, STEM.noun, 3);
+  if (!ch) [w, ch] = applyGroup(w, STEM.verb, 3);
+  if (!ch) [w] = applyGroup(w, STEM.vowel, 3);
+  return w;
+}
+function makeSteps(o){
+  return [
+    {key:'lower', name:'Minúsculas', on:o.lower, desc:'Converte todas as letras para minúsculas.', fn:t => t.toLowerCase()},
+    {key:'accents', name:'Remover acentos', on:o.accents, desc:'Remove diacríticos (á, ç, õ…).', fn:t => deacc(t)},
+    {key:'nums', name:'Remover tokens com números', on:o.nums, desc:'Descarta tokens que contêm dígitos.', fn:t => /\d/.test(t) ? null : t},
+    {key:'punct', name:'Remover pontuação', on:o.punct, desc:'Mantém apenas letras e dígitos dentro de cada token.', fn:t => { const r = t.replace(/[^\p{L}\p{N}]/gu, ''); return r || null; }},
+    {key:'stop', name:'Remover stopwords', on:o.stop, desc:'Remove palavras funcionais. A comparação é exata: “O” maiúsculo só sai se a etapa 1 estiver ligada.', fn:t => STOP.has(t) ? null : t},
+    {key:'short', name:'Comprimento mínimo', on:o.minLen > 1, desc:`Remove tokens com menos de ${o.minLen} caracteres.`, fn:t => t.length < o.minLen ? null : t},
+    {key:'stem', name:'Radicalização', on:o.stem === 'light', desc:'Corta sufixos de plural, gênero, grau e flexão verbal (versão simplificada do RSLP).', fn:t => stemPT(t)}
+  ];
+}
+function runPipeline(text, steps){
+  let cur = String(text || '').split(/\s+/).filter(Boolean);
+  const trace = [{tokens:cur}];
+  for (const s of steps){
+    if (!s.on){ trace.push({tokens:cur, off:true}); continue; }
+    const res = cur.map(s.fn); const next = res.filter(x => x !== null && x !== '');
+    trace.push({tokens:next, res, prev:cur}); cur = next;
+  }
+  return {tokens:cur, trace};
+}
+function features(tokens, n){ const out = [...tokens]; if (n === 2) for (let i = 0; i + 1 < tokens.length; i++) out.push(tokens[i] + ' ' + tokens[i+1]); return out; }
+
+/* ---------------- modelo ---------------- */
+let M = null;
+function compute(){
+  const steps = makeSteps(opts);
+  const N = docs.length;
+  const P = docs.map(d => runPipeline(d.text, steps));
+  const labs = docs.map(d => (d.label || '').trim() || '(sem rótulo)');
+  const labels = [...new Set(labs)].sort((a,b) => a.localeCompare(b, 'pt'));
+  const stepStats = [];
+  for (let s = 0; s <= steps.length; s++){ const vs = new Set(); let tot = 0; P.forEach(p => { p.trace[s].tokens.forEach(t => vs.add(t)); tot += p.trace[s].tokens.length; }); stepStats.push({vocab:vs.size, tokens:tot}); }
+
+  const feats = P.map(p => features(p.tokens, opts.ngram));
+  const dfMap = new Map(); feats.forEach(f => new Set(f).forEach(t => dfMap.set(t, (dfMap.get(t) || 0) + 1)));
+  const vocab = [...dfMap.keys()].filter(t => dfMap.get(t) >= opts.minDf).sort((a,b) => dfMap.get(b) - dfMap.get(a) || a.localeCompare(b, 'pt'));
+  const idx = new Map(vocab.map((t,i) => [t,i]));
+  const V = vocab.length;
+  const counts = feats.map(f => { const r = new Array(V).fill(0); f.forEach(t => { const j = idx.get(t); if (j !== undefined) r[j]++; }); return r; });
+  const df = vocab.map(t => dfMap.get(t));
+  const idf = df.map(d => Math.log((1 + N) / (1 + d)) + 1);
+  const tf = counts.map(r => { const s = sum(r); return r.map(c => s ? c/s : 0); });
+  const tfidfRaw = counts.map(r => r.map((c,j) => c*idf[j]));
+  const tfidf = tfidfRaw.map(l2);
+
+  // LSA
+  const lsa = {k:0, values:[], ratio:[], s:[], termEmb:vocab.map(() => []), docEmb:docs.map(() => [])};
+  if (N > 1 && V > 0){
+    const e = jacobi(gram(tfidf));
+    const pos = e.values.filter(v => v > 1e-10); const tot = sum(pos);
+    const k = Math.min(opts.lsaK, pos.length);
+    lsa.k = k; lsa.ratio = pos.slice(0, 15).map(v => v/tot);
+    lsa.s = e.values.slice(0, k).map(Math.sqrt);
+    lsa.termEmb = vocab.map((_, j) => { const r = new Array(k).fill(0); for (let c = 0; c < k; c++) for (let d = 0; d < N; d++) r[c] += tfidf[d][j]*e.vectors[d][c]; return r; });
+    lsa.docEmb = docs.map((_, d) => { const r = []; for (let c = 0; c < k; c++) r.push(e.vectors[d][c]*lsa.s[c]); return r; });
+  }
+
+  // vetores de palavras PPMI-SVD
+  const uniDf = new Map(); P.forEach(p => new Set(p.tokens).forEach(t => uniDf.set(t, (uniDf.get(t) || 0) + 1)));
+  const wv = [...uniDf.keys()].filter(t => uniDf.get(t) >= opts.minDf).sort((a,b) => a.localeCompare(b, 'pt'));
+  const widx = new Map(wv.map((t,i) => [t,i])); const W = wv.length;
+  const C = Array.from({length:W}, () => new Array(W).fill(0));
+  P.forEach(p => { const t = p.tokens; for (let i = 0; i < t.length; i++){ const a = widx.get(t[i]); if (a === undefined) continue; for (let j = i+1; j <= i + opts.win && j < t.length; j++){ const b = widx.get(t[j]); if (b === undefined || a === b) continue; C[a][b]++; C[b][a]++; } } });
+  const row = C.map(sum); const total = sum(row);
+  const PM = C.map((r,a) => r.map((c,b) => c > 0 ? Math.max(0, Math.log(c*total/(row[a]*row[b]))) : 0));
+  const eW = topEig(PM, Math.min(opts.wdim, W));
+  const wordVec = wv.map((_, j) => l2(eW.vecs.map((v,c) => v[j]*Math.sqrt(Math.abs(eW.values[c])))));
+  const wdim = eW.vecs.length;
+  const avgWords = toks => { const acc = new Array(wdim).fill(0); let n = 0; toks.forEach(t => { const j = widx.get(t); if (j === undefined || row[j] === 0) return; const v = wordVec[j]; for (let c = 0; c < wdim; c++) acc[c] += v[c]; n++; }); return {vec: n ? acc.map(v => v/n) : acc, n}; };
+  const docW = P.map(p => avgWords(p.tokens).vec);
+
+  const reps = {bow:counts, tfidf, lsa:lsa.docEmb, wemb:docW};
+  const sims = {}; REPS.forEach(r => sims[r] = cosMatrix(reps[r]));
+  const sep = {}; REPS.forEach(r => sep[r] = separation(sims[r], labs));
+
+  M = {steps, N, P, labs, labels, stepStats, vocab, idx, V, counts, df, idf, tf, tfidfRaw, tfidf, lsa, wv, widx, wordVec, row, avgWords, reps, sims, sep};
+  computeApps();
+}
+function separation(S, labs){
+  let a = 0, na = 0, b = 0, nb = 0;
+  for (let i = 0; i < S.length; i++) for (let j = i+1; j < S.length; j++){ if (labs[i] === labs[j]){ a += S[i][j]; na++; } else { b += S[i][j]; nb++; } }
+  return (na && nb) ? a/na - b/nb : NaN;
+}
+
+/* ---------------- aprendizado de máquina ---------------- */
+function kmeans(X, k, seed){
+  const n = X.length; if (!n) return []; k = Math.min(k, n);
+  const d2 = (a,b) => { let s = 0; for (let i = 0; i < a.length; i++){ const t = a[i]-b[i]; s += t*t; } return s; };
+  const rng = mulberry32(seed); let best = null, bestIn = Infinity;
+  for (let r = 0; r < 12; r++){
+    const C = [Array.from(X[Math.floor(rng()*n)])];
+    while (C.length < k){ const d = X.map(x => Math.min(...C.map(c => d2(x,c)))); const s = sum(d); let i = 0; if (s === 0) i = Math.floor(rng()*n); else { let t = rng()*s; for (; i < n-1; i++){ t -= d[i]; if (t <= 0) break; } } C.push(Array.from(X[i])); }
+    let lab = new Array(n).fill(-1);
+    for (let it = 0; it < 60; it++){
+      let changed = false;
+      for (let i = 0; i < n; i++){ let bi = 0, bd = Infinity; C.forEach((c,ci) => { const dd = d2(X[i], c); if (dd < bd){ bd = dd; bi = ci; } }); if (lab[i] !== bi){ lab[i] = bi; changed = true; } }
+      for (let c = 0; c < k; c++){ const mem = X.filter((_, i) => lab[i] === c); if (!mem.length) continue; C[c] = C[c].map((_, j) => sum(mem.map(m => m[j]))/mem.length); }
+      if (!changed) break;
+    }
+    const inertia = sum(X.map((x,i) => d2(x, C[lab[i]])));
+    if (inertia < bestIn - 1e-12){ bestIn = inertia; best = lab; }
+  }
+  return best;
+}
+function purity(assign, labs){
+  const groups = new Map(); assign.forEach((c,i) => { if (!groups.has(c)) groups.set(c, new Map()); const g = groups.get(c); g.set(labs[i], (g.get(labs[i]) || 0) + 1); });
+  let s = 0; groups.forEach(g => s += Math.max(...g.values())); return s/assign.length;
+}
+function knnLOO(S, labs, k=3){
+  const n = S.length;
+  return labs.map((_, i) => {
+    const nb = [...Array(n).keys()].filter(j => j !== i).sort((a,b) => S[i][b] - S[i][a]).slice(0, k);
+    const score = new Map(); nb.forEach(j => score.set(labs[j], (score.get(labs[j]) || 0) + Math.max(S[i][j], 0) + 1e-6));
+    return [...score.entries()].sort((a,b) => b[1] - a[1])[0][0];
+  });
+}
+function nbLOO(X, labs, labels){
+  const n = X.length, V = X[0] ? X[0].length : 0;
+  return labs.map((_, i) => {
+    let best = null, bestS = -Infinity;
+    labels.forEach(l => {
+      const mem = X.filter((_, j) => j !== i && labs[j] === l); if (!mem.length) return;
+      const tc = new Array(V).fill(0); mem.forEach(m => m.forEach((v,j) => tc[j] += v)); const T = sum(tc);
+      let s = Math.log(mem.length/(n-1)); X[i].forEach((v,j) => { if (v) s += v*Math.log((tc[j] + 1)/(T + V)); });
+      if (s > bestS){ bestS = s; best = l; }
+    });
+    return best;
+  });
+}
+function computeApps(){
+  const {N, labs, labels, reps, sims} = M;
+  M.km = {}; M.purity = {}; M.pred = {}; M.acc = {};
+  if (N < 2) return;
+  const k = Math.max(2, Math.min(ui.kmK, N));
+  REPS.forEach(r => { const a = kmeans(reps[r].map(l2), k, 42); M.km[r] = a; M.purity[r] = purity(a, labs); });
+  if (labels.length >= 2 && N >= 3){
+    REPS.forEach(r => { M.pred['knn:' + r] = knnLOO(sims[r], labs, 3); });
+    M.pred['nb:bow'] = nbLOO(M.counts, labs, labels);
+    Object.keys(M.pred).forEach(key => { M.acc[key] = M.pred[key].filter((p,i) => p === labs[i]).length/N; });
+  }
+}
+const CLS_NAME = key => key === 'nb:bow' ? 'Naive Bayes · BoW' : 'kNN · ' + REP_SHORT[key.split(':')[1]];
+
+function pca2(X){
+  const n = X.length; if (n < 2 || !X[0] || !X[0].length) return null;
+  const d = X[0].length; const mean = new Array(d).fill(0); X.forEach(x => x.forEach((v,j) => mean[j] += v/n));
+  const Xc = X.map(x => x.map((v,j) => v - mean[j]));
+  const e = jacobi(gram(Xc)); const tot = sum(e.values.filter(v => v > 0)) || 1;
+  const comp = c => X.map((_, i) => (e.vectors[i][c] || 0)*Math.sqrt(Math.max(e.values[c] || 0, 0)));
+  const xs = comp(0), ys = n > 2 ? comp(1) : X.map(() => 0);
+  return {pts: xs.map((x,i) => [x, ys[i]]), ratio: [Math.max(e.values[0],0)/tot, Math.max(e.values[1] || 0, 0)/tot]};
+}
+function queryVectors(text){
+  const {steps, vocab, idx, V, idf, lsa, avgWords, widx} = M;
+  const p = runPipeline(text, steps); const f = features(p.tokens, opts.ngram);
+  const bow = new Array(V).fill(0); f.forEach(t => { const j = idx.get(t); if (j !== undefined) bow[j]++; });
+  const tfidf = l2(bow.map((c,j) => c*idf[j]));
+  const lq = []; for (let c = 0; c < lsa.k; c++){ let s = 0; for (let j = 0; j < V; j++) s += tfidf[j]*lsa.termEmb[j][c]; lq.push(s/lsa.s[c]); }
+  const w = avgWords(p.tokens);
+  const oov = p.tokens.filter(t => !idx.has(t));
+  const oovW = p.tokens.filter(t => !widx.has(t));
+  return {tokens:p.tokens, vecs:{bow, tfidf, lsa:lq, wemb:w.vec}, oov, oovW};
+}
+
+/* ---------------- desenho ---------------- */
+const labelColor = l => `var(--c${(M.labels.indexOf(l) % 6) + 1})`;
+const dotHtml = l => `<span class="dot" style="background:${labelColor(l)}" title="${esc(l)}"></span>`;
+function bars(items, {max, fmtV = v => fmt(v), color} = {}){
+  if (!items.length) return '<div class="empty">Sem dados.</div>';
+  const m = max ?? Math.max(...items.map(i => Math.abs(i.v)), 1e-9);
+  return `<div class="bars">${items.map(i => `<div class="bar${i.cls ? ' ' + i.cls : ''}" title="${esc(i.title || i.t)}"><span class="t">${i.html || esc(i.t)}</span><span class="track"><span class="fill" style="width:${Math.max(0, Math.min(100, 100*Math.abs(i.v)/m))}%;background:${i.color || color || 'var(--accent)'}"></span></span><span class="v">${i.vt ?? fmtV(i.v)}</span></div>`).join('')}</div>`;
+}
+const docOpt = (d,i) => ({v:i, t:`D${i+1} · ${M.labs[i]} — ${short(d.text, 48)}`});
+function fillSelect(el, items, value){
+  el.innerHTML = items.map(o => `<option value="${esc(o.v)}">${esc(o.t)}</option>`).join('');
+  if (items.some(o => String(o.v) === String(value))) el.value = String(value); else if (items.length) el.value = String(items[0].v);
+  return el.value;
+}
+const heatBg = (frac) => `color-mix(in srgb, var(--accent) ${Math.round(Math.max(0, Math.min(1, frac))*100)}%, var(--surface))`;
+const heatFg = (frac) => frac > .55 ? 'var(--on-accent)' : 'var(--fg)';
+function freqTop(tokLists, n){ const m = new Map(); tokLists.forEach(l => l.forEach(t => m.set(t, (m.get(t) || 0) + 1))); return [...m.entries()].sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt')).slice(0, n); }
+
+function renderStatus(){
+  $('#status').textContent = `${M.N} documentos · ${M.labels.length} classes · vocabulário ${M.V} termos`;
+}
+
+/* 1 corpus */
+function renderDocList(){
+  $('#docList').innerHTML = docs.map((d,i) => `<div class="doc-row">
+    <span class="doc-id">D${i+1}</span>
+    <input type="text" class="doc-label" id="lab-${i}" data-i="${i}" list="labelList" value="${esc(d.label)}" aria-label="Rótulo do D${i+1}">
+    <textarea id="txt-${i}" data-i="${i}" rows="2" aria-label="Texto do D${i+1}">${esc(d.text)}</textarea>
+    <button class="icon-btn del" data-i="${i}" aria-label="Remover D${i+1}" title="Remover">×</button>
+  </div>`).join('') || '<div class="empty">Corpus vazio. Adicione documentos ou restaure o exemplo.</div>';
+}
+function renderCorpus(){
+  $('#labelList').innerHTML = M.labels.map(l => `<option value="${esc(l)}">`).join('');
+  const rawTok = M.P.map(p => p.trace[0].tokens.length);
+  const cnt = M.labels.map(l => ({t:l, html:`${dotHtml(l)} ${esc(l)}`, v:M.labs.filter(x => x === l).length, color:labelColor(l), vt:String(M.labs.filter(x => x === l).length)}));
+  $('#corpusStats').innerHTML = `<div class="kv">
+      <div><b>${M.N}</b><span>documentos</span></div>
+      <div><b>${M.labels.length}</b><span>classes</span></div>
+      <div><b>${sum(rawTok)}</b><span>tokens brutos</span></div>
+      <div><b>${M.N ? fmt(sum(rawTok)/M.N, 1) : '–'}</b><span>tokens por documento</span></div>
+    </div>
+    <span class="lbl">Documentos por classe</span>${bars(cnt)}`;
+  document.querySelectorAll('.doc-row').forEach((row, i) => { const id = row.querySelector('.doc-id'); if (id && M.labs[i]) id.innerHTML = `${dotHtml(M.labs[i])}D${i+1}`; });
+}
+
+/* 2 pré-processamento */
+function renderPre(){
+  if (!M.N){ $('#trace').innerHTML = '<div class="empty">Sem documentos.</div>'; $('#funnel').innerHTML = $('#topCompare').innerHTML = ''; return; }
+  ui.preDoc = +fillSelect($('#preDoc'), docs.map(docOpt), ui.preDoc);
+  const p = M.P[ui.preDoc];
+  const chip = t => `<span class="tok">${esc(t)}</span>`;
+  let html = `<div class="stepcard"><div class="sc-head"><span class="sc-n">0</span><strong>Tokenização por espaços</strong><span class="sc-count">${p.trace[0].tokens.length} tokens</span></div><p class="sc-desc">O texto é dividido onde há espaços. Repare na pontuação ainda colada às palavras.</p><div class="toks">${p.trace[0].tokens.map(chip).join('') || '<span class="muted">texto vazio</span>'}</div></div>`;
+  M.steps.forEach((s, i) => {
+    const e = p.trace[i+1], before = p.trace[i].tokens.length, after = e.tokens.length;
+    let body;
+    if (e.off) body = '<p class="sc-desc">Etapa desligada: os tokens passam sem alteração.</p>';
+    else {
+      let nCh = 0, nRm = 0;
+      const chips = e.prev.map((t,j) => { const r = e.res[j]; if (r === null || r === ''){ nRm++; return `<span class="tok rm">${esc(t)}</span>`; } if (r !== t){ nCh++; return `<span class="tok ch" title="${esc(t)} → ${esc(r)}">${esc(r)}<small>${esc(t)}</small></span>`; } return chip(t); }).join('');
+      body = `<p class="sc-desc">${esc(s.desc)} <b>${nCh}</b> alterados, <b>${nRm}</b> removidos.</p><div class="toks">${chips || '<span class="muted">nenhum token</span>'}</div>`;
+    }
+    html += `<div class="stepcard${e.off ? ' off' : ''}"><div class="sc-head"><span class="sc-n">${i+1}</span><strong>${esc(s.name)}</strong><span class="pill${e.off ? '' : ' on'}">${e.off ? 'desligada' : 'ligada'}</span><span class="sc-count">${before} → ${after} tokens</span></div>${body}</div>`;
+  });
+  html += `<div class="stepcard" style="border-color:var(--accent)"><div class="sc-head"><strong>Resultado final</strong><span class="sc-count">${p.tokens.length} tokens</span></div><div class="toks">${p.tokens.map(chip).join('') || '<span class="muted">nenhum token restou</span>'}</div></div>`;
+  $('#trace').innerHTML = html;
+
+  const names = ['Texto bruto', ...M.steps.map(s => s.name)];
+  const offs = [false, ...M.steps.map(s => !s.on)];
+  const vMax = Math.max(...M.stepStats.map(s => s.vocab), 1), tMax = Math.max(...M.stepStats.map(s => s.tokens), 1);
+  $('#funnel').innerHTML = `<div><span class="lbl">Vocabulário (termos distintos)</span>${bars(M.stepStats.map((s,i) => ({t:`${i}. ${names[i]}`, v:s.vocab, vt:String(s.vocab), cls:offs[i] ? 'dim' : ''})), {max:vMax})}</div>
+    <div><span class="lbl">Total de tokens</span>${bars(M.stepStats.map((s,i) => ({t:`${i}. ${names[i]}`, v:s.tokens, vt:String(s.tokens), cls:offs[i] ? 'dim' : '', color:'var(--c1)'})), {max:tMax})}</div>`;
+  const first = M.stepStats[0], last = M.stepStats[M.stepStats.length - 1];
+  $('#funnel').insertAdjacentHTML('beforeend', `<p class="note" style="grid-column:1/-1">Redução total: vocabulário ${first.vocab} → ${last.vocab} (${first.vocab ? pct(1 - last.vocab/first.vocab) : '–'} menor); tokens ${first.tokens} → ${last.tokens}.</p>`);
+
+  const rawTop = freqTop(M.P.map(p => p.trace[0].tokens), 12), procTop = freqTop(M.P.map(p => p.tokens), 12);
+  $('#topCompare').innerHTML = `<div><span class="lbl">Texto bruto</span>${bars(rawTop.map(([t,v]) => ({t, v, vt:String(v), color:'var(--c2)'})))}</div>
+    <div><span class="lbl">Depois do pipeline</span>${bars(procTop.map(([t,v]) => ({t, v, vt:String(v)})))}</div>`;
+}
+
+/* 3 vetorização */
+function renderVec(){
+  const {N, V, vocab, counts, tf, tfidf, tfidfRaw, df, idf} = M;
+  document.querySelectorAll('#heatMode button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === ui.heatMode)));
+  const zeros = sum(counts.map(r => r.filter(v => v === 0).length));
+  $('#sparsity').innerHTML = `<div class="kv"><div><b>${V}</b><span>dimensões (termos)</span></div><div><b>${N*V ? pct(zeros/(N*V)) : '–'}</b><span>células zeradas</span></div></div>`;
+  if (!N || !V){ $('#heat').innerHTML = '<div class="empty">Vocabulário vazio com as configurações atuais.</div>'; $('#worked').innerHTML = $('#docTop').innerHTML = $('#idf').innerHTML = ''; $('#heatCaption').textContent = ''; return; }
+  const nCols = Math.max(4, Math.min(ui.heatN, V));
+  let cols = [...Array(V).keys()];
+  if (ui.heatOrder === 'tfidf'){ const s = cols.map(j => sum(tfidf.map(r => r[j]))); cols.sort((a,b) => s[b] - s[a]); }
+  cols = cols.slice(0, nCols);
+  if (ui.cell && !cols.includes(ui.cell[1])) cols[cols.length - 1] = ui.cell[1];
+  const mat = ui.heatMode === 'bin' ? counts.map(r => r.map(v => v > 0 ? 1 : 0)) : ui.heatMode === 'bow' ? counts : ui.heatMode === 'tf' ? tf : tfidf;
+  const mx = Math.max(...cols.flatMap(j => mat.map(r => r[j])), 1e-9);
+  const sel = ui.cell || [0, cols[0]];
+  $('#heatCaption').textContent = `Mostrando ${cols.length} de ${V} termos. Valores: ${ui.heatMode === 'bin' ? 'presença (1) ou ausência (0) do termo, sem contar repetições' : ui.heatMode === 'bow' ? 'contagem de ocorrências' : ui.heatMode === 'tf' ? 'contagem ÷ número de tokens do documento' : 'TF × IDF, normalizado por L2 em cada documento'}.`;
+  $('#heat').innerHTML = `<table class="heat"><thead><tr><th></th>${cols.map(j => `<th title="${esc(vocab[j])} (df=${df[j]})">${esc(vocab[j])}</th>`).join('')}</tr></thead><tbody>${counts.map((_, d) => `<tr><th>${dotHtml(M.labs[d])} D${d+1}</th>${cols.map(j => { const v = mat[d][j], f = v/mx; return `<td class="${sel[0] === d && sel[1] === j ? 'sel' : ''}" style="background:${heatBg(f)};color:${heatFg(f)}"><button data-d="${d}" data-j="${j}" aria-label="D${d+1}, ${esc(vocab[j])}: ${fmt(v)}">${v === 0 ? '·' : (ui.heatMode === 'bow' || ui.heatMode === 'bin') ? v : fmt(v)}</button></td>`; }).join('')}</tr>`).join('')}</tbody></table>`;
+
+  const [d, j] = sel; const c = counts[d][j], len = sum(counts[d]), n2 = norm(tfidfRaw[d]);
+  $('#worked').innerHTML = `<p>Termo <b class="mono">${esc(vocab[j])}</b> no documento <b>D${d+1}</b></p>
+    <p class="docquote">${esc(docs[d].text)}</p>
+    <dl class="formula">
+      <dt>contagem (BoW)</dt><dd>${c}</dd>
+      <dt>TF relativo</dt><dd>${c} / ${len} = ${fmt(len ? c/len : 0, 3)}</dd>
+      <dt>df</dt><dd>${df[j]} de N = ${N} documentos</dd>
+      <dt>idf</dt><dd>ln((1 + ${N}) / (1 + ${df[j]})) + 1 = ${fmt(idf[j], 3)}</dd>
+      <dt>peso bruto</dt><dd>${c} × ${fmt(idf[j], 3)} = ${fmt(c*idf[j], 3)}</dd>
+      <dt>norma L2 de D${d+1}</dt><dd>${fmt(n2, 3)}</dd>
+      <dt>TF-IDF final</dt><dd class="res">${fmt(c*idf[j], 3)} / ${fmt(n2, 3)} = ${fmt(tfidf[d][j], 3)}</dd>
+    </dl>
+    <p class="note">Convenção do scikit-learn (idf suavizado, contagem bruta e normalização L2). Outras bibliotecas usam variantes, mas a ideia é a mesma: frequente no documento e raro no corpus significa peso alto.</p>`;
+
+  ui.vecDoc = +fillSelect($('#vecDoc'), docs.map(docOpt), ui.vecDoc);
+  const vd = ui.vecDoc;
+  const topBy = (row) => [...Array(V).keys()].filter(j => row[j] > 0).sort((a,b) => row[b] - row[a]).slice(0, 7);
+  $('#docTop').innerHTML = `<div><span class="lbl">BoW (contagem)</span>${bars(topBy(counts[vd]).map(j => ({t:vocab[j], v:counts[vd][j], vt:String(counts[vd][j]), color:'var(--c2)'})))}</div>
+    <div><span class="lbl">TF-IDF</span>${bars(topBy(tfidf[vd]).map(j => ({t:vocab[j], v:tfidf[vd][j]})))}</div>`;
+
+  const order = [...Array(V).keys()].sort((a,b) => idf[a] - idf[b] || vocab[a].localeCompare(vocab[b], 'pt'));
+  const im = Math.max(...idf);
+  $('#idf').innerHTML = `<div><span class="lbl">Mais comuns (idf baixo)</span>${bars(order.slice(0, 10).map(j => ({t:`${vocab[j]} · df ${df[j]}`, v:idf[j], color:'var(--c2)'})), {max:im})}</div>
+    <div><span class="lbl">Mais raros (idf alto)</span>${bars(order.slice(-10).reverse().map(j => ({t:`${vocab[j]} · df ${df[j]}`, v:idf[j]})), {max:im})}</div>`;
+}
+
+/* 4 embeddings */
+function simTable(S, order){
+  const brk = order.map((i,p) => p > 0 && M.labs[order[p-1]] !== M.labs[i]);
+  return `<table class="sim"><thead><tr><th></th>${order.map((i,p) => `<th class="${brk[p] ? 'bl' : ''}">${dotHtml(M.labs[i])}</th>`).join('')}</tr></thead><tbody>${order.map((i,p) => `<tr class="${brk[p] ? 'bt' : ''}"><th>${dotHtml(M.labs[i])}</th>${order.map((j,q) => { const v = S[i][j]; return `<td class="${brk[q] ? 'bl' : ''}" style="background:${heatBg(Math.max(0, v))}" title="D${i+1} × D${j+1}: ${fmt(v)}"></td>`; }).join('')}</tr>`).join('')}</tbody></table>`;
+}
+function neighbors(vecs, words, w, n=8){
+  const i = words.indexOf(w); if (i < 0) return null;
+  const v = vecs[i]; if (!v || norm(v) === 0) return [];
+  return words.map((t,j) => [t, j === i ? -Infinity : dot(l2(v), l2(vecs[j]))]).sort((a,b) => b[1] - a[1]).slice(0, n).filter(x => Number.isFinite(x[1]));
+}
+function renderEmb(){
+  const {N, sims, sep, labs, lsa} = M;
+  if (N < 2){ $('#simgrid').innerHTML = '<div class="empty">São necessários ao menos 2 documentos.</div>'; return; }
+  const order = [...Array(N).keys()].sort((a,b) => M.labels.indexOf(labs[a]) - M.labels.indexOf(labs[b]) || a - b);
+  const bestR = REPS.reduce((a,b) => (sep[b] > sep[a] ? b : a));
+  const dims = {bow:M.V, tfidf:M.V, lsa:lsa.k, wemb:M.wordVec[0] ? M.wordVec[0].length : 0};
+  $('#simgrid').innerHTML = REPS.map(r => `<div><strong>${REP_NAME[r]}</strong><span class="note">${dims[r]} dimensões · ${r === 'bow' || r === 'tfidf' ? 'esparso' : 'denso'}</span><div class="scroll">${simTable(sims[r], order)}</div><span class="score" style="color:${r === bestR ? 'var(--accent-ink)' : 'var(--fg)'}">Separação ${fmt(sep[r])}${r === bestR ? ' · melhor' : ''}</span></div>`).join('');
+  $('#simLegend').innerHTML = M.labels.map(l => `<span>${dotHtml(l)}${esc(l)}</span>`).join('') + `<span>cor da célula: <span class="dot" style="background:${heatBg(0)};border:1px solid var(--line)"></span> 0 → <span class="dot" style="background:${heatBg(1)}"></span> 1</span>`;
+
+  // temas latentes
+  $('#lsaDims').textContent = `Neste corpus: ${M.V} dimensões (uma por termo) → ${lsa.k} dimensões.`;
+  const themeRows = [];
+  for (let c = 0; c < lsa.k; c++){
+    const col = M.vocab.map((t,j) => [t, lsa.termEmb[j][c]]);
+    const pos = col.filter(x => x[1] > 1e-9).sort((a,b) => b[1] - a[1]).slice(0, 7).map(x => x[0]);
+    const neg = col.filter(x => x[1] < -1e-9).sort((a,b) => a[1] - b[1]).slice(0, 5).map(x => x[0]);
+    themeRows.push(`<tr><td class="n">${c+1}</td><td class="n">${pct(lsa.ratio[c])}</td><td>${pos.map(t => `<span class="tok">${esc(t)}</span>`).join(' ') || '–'}</td><td>${neg.map(t => `<span class="tok">${esc(t)}</span>`).join(' ') || '–'}</td></tr>`);
+  }
+  $('#themes').innerHTML = themeRows.length ? `<table class="conf themes"><thead><tr><th>Tema</th><th>Variância</th><th>Polo + (palavras de maior peso)</th><th>Polo −</th></tr></thead><tbody>${themeRows.join('')}</tbody></table>` : '<div class="empty">Sem dados.</div>';
+
+  // vizinhos
+  $('#vocabList').innerHTML = M.wv.slice(0, 400).map(w => `<option value="${esc(w)}">`).join('');
+  const raw = (ui.nbWord || '').trim();
+  const q = runPipeline(raw, M.steps).tokens[0] || raw;
+  const nl = neighbors(lsa.termEmb, M.vocab, q), nw = neighbors(M.wordVec, M.wv, q);
+  const block = (title, res, color) => `<div><span class="lbl">${title}</span>${res === null ? `<div class="empty">“${esc(q)}” não está no vocabulário.</div>` : res.length ? bars(res.map(([t,v]) => ({t, v, color})), {max:1}) : '<div class="empty">Palavra sem contexto suficiente.</div>'}</div>`;
+  $('#neighbors').innerHTML = (raw ? `<p class="note" style="grid-column:1/-1">Termo após o pipeline: <span class="tok">${esc(q)}</span></p>` : '') + block('LSA (termos)', nl) + block('PPMI-SVD (palavras)', nw, 'var(--c1)');
+
+  // par
+  ui.pairA = +fillSelect($('#pairA'), docs.map(docOpt), ui.pairA);
+  ui.pairB = +fillSelect($('#pairB'), docs.map(docOpt), ui.pairB);
+  const a = ui.pairA, b = ui.pairB;
+  const common = [...new Set(M.P[a].tokens)].filter(t => M.P[b].tokens.includes(t));
+  $('#pair').innerHTML = `<p class="docquote">${dotHtml(labs[a])} <b>D${a+1}</b> ${esc(docs[a].text)}</p><p class="docquote">${dotHtml(labs[b])} <b>D${b+1}</b> ${esc(docs[b].text)}</p>
+    ${bars(REPS.map(r => ({t:REP_SHORT[r], v:sims[r][a][b]})), {max:1})}
+    <p class="note">Termos em comum após o pipeline: ${common.length ? common.map(t => `<span class="tok">${esc(t)}</span>`).join(' ') : 'nenhum'}. Sem termos em comum, BoW e TF-IDF dão similaridade zero.</p>`;
+
+  $('#variance').innerHTML = lsa.ratio.length ? bars(lsa.ratio.map((v,i) => ({t:`dimensão ${i+1}`, v, vt:pct(v), cls:i < lsa.k ? 'best' : 'dim'})), {max:Math.max(...lsa.ratio)}) + `<p class="note">As ${lsa.k} dimensões usadas explicam ${pct(sum(lsa.ratio.slice(0, lsa.k)))} da variância.</p>` : '<div class="empty">Sem dados.</div>';
+}
+
+/* 5 aplicações */
+function renderApps(){
+  const {N, labs, labels} = M;
+  const repOpts = REPS.map(r => ({v:r, t:REP_NAME[r]}));
+  ui.mapRep = fillSelect($('#mapRep'), repOpts, ui.mapRep);
+  ui.kmRep = fillSelect($('#kmRep'), repOpts, ui.kmRep);
+  $('#mapLegend').innerHTML = labels.map(l => `<span>${dotHtml(l)}${esc(l)}</span>`).join('');
+
+  // mapa
+  const pc = pca2(M.reps[ui.mapRep].map(l2));
+  if (!pc){ $('#map').innerHTML = '<div class="empty">Dados insuficientes para projetar.</div>'; $('#mapCaption').textContent = ''; }
+  else {
+    const W = 640, H = 380, m = 34;
+    const xs = pc.pts.map(p => p[0]), ys = pc.pts.map(p => p[1]);
+    const [x0, x1] = [Math.min(...xs), Math.max(...xs)], [y0, y1] = [Math.min(...ys), Math.max(...ys)];
+    const sx = v => x1 - x0 < 1e-12 ? W/2 : m + (v - x0)/(x1 - x0)*(W - 2*m);
+    const sy = v => y1 - y0 < 1e-12 ? H/2 : H - m - (v - y0)/(y1 - y0)*(H - 2*m);
+    $('#map').innerHTML = `<div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:100%;display:block" role="img" aria-label="Projeção 2D dos documentos">
+      <rect x="0" y="0" width="${W}" height="${H}" fill="var(--bg)" rx="8"></rect>
+      <line x1="${m}" y1="${H-m+10}" x2="${W-m}" y2="${H-m+10}" stroke="var(--line)"></line><line x1="${m-10}" y1="${m}" x2="${m-10}" y2="${H-m}" stroke="var(--line)"></line>
+      <text x="${W-m}" y="${H-8}" text-anchor="end" font-size="11" fill="var(--muted)">componente 1 (${pct(pc.ratio[0])})</text>
+      <text x="12" y="${m-12}" font-size="11" fill="var(--muted)">componente 2 (${pct(pc.ratio[1])})</text>
+      ${pc.pts.map((p,i) => `<g><title>D${i+1} · ${esc(labs[i])}: ${esc(docs[i].text)}</title><circle cx="${sx(p[0]).toFixed(1)}" cy="${sy(p[1]).toFixed(1)}" r="8" fill="${labelColor(labs[i])}" stroke="var(--surface)" stroke-width="2"></circle><text x="${(sx(p[0])+11).toFixed(1)}" y="${(sy(p[1])+4).toFixed(1)}" font-size="11" fill="var(--fg)">D${i+1}</text></g>`).join('')}
+    </svg></div>`;
+    $('#mapCaption').textContent = `Os dois primeiros componentes explicam ${pct(pc.ratio[0] + pc.ratio[1])} da variância desta representação.`;
+  }
+
+  // busca
+  if (N){
+    const q = queryVectors(ui.query || '');
+    $('#queryInfo').innerHTML = `Consulta processada: ${q.tokens.length ? q.tokens.map(t => `<span class="tok">${esc(t)}</span>`).join(' ') : '<i>vazia</i>'}${q.oov.length ? ` · fora do vocabulário: ${q.oov.map(esc).join(', ')}` : ''}`;
+    $('#search').innerHTML = REPS.map(r => {
+      const qv = l2(q.vecs[r]);
+      const sc = M.reps[r].map((row, i) => [i, dot(qv, l2(row))]).sort((a,b) => b[1] - a[1]).slice(0, 4);
+      return `<div><span class="lbl">${REP_SHORT[r]}</span><div class="results">${sc.map(([i,s]) => `<div class="res-item"><span class="mono">${dotHtml(labs[i])} D${i+1}</span><span class="txt" title="${esc(docs[i].text)}">${esc(docs[i].text)}</span><span class="sc">${s > 1e-9 ? fmt(s) : '0'}</span></div>`).join('')}</div></div>`;
+    }).join('');
+  } else { $('#search').innerHTML = ''; $('#queryInfo').textContent = ''; }
+
+  // agrupamento
+  const a = M.km[ui.kmRep];
+  if (a){
+    const k = Math.max(...a) + 1;
+    $('#clusters').innerHTML = [...Array(k).keys()].map(c => { const mem = a.map((x,i) => x === c ? i : -1).filter(i => i >= 0); return `<div class="cluster"><h4>Grupo ${c+1} · ${mem.length} docs</h4>${mem.map(i => `<div>${dotHtml(labs[i])}<span class="mono">D${i+1}</span><span>${esc(docs[i].text)}</span></div>`).join('')}</div>`; }).join('');
+    const best = REPS.reduce((x,y) => M.purity[y] > M.purity[x] ? y : x);
+    $('#purity').innerHTML = bars(REPS.map(r => ({t:REP_SHORT[r], v:M.purity[r], vt:pct(M.purity[r]), cls:r === best ? 'best' : ''})), {max:1});
+  } else { $('#clusters').innerHTML = '<div class="empty">São necessários ao menos 2 documentos.</div>'; $('#purity').innerHTML = ''; }
+
+  // classificação
+  const keys = Object.keys(M.pred);
+  if (keys.length){
+    const best = keys.reduce((x,y) => M.acc[y] > M.acc[x] ? y : x);
+    $('#accuracy').innerHTML = bars(keys.map(kk => ({t:CLS_NAME(kk), v:M.acc[kk], vt:pct(M.acc[kk]), cls:kk === best ? 'best' : '', color:kk.startsWith('nb') ? 'var(--c2)' : 'var(--accent)'})), {max:1});
+    const maj = Math.max(...labels.map(l => labs.filter(x => x === l).length))/N;
+    $('#baseline').textContent = `Referência: chutar sempre a classe mais frequente acerta ${pct(maj)}. Com ${N} documentos, cada erro custa ${pct(1/N)} de acurácia.`;
+    ui.cls = fillSelect($('#clsSel'), keys.map(kk => ({v:kk, t:CLS_NAME(kk)})), ui.cls);
+    const pred = M.pred[ui.cls];
+    const cm = labels.map(t => labels.map(p => labs.filter((x,i) => x === t && pred[i] === p).length));
+    const cmx = Math.max(...cm.flat(), 1);
+    $('#confusion').innerHTML = `<table class="conf"><thead><tr><th>real ↓ · previsto →</th>${labels.map(l => `<th>${dotHtml(l)} ${esc(short(l, 12))}</th>`).join('')}</tr></thead><tbody>${cm.map((r,i) => `<tr><th style="text-align:left">${dotHtml(labels[i])} ${esc(short(labels[i], 14))}</th>${r.map((v,j) => `<td style="background:${v ? (i === j ? heatBg(v/cmx) : `color-mix(in srgb, var(--removed) ${Math.round(25 + 50*v/cmx)}%, var(--surface))`) : 'transparent'};color:${i === j ? heatFg(v/cmx) : 'var(--fg)'};font-weight:${i === j ? 600 : 400}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    const errs = pred.map((p,i) => p !== labs[i] ? i : -1).filter(i => i >= 0);
+    $('#errors').innerHTML = errs.length ? 'Erros: ' + errs.map(i => `<b>D${i+1}</b> (${esc(labs[i])} → ${esc(pred[i])})`).join(', ') : 'Nenhum erro.';
+  } else { $('#accuracy').innerHTML = '<div class="empty">São necessárias ao menos 2 classes e 3 documentos.</div>'; $('#confusion').innerHTML = $('#errors').innerHTML = $('#baseline').innerHTML = ''; }
+
+  // termos por classe
+  if (M.V){
+    $('#classTerms').innerHTML = labels.map(l => {
+      const mem = M.tfidf.filter((_, i) => labs[i] === l);
+      const mean = M.vocab.map((_, j) => sum(mem.map(r => r[j]))/mem.length);
+      const top = [...mean.keys()].filter(j => mean[j] > 0).sort((x,y) => mean[y] - mean[x]).slice(0, 7);
+      return `<div><span class="lbl" style="display:flex;gap:6px;align-items:center">${dotHtml(l)}${esc(l)}</span>${bars(top.map(j => ({t:M.vocab[j], v:mean[j], color:labelColor(l)})))}</div>`;
+    }).join('');
+  } else $('#classTerms').innerHTML = '<div class="empty">Vocabulário vazio.</div>';
+}
+
+/* ---------------- orquestração ---------------- */
+const RENDER = {corpus:renderCorpus, preprocessamento:renderPre, vetorizacao:renderVec, embeddings:renderEmb, aplicacoes:renderApps, atividades:() => {}};
+function pipeSummary(){
+  const on = M.steps.filter(s => s.on).map(s => s.key === 'short' ? `mín. ${opts.minLen} caracteres` : s.name.toLowerCase());
+  return `Pipeline da etapa 2 em uso: ${on.length ? on.join(' → ') : 'nenhuma etapa (texto bruto)'} · ${opts.ngram === 2 ? 'unigramas + bigramas' : 'unigramas'} · min df ${opts.minDf}`;
+}
+function render(){ renderStatus(); document.querySelectorAll('.pipe-note').forEach(e => e.textContent = pipeSummary()); try { RENDER[ui.tab](); } catch(e){ console.error(e); } }
+let timer = null;
+function schedule(full = true){ clearTimeout(timer); timer = setTimeout(() => { if (full) compute(); else computeApps(); render(); }, 180); }
+function setTab(t){
+  if (!RENDER[t]) t = 'corpus';
+  ui.tab = t;
+  document.querySelectorAll('.steps button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
+  document.querySelectorAll('.tab').forEach(s => s.hidden = s.id !== 'tab-' + t);
+  try { history.replaceState(null, '', '#' + t); } catch(e) {}
+  render();
+}
+function syncControls(){
+  document.querySelectorAll('[data-opt]').forEach(el => { const v = opts[el.dataset.opt]; if (el.type === 'checkbox') el.checked = !!v; else el.value = String(v); });
+  ['heatN','kmK','nbWord','query','heatOrder'].forEach(k => { const el = document.querySelector(`[data-ui="${k}"]`); if (el) el.value = String(ui[k]); });
+}
+
+// navegação
+document.querySelectorAll('.steps button').forEach(b => b.addEventListener('click', () => { setTab(b.dataset.tab); window.scrollTo({top:0}); }));
+
+// corpus
+$('#docList').addEventListener('input', e => {
+  const i = +e.target.dataset.i; if (!docs[i]) return;
+  if (e.target.tagName === 'TEXTAREA') docs[i].text = e.target.value; else docs[i].label = e.target.value;
+  ui.cell = null; save(); schedule();
+});
+$('#docList').addEventListener('click', e => {
+  const b = e.target.closest('.del'); if (!b) return;
+  docs.splice(+b.dataset.i, 1); ui.cell = null; save(); renderDocList(); compute(); render();
+});
+$('#addDoc').addEventListener('click', () => {
+  docs.push({label: M.labels[0] && M.labels[0] !== '(sem rótulo)' ? M.labels[0] : '', text:''});
+  save(); renderDocList(); compute(); render();
+  const t = document.getElementById('txt-' + (docs.length - 1)); if (t) t.focus();
+});
+$('#resetDocs').addEventListener('click', () => { docs = SAMPLE.map(d => ({...d})); opts = {...DEFAULT_OPTS}; ui.cell = null; save(); syncControls(); renderDocList(); compute(); render(); });
+$('#toggleBulk').addEventListener('click', e => { const box = $('#bulkBox'); box.hidden = !box.hidden; e.currentTarget.setAttribute('aria-expanded', String(!box.hidden)); });
+function bulk(replace){
+  const lines = $('#bulkText').value.split('\n').map(l => l.trim()).filter(Boolean);
+  const parsed = lines.map(l => { const k = l.indexOf('|'); return k >= 0 ? {label:l.slice(0,k).trim(), text:l.slice(k+1).trim()} : {label:'', text:l}; }).filter(d => d.text);
+  if (!parsed.length){ $('#bulkMsg').textContent = 'Nenhuma linha válida encontrada.'; return; }
+  docs = replace ? parsed : docs.concat(parsed); ui.cell = null;
+  $('#bulkMsg').textContent = `${parsed.length} documento(s) ${replace ? 'carregados' : 'acrescentados'}.`;
+  save(); renderDocList(); compute(); render();
+}
+$('#bulkAppend').addEventListener('click', () => bulk(false));
+$('#bulkReplace').addEventListener('click', () => bulk(true));
+
+// opções
+document.querySelectorAll('[data-opt]').forEach(el => el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', () => {
+  const k = el.dataset.opt;
+  if (el.type === 'checkbox') opts[k] = el.checked;
+  else if (el.type === 'number'){ const v = parseInt(el.value, 10); if (!Number.isFinite(v)) return; opts[k] = Math.max(+el.min || 1, Math.min(+el.max || 99, v)); }
+  else opts[k] = k === 'ngram' ? +el.value : el.value;
+  ui.cell = null; save(); schedule();
+}));
+document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => {
+  const p = b.dataset.preset;
+  Object.assign(opts, p === 'none' ? {lower:false, accents:false, nums:false, punct:false, stop:false, minLen:1, stem:'none'}
+    : p === 'basic' ? {lower:true, accents:false, nums:true, punct:true, stop:true, minLen:2, stem:'none'}
+    : {lower:true, accents:true, nums:true, punct:true, stop:true, minLen:3, stem:'light'});
+  ui.cell = null; save(); syncControls(); compute(); render();
+}));
+
+// controles de interface
+document.querySelectorAll('[data-ui]').forEach(el => el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', () => {
+  const k = el.dataset.ui;
+  if (el.type === 'number'){ const v = parseInt(el.value, 10); if (!Number.isFinite(v)) return; ui[k] = Math.max(+el.min, Math.min(+el.max, v)); }
+  else if (['preDoc','vecDoc','pairA','pairB'].includes(k)) ui[k] = +el.value;
+  else ui[k] = el.value;
+  if (k === 'kmK') schedule(false);
+  else if (el.type === 'text' || el.type === 'number') schedule(false);
+  else render();
+}));
+$('#heatMode').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; ui.heatMode = b.dataset.mode; render(); });
+$('#heat').addEventListener('click', e => { const b = e.target.closest('button[data-d]'); if (!b) return; ui.cell = [+b.dataset.d, +b.dataset.j]; ui.vecDoc = +b.dataset.d; render(); });
+
+$('#pairSuggest').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const a = +b.dataset.a, c = +b.dataset.b; if (a >= docs.length || c >= docs.length) return; ui.pairA = a; ui.pairB = c; render(); });
+$('#querySuggest').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; ui.query = b.dataset.q; $('#query').value = ui.query; render(); });
+document.addEventListener('click', e => { const b = e.target.closest('[data-goto]'); if (!b) return; setTab(b.dataset.goto); window.scrollTo({top:0}); });
+
+// início
+syncControls();
+renderDocList();
+compute();
+const h = (location.hash || '').slice(1);
+setTab(RENDER[h] ? h : 'corpus');
+})();
+</script>
+
+</body></html>
