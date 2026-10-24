@@ -177,6 +177,62 @@ table.themes td.n{text-align:right;font-family:var(--font-mono)}
 .guided ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:5px;font-size:.88rem}
 .linkbtn{all:unset;cursor:pointer;color:var(--accent-ink);font:600 .82rem var(--font-body);text-decoration:underline;text-underline-offset:3px}
 .linkbtn:focus-visible{outline:2px solid var(--accent)}
+.subnav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;scroll-margin-top:140px}
+.subnav button{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font:500 .88rem var(--font-body);padding:8px 12px;border-radius:8px;cursor:pointer}
+.subnav button .n{font:600 .72rem var(--font-mono)}
+.subnav button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.app-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:900px){.app-grid{grid-template-columns:minmax(0,1fr)}}
+.app-guide .eyebrow{font:600 .72rem var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.app-guide h3{font-size:1.25rem}
+.blk{display:flex;flex-direction:column;gap:5px;font-size:.9rem}
+.exp{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+.exp .lbl{color:var(--accent-ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.app-pager{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-top:20px}
+.app-pager .btn:disabled{opacity:.4;cursor:default}
+.callout{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:10px 12px;font-size:.88rem;background:var(--bg);display:flex;flex-direction:column;gap:6px}
+.callout.warn{border-left-color:var(--c2)}
+.star-key{font-size:1rem;line-height:1}
+mark{background:var(--mark);color:var(--mark-ink);border-radius:3px;padding:0 2px}
+.res-item .txt.full{display:block;-webkit-line-clamp:unset;overflow:visible}
+.cluster.mine{border-color:var(--fg);border-width:2px}
+.cl-names{display:flex;flex-wrap:wrap;gap:4px}
+.cls-table{border-collapse:collapse;font-size:.85rem;width:100%}
+.cls-table th,.cls-table td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.cls-table thead th{font:600 .72rem var(--font-mono);text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.cls-table tbody th{font-weight:500;white-space:nowrap}
+.cls-tag{display:inline-block;font-weight:600;padding:1px 8px;border-radius:99px;background:color-mix(in srgb,var(--c) 18%,var(--surface));border:1px solid var(--c)}
+.nbref{display:inline-flex;align-items:center;gap:4px;margin-right:8px;font:.8rem var(--font-mono);white-space:nowrap}
+.tok.vote{border-color:var(--c,var(--line));background:color-mix(in srgb,var(--c,var(--surface-2)) 16%,var(--surface));flex-direction:row;gap:4px;align-items:baseline}
+.tok.vote small{text-decoration:none;opacity:.8}
+.tok.vote.none{opacity:.55;border-style:dashed}
+.tag-new{font:600 .62rem var(--font-mono);text-transform:uppercase;letter-spacing:.05em;padding:0 5px;border-radius:99px;background:color-mix(in srgb,var(--c4) 22%,var(--surface));color:var(--fg);vertical-align:1px}
+.rots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
+.rot{gap:10px}
+.rot-head{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rot .code{font:600 .75rem var(--font-mono);color:var(--accent-ink);letter-spacing:.06em;margin-right:4px}
+.rot h3{font-size:1.2rem}
+.rot .q{font-family:var(--font-display);font-size:1.02rem;font-style:italic;color:var(--fg)}
+.rot>p{font-size:.9rem}
+.rot details summary{cursor:pointer;font:500 .88rem var(--font-body);color:var(--accent-ink)}
+.rot-steps{margin:10px 0 0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;font-size:.88rem}
+.reflect{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.reflect ul{margin:0;padding-left:1.15em;display:flex;flex-direction:column;gap:4px;font-size:.88rem}
+.gloss{display:grid;grid-template-columns:minmax(0,10em) minmax(0,1fr);gap:6px 14px;margin:0;font-size:.86rem}
+.gloss dt{font-weight:600}
+.gloss dd{margin:0;color:var(--muted)}
+@media (max-width:520px){.gloss{grid-template-columns:minmax(0,1fr)}.gloss dd{margin-bottom:6px}}
+.guidebar{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:2px solid var(--accent);box-shadow:0 -8px 24px color-mix(in srgb,var(--fg) 14%,transparent);padding-bottom:env(safe-area-inset-bottom,0px);max-height:48vh;overflow-y:auto}
+.guide-in{max-width:1220px;margin:0 auto;padding-block:12px 14px;display:flex;flex-direction:column;gap:6px}
+.g-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.g-top .lbl{color:var(--accent-ink)}
+#gTitle{font-family:var(--font-display);font-size:1.05rem}
+#gText,#gObs{font-size:.9rem;max-width:95ch}
+.g-obs{background:color-mix(in srgb,var(--accent) 8%,var(--surface));border-radius:6px;padding:6px 10px}
+.btn:disabled{opacity:.4;cursor:default}
+.panel{scroll-margin-top:150px}
+.flash{outline:3px solid var(--accent);outline-offset:4px;transition:outline-color .6s}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -193,7 +249,7 @@ table.themes td.n{text-align:right;font-family:var(--font-mono)}
       <button role="tab" data-tab="vetorizacao"><span class="n">3</span>Vetorização (BoW · TF-IDF)</button><span class="arrow" aria-hidden="true">›</span>
       <button role="tab" data-tab="embeddings"><span class="n">4</span>Embeddings</button><span class="arrow" aria-hidden="true">›</span>
       <button role="tab" data-tab="aplicacoes"><span class="n">5</span>Aplicações</button><span class="arrow" aria-hidden="true">›</span>
-      <button role="tab" data-tab="atividades"><span class="n">6</span>Atividades</button>
+      <button role="tab" data-tab="roteiros"><span class="n">6</span>Roteiros</button>
     </nav>
   </div>
 </header>
@@ -411,7 +467,7 @@ table.themes td.n{text-align:right;font-family:var(--font-mono)}
       </div>
       <div class="grid2">
         <div class="panel">
-          <div class="panel-head"><h3>Vizinhos de uma palavra</h3><p>No BoW/TF-IDF toda palavra é ortogonal às outras (similaridade 0). Em embeddings, palavras de contextos parecidos ficam próximas.</p></div>
+          <div class="panel-head"><h3>Vizinhos de uma palavra</h3><p>No BoW e no TF-IDF cada palavra é independente das outras. Aqui, palavras usadas em contextos parecidos ficam próximas. São três visões: <b>LSA</b> (palavras que aparecem nos mesmos documentos), <b>Contextos</b> (palavras que têm os mesmos vizinhos dentro da janela) e <b>PPMI-SVD</b> (esses mesmos contextos comprimidos em poucas dimensões, como num embedding).</p></div>
           <div class="ctl"><label for="nbWord">Palavra</label><input type="text" id="nbWord" data-ui="nbWord" list="vocabList" autocomplete="off"></div>
           <datalist id="vocabList"></datalist>
           <div class="cols" id="neighbors"></div>
@@ -443,283 +499,285 @@ table.themes td.n{text-align:right;font-family:var(--font-mono)}
 <section class="tab" id="tab-aplicacoes" role="tabpanel" hidden>
   <div class="sec-head">
     <span class="eyebrow">Etapa 5 de 6</span>
-    <h2>Aplicações: visualizar, agrupar, classificar e buscar</h2>
-    <p>As mesmas quatro representações alimentam tarefas clássicas. Mude o pré-processamento na etapa 2 e volte aqui para ver o efeito no resultado final.</p>
+    <h2>Aplicações: o que se faz com textos transformados em números</h2>
+    <p>São cinco aplicações, apresentadas uma de cada vez. Cada uma explica para que serve e como funciona, e traz um campo para você testar com um texto seu. Todas usam as representações das etapas anteriores: mude o pré-processamento na etapa 2 e volte aqui para ver o efeito.</p>
     <p class="pipe-note"></p>
   </div>
-  <div class="stack">
-    <div class="grid2">
-      <div class="panel">
-        <div class="panel-head">
-          <h3>Mapa 2D dos documentos (PCA)</h3>
-          <select id="mapRep" data-ui="mapRep" aria-label="Representação" style="width:auto"></select>
-          <p id="mapCaption"></p>
+  <nav class="subnav" id="appNav" aria-label="Aplicações">
+    <button data-app="mapa"><span class="n">5.1</span>Mapa de documentos</button>
+    <button data-app="busca"><span class="n">5.2</span>Busca por similaridade</button>
+    <button data-app="agrupamento"><span class="n">5.3</span>Agrupamento</button>
+    <button data-app="classificacao"><span class="n">5.4</span>Classificação</button>
+    <button data-app="palavras"><span class="n">5.5</span>Palavras-chave</button>
+  </nav>
+
+  <!-- 5.1 -->
+  <div class="app" id="app-mapa">
+    <div class="app-grid">
+      <div class="panel app-guide">
+        <span class="eyebrow">Aplicação 5.1</span>
+        <h3>Mapa de documentos</h3>
+        <div class="blk"><span class="lbl">Para que serve</span><p>Ver de relance como os textos do corpus se organizam. Textos parecidos ficam perto uns dos outros; textos diferentes ficam longe.</p></div>
+        <div class="blk"><span class="lbl">Como funciona</span><ol class="howto">
+          <li>Cada texto vira uma lista de números (um vetor) na representação escolhida.</li>
+          <li>Uma técnica chamada PCA reduz as centenas de dimensões a apenas duas, preservando o máximo possível das diferenças entre os textos.</li>
+          <li>Cada ponto do mapa é um documento, colorido pela sua classe.</li>
+        </ol></div>
+        <div class="ctl"><label for="mapRep">Representação</label><select id="mapRep" data-ui="mapRep"></select></div>
+        <div class="exp">
+          <label class="lbl" for="mapText">Experimente: escreva um texto e veja onde ele cai no mapa</label>
+          <textarea id="mapText" data-ui="mapText" rows="3"></textarea>
+          <div class="chips"><span class="note">Exemplos:</span>
+            <button class="btn sm" data-set="mapText" data-val="O goleiro defendeu o pênalti e a torcida comemorou no estádio.">futebol</button>
+            <button class="btn sm" data-set="mapText" data-val="O hospital usa inteligência artificial para analisar exames.">saúde + tecnologia</button>
+            <button class="btn sm" data-set="mapText" data-val="A alta dos juros preocupa as pequenas empresas.">economia</button>
+            <button class="btn sm" data-set="mapText" data-val="Minha avó prepara um bolo de fubá aos domingos.">fora do tema</button>
+          </div>
         </div>
-        <div id="map"></div>
-        <div class="legend" id="mapLegend"></div>
       </div>
       <div class="panel">
-        <div class="panel-head"><h3>Busca por similaridade</h3></div>
-        <ol class="howto">
-          <li>Digite uma frase no campo <b>Consulta</b> ou clique em um dos exemplos.</li>
-          <li>A consulta passa pelo mesmo pré-processamento da etapa 2. Os tokens resultantes aparecem logo abaixo do campo, junto com as palavras que não existem no vocabulário.</li>
-          <li>A consulta vira um vetor em cada representação. Cada coluna lista os 4 documentos mais parecidos, com a similaridade cosseno à direita (0 = nada em comum, 1 = idêntico).</li>
-          <li>Compare as colunas. BoW e TF-IDF só encontram documentos que tenham as mesmas palavras. LSA e vetores de palavras podem trazer documentos do mesmo assunto escritos com outras palavras.</li>
-        </ol>
-        <div class="ctl"><label for="query">Consulta</label><input type="text" id="query" data-ui="query" autocomplete="off"></div>
-        <div class="toolbar" id="querySuggest"><span class="lbl" style="align-self:center">Exemplos</span>
-          <button class="btn sm" data-q="vacina para idosos">vacina para idosos</button>
-          <button class="btn sm" data-q="celular com câmera">celular com câmera</button>
-          <button class="btn sm" data-q="preço dos alimentos">preço dos alimentos</button>
-          <button class="btn sm" data-q="juros altos para empresas">juros altos para empresas</button>
-          <button class="btn sm" data-q="treino">treino</button>
-          <button class="btn sm" data-q="futebol">futebol</button>
+        <div class="panel-head"><h3>Resultado</h3><p id="mapCaption"></p></div>
+        <div id="map"></div>
+        <div class="legend" id="mapLegend"></div>
+        <div id="mapNear"></div>
+        <p class="note">Os eixos não têm unidade nem significado fixo. O que importa são as distâncias entre os pontos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="app" id="app-busca" hidden>
+    <div class="app-grid">
+      <div class="panel app-guide">
+        <span class="eyebrow">Aplicação 5.2</span>
+        <h3>Busca por similaridade</h3>
+        <div class="blk"><span class="lbl">Para que serve</span><p>Encontrar, num conjunto de textos, os mais parecidos com uma pergunta ou frase. É o princípio dos buscadores e dos assistentes que consultam documentos antes de responder.</p></div>
+        <div class="blk"><span class="lbl">Como funciona</span><ol class="howto">
+          <li>A consulta passa pelo mesmo pré-processamento da etapa 2.</li>
+          <li>Ela vira um vetor em cada uma das quatro representações.</li>
+          <li>Cada documento recebe uma nota de similaridade de 0 (nada em comum) a 1 (idêntico).</li>
+          <li>Os 4 documentos de nota mais alta aparecem em cada coluna.</li>
+        </ol></div>
+        <div class="exp">
+          <label class="lbl" for="query">Experimente: escreva uma consulta</label>
+          <input type="text" id="query" data-ui="query" autocomplete="off">
+          <div class="chips"><span class="note">Exemplos:</span>
+            <button class="btn sm" data-set="query" data-val="vacina para idosos">vacina para idosos</button>
+            <button class="btn sm" data-set="query" data-val="celular com câmera">celular com câmera</button>
+            <button class="btn sm" data-set="query" data-val="preço dos alimentos">preço dos alimentos</button>
+            <button class="btn sm" data-set="query" data-val="atendimento médico para idosos">atendimento médico</button>
+            <button class="btn sm" data-set="query" data-val="treino">treino</button>
+            <button class="btn sm" data-set="query" data-val="futebol">futebol</button>
+          </div>
         </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Resultado</h3><p>As <mark>palavras destacadas</mark> são as que o documento compartilha com a consulta. Quando um documento aparece sem nenhum destaque, a representação o encontrou pela semelhança de tema, e não por palavras iguais.</p></div>
         <div id="queryInfo" class="note"></div>
         <div class="cols" id="search"></div>
       </div>
     </div>
-    <div class="panel">
-      <div class="panel-head">
-        <h3>Agrupamento (k-means, sem rótulos)</h3>
-        <div class="toolbar" style="align-items:center">
-          <label class="lbl" for="kmK">k</label><input type="number" id="kmK" data-ui="kmK" min="2" max="10" style="width:5em">
-          <select id="kmRep" data-ui="kmRep" aria-label="Representação" style="width:auto"></select>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="app" id="app-agrupamento" hidden>
+    <div class="app-grid">
+      <div class="panel app-guide">
+        <span class="eyebrow">Aplicação 5.3</span>
+        <h3>Agrupamento</h3>
+        <div class="blk"><span class="lbl">Para que serve</span><p>Descobrir grupos de textos parecidos sem informar nenhuma categoria. É útil para explorar um corpus que você ainda não conhece.</p></div>
+        <div class="blk"><span class="lbl">Como funciona</span><ol class="howto">
+          <li>Você escolhe quantos grupos quer (k).</li>
+          <li>O algoritmo k-means sorteia k pontos de partida e coloca cada texto no grupo do ponto mais próximo.</li>
+          <li>Recalcula o centro de cada grupo e repete até os grupos pararem de mudar.</li>
+          <li>O painel nomeia cada grupo pelas palavras de maior peso dos seus textos.</li>
+        </ol></div>
+        <div class="grid2" style="gap:10px">
+          <div class="ctl"><label for="kmK">Número de grupos (k)</label><input type="number" id="kmK" data-ui="kmK" min="2" max="10"></div>
+          <div class="ctl"><label for="kmRep">Representação</label><select id="kmRep" data-ui="kmRep"></select></div>
         </div>
-        <p>O algoritmo não vê os rótulos; as cores mostram a classe verdadeira. Pureza = fração de documentos que pertencem à classe majoritária do seu grupo.</p>
-      </div>
-      <div class="layout" style="grid-template-columns:minmax(0,1fr) 300px">
-        <div class="clusters" id="clusters"></div>
-        <div class="stack" style="gap:8px"><span class="lbl">Pureza por representação</span><div id="purity"></div></div>
-      </div>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><h3>Classificação supervisionada</h3><p>Validação leave-one-out: cada documento é classificado por um modelo treinado com todos os outros. kNN usa os 3 vizinhos mais próximos por cosseno; Naive Bayes multinomial usa as contagens (BoW).</p></div>
-      <div class="grid2">
-        <div class="stack" style="gap:8px"><span class="lbl">Acurácia</span><div id="accuracy"></div><p class="note" id="baseline"></p></div>
-        <div class="stack" style="gap:8px">
-          <div class="toolbar" style="align-items:center"><label class="lbl" for="clsSel">Matriz de confusão</label><select id="clsSel" data-ui="cls" style="width:auto"></select></div>
-          <div class="scroll" id="confusion"></div>
-          <div id="errors" class="note"></div>
+        <div class="exp">
+          <label class="lbl" for="kmText">Experimente: em que grupo entraria um texto novo?</label>
+          <textarea id="kmText" data-ui="kmText" rows="3"></textarea>
+          <div class="chips"><span class="note">Exemplos:</span>
+            <button class="btn sm" data-set="kmText" data-val="A farmácia passou a vender remédios pelo aplicativo.">farmácia no aplicativo</button>
+            <button class="btn sm" data-set="kmText" data-val="O time treinou pênaltis antes da final.">treino de pênaltis</button>
+            <button class="btn sm" data-set="kmText" data-val="O preço da energia subiu de novo.">preço da energia</button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="panel">
-      <div class="panel-head"><h3>Termos característicos de cada classe</h3><p>Média do TF-IDF dos documentos da classe. Uma forma simples de análise exploratória de texto.</p></div>
-      <div class="cols" id="classTerms"></div>
+      <div class="stack">
+        <div class="panel">
+          <div class="panel-head"><h3>Resultado</h3><p>O algoritmo não vê as classes. As bolinhas coloridas mostram a classe real de cada texto apenas para você comparar.</p></div>
+          <div id="kmInfo"></div>
+          <div class="clusters" id="clusters"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Os grupos coincidem com as suas classes?</h3><p>Concordância (pureza): fração dos textos que pertencem à classe mais comum do seu grupo. 100% significa que cada grupo contém uma única classe.</p></div>
+          <div id="purity"></div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- 5.4 -->
+  <div class="app" id="app-classificacao" hidden>
+    <div class="app-grid">
+      <div class="panel app-guide">
+        <span class="eyebrow">Aplicação 5.4</span>
+        <h3>Classificação</h3>
+        <div class="blk"><span class="lbl">Para que serve</span><p>Atribuir automaticamente uma categoria a um texto novo, aprendendo com exemplos já rotulados (as classes que você definiu na etapa 1).</p></div>
+        <div class="blk"><span class="lbl">Como funciona</span><ol class="howto">
+          <li><b>Vizinhos mais próximos (kNN):</b> procura os 3 textos do corpus mais parecidos com o novo texto e faz uma votação com as classes deles.</li>
+          <li><b>Naive Bayes:</b> cada palavra vota na classe em que aparece com mais frequência. Os votos são combinados numa probabilidade para cada classe.</li>
+        </ol></div>
+        <div class="exp">
+          <label class="lbl" for="clsText">Experimente: escreva um texto para classificar</label>
+          <textarea id="clsText" data-ui="clsText" rows="3"></textarea>
+          <div class="chips"><span class="note">Exemplos:</span>
+            <button class="btn sm" data-set="clsText" data-val="O banco aumentou os juros do financiamento.">banco (finanças)</button>
+            <button class="btn sm" data-set="clsText" data-val="O banco da praça foi pintado de verde.">banco (assento)</button>
+            <button class="btn sm" data-set="clsText" data-val="Deitei na rede depois do almoço.">rede de descanso</button>
+            <button class="btn sm" data-set="clsText" data-val="O aplicativo do hospital marca consultas pelo celular.">saúde + tecnologia</button>
+            <button class="btn sm" data-set="clsText" data-val="O jogador assinou um contrato milionário com o clube.">contrato do jogador</button>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="panel">
+          <div class="panel-head"><h3>Resultado</h3></div>
+          <div id="clsResult" class="stack" style="gap:14px"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Quão confiável é cada classificador?</h3><p>Teste com o próprio corpus: cada documento é retirado, classificado por um modelo treinado com todos os outros e depois conferido com a classe real (validação leave-one-out).</p></div>
+          <div class="grid2">
+            <div class="stack" style="gap:8px"><span class="lbl">Acertos</span><div id="accuracy"></div><p class="note" id="baseline"></p></div>
+            <div class="stack" style="gap:8px">
+              <div class="toolbar" style="align-items:center"><label class="lbl" for="clsSel">Onde erra</label><select id="clsSel" data-ui="cls" style="width:auto"></select></div>
+              <div class="scroll" id="confusion"></div>
+              <div id="errors" class="note"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.5 -->
+  <div class="app" id="app-palavras" hidden>
+    <div class="app-grid">
+      <div class="panel app-guide">
+        <span class="eyebrow">Aplicação 5.5</span>
+        <h3>Palavras-chave</h3>
+        <div class="blk"><span class="lbl">Para que serve</span><p>Identificar as palavras que caracterizam um texto ou um grupo de textos em comparação com um corpus de referência, como na análise de palavras-chave da linguística de corpus.</p></div>
+        <div class="blk"><span class="lbl">Como funciona</span><ol class="howto">
+          <li>Conta quantas vezes cada palavra aparece no seu texto.</li>
+          <li>Multiplica essa frequência pela raridade da palavra no corpus de referência (as notícias da etapa 1).</li>
+          <li>Palavras presentes em quase todos os documentos descem; palavras frequentes no texto e raras no corpus sobem.</li>
+          <li>Palavras que não existem no corpus de referência recebem a raridade máxima e são marcadas como novas.</li>
+        </ol></div>
+        <div class="exp">
+          <label class="lbl" for="kwText">Experimente: cole um texto</label>
+          <textarea id="kwText" data-ui="kwText" rows="5"></textarea>
+          <div class="chips"><span class="note">Exemplos:</span>
+            <button class="btn sm" data-set="kwText" data-ref="kw1">vacinação nas escolas</button>
+            <button class="btn sm" data-set="kwText" data-ref="kw2">mercado imobiliário</button>
+            <button class="btn sm" data-set="kwText" data-ref="kw3">final do campeonato</button>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="panel">
+          <div class="panel-head"><h3>Resultado</h3><p>À esquerda, a frequência bruta no seu texto; à direita, a saliência em relação ao corpus. <span class="tag-new">nova</span> indica uma palavra ausente do corpus de referência.</p></div>
+          <div id="kwInfo" class="note"></div>
+          <div class="cols" id="kwResult"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Palavras características de cada classe do corpus</h3><p>A mesma ideia aplicada a cada classe: a média do peso (frequência × raridade) nos documentos da classe.</p></div>
+          <div class="cols" id="classTerms"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-pager">
+    <button class="btn" id="appPrev">‹ Aplicação anterior</button>
+    <span id="appPos" class="note"></span>
+    <button class="btn primary" id="appNext">Próxima aplicação ›</button>
+  </div>
 </section>
-<!-- 6 ATIVIDADES -->
-<section class="tab" id="tab-atividades" role="tabpanel" hidden>
+
+<!-- 6 ROTEIROS -->
+<section class="tab" id="tab-roteiros" role="tabpanel" hidden>
   <div class="sec-head">
     <span class="eyebrow">Etapa 6 de 6</span>
-    <h2>Atividades: exploração em sala e tarefas</h2>
-    <p>A primeira parte reúne explorações rápidas para fazer durante a oficina, organizadas por etapa. A segunda traz tarefas para casa com procedimento, tabela de registro e perguntas para o relatório. Antes de cada tarefa, clique em “Restaurar corpus de exemplo” na etapa 1 para que todos partam da mesma configuração.</p>
+    <h2>Roteiros de autoestudo</h2>
+    <p>Cada roteiro parte de uma pergunta linguística e conduz você, passo a passo, pelas etapas do painel. Não é preciso conhecer programação.</p>
   </div>
   <div class="stack">
-    <div class="panel">
-      <div class="panel-head"><h3>Parte A · Exploração guiada em sala</h3><p>Cerca de 5 minutos por bloco. Discuta as respostas com a turma antes de passar ao próximo.</p></div>
-      <div class="guided">
-        <div><span class="lbl">Etapa 1 · Corpus</span><ul>
-          <li>Acrescente um texto ambíguo (por exemplo, um aplicativo de saúde) e veja em que classe ele cai na etapa 5.</li>
-          <li>Escreva dois textos sobre o mesmo assunto sem nenhuma palavra em comum. Quais representações percebem a semelhança?</li>
-        </ul><button class="linkbtn" data-goto="corpus">Ir para a etapa 1</button></div>
-        <div><span class="lbl">Etapa 2 · Pré-processamento</span><ul>
-          <li>Use a predefinição “Nenhuma” e depois “Básico”. Quanto o vocabulário encolhe?</li>
-          <li>Desligue só “Minúsculas”. Por que “O” e “A” voltam ao resultado final mesmo com stopwords ligadas?</li>
-          <li>Ative a radicalização e procure “trein” no D2, D4 e D8. Isso ajuda ou atrapalha?</li>
-        </ul><button class="linkbtn" data-goto="preprocessamento">Ir para a etapa 2</button></div>
-        <div><span class="lbl">Etapa 3 · Vetorização</span><ul>
-          <li>Alterne Binário, BoW e TF-IDF na matriz. Onde a contagem difere da presença?</li>
-          <li>Clique na célula de uma palavra comum e de uma rara do mesmo documento e compare o idf.</li>
-          <li>Ative bigramas: o que acontece com a dimensão e com a esparsidade?</li>
-        </ul><button class="linkbtn" data-goto="vetorizacao">Ir para a etapa 3</button></div>
-        <div><span class="lbl">Etapa 4 · Embeddings</span><ul>
-          <li>Leia a tabela de temas do LSA. Que assunto cada tema parece representar?</li>
-          <li>Clique no par “D20 × D23”. Por que BoW dá zero e o LSA não?</li>
-          <li>Procure os vizinhos de “juros” com janela 1 e com janela 5.</li>
-        </ul><button class="linkbtn" data-goto="embeddings">Ir para a etapa 4</button></div>
-        <div><span class="lbl">Etapa 5 · Aplicações</span><ul>
-          <li>Busque “futebol”, palavra ausente do corpus. O que cada método devolve, e por quê?</li>
-          <li>Rode o k-means com k = 2 e k = 6. Os grupos ainda fazem sentido?</li>
-          <li>Na matriz de confusão do kNN · BoW, leia os documentos errados. O que eles têm em comum?</li>
-        </ul><button class="linkbtn" data-goto="aplicacoes">Ir para a etapa 5</button></div>
-      </div>
-    </div>
-
-    <div class="panel-head" style="padding-top:8px"><h3>Parte B · Tarefas para casa</h3><p>Cada tarefa indica as etapas envolvidas, o procedimento, uma tabela para registrar os resultados e as perguntas que devem ser respondidas no relatório.</p></div>
-    <div class="acts">
-
-      <article class="panel act">
-        <span class="code">TAREFA 1</span>
-        <h3>Quanto o pré-processamento importa?</h3>
-        <div class="meta"><span class="pill on">Etapas 2 e 5</span><span class="pill">20 min</span></div>
-        <p><b>Objetivo.</b> Medir o efeito de cada configuração de limpeza no vocabulário e no desempenho final.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Na etapa 2, aplique a predefinição “Nenhuma”. Anote o vocabulário final (gráfico de impacto).</li>
-          <li>Na etapa 5, anote a acurácia do kNN · TF-IDF e a pureza do LSA (k-means com k = 4).</li>
-          <li>Repita para “Básico” e “Completo”.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Configuração</th><th>Vocabulário</th><th>Acurácia kNN · TF-IDF</th><th>Pureza LSA</th></tr></thead><tbody><tr><th>Nenhuma</th><td></td><td></td><td></td></tr><tr><th>Básico</th><td></td><td></td><td></td></tr><tr><th>Completo</th><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Mais limpeza sempre melhora o resultado? Justifique com os números.</li><li>Em que tipo de aplicação você <i>não</i> removeria stopwords? (Pense em negações como “não”.)</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 2</span>
-        <h3>Radicalização: ganhos e colisões</h3>
-        <div class="meta"><span class="pill on">Etapas 2, 3 e 5</span><span class="pill">25 min</span></div>
-        <p><b>Objetivo.</b> Identificar quando reduzir palavras ao radical une variações úteis e quando mistura significados diferentes.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Com a predefinição “Básico”, busque “vacina para idosos” e “celular com câmera” (etapa 5). Anote o documento em 1º lugar e o escore no BoW.</li>
-          <li>Ligue a radicalização e repita as buscas.</li>
-          <li>Na etapa 3, ordene as colunas por df e encontre ao menos 3 radicais que juntam palavras de classes diferentes (exemplo: “trein”).</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Consulta</th><th>1º lugar sem radical (escore)</th><th>1º lugar com radical (escore)</th></tr></thead><tbody><tr><th>vacina para idosos</th><td></td><td></td></tr><tr><th>celular com câmera</th><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Liste as colisões encontradas e as palavras originais de cada uma.</li><li>Lematização (reduzir “treinaram” a “treinar”) resolveria essas colisões? Por quê?</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 3</span>
-        <h3>Anatomia do TF-IDF</h3>
-        <div class="meta"><span class="pill on">Etapa 3</span><span class="pill">20 min</span></div>
-        <p><b>Objetivo.</b> Calcular o TF-IDF à mão e confirmar com o painel.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Escolha o D1. Selecione um termo que aparece em muitos documentos e um que aparece só no D1.</li>
-          <li>Calcule idf = ln((1 + N) / (1 + df)) + 1 para cada um com uma calculadora.</li>
-          <li>Clique nas células correspondentes e compare com o cálculo exibido.</li>
-          <li>Compare a lista de maior peso do D1 no BoW e no TF-IDF.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Termo</th><th>contagem</th><th>df</th><th>idf (seu cálculo)</th><th>TF-IDF (painel)</th></tr></thead><tbody><tr><th>comum:</th><td></td><td></td><td></td><td></td></tr><tr><th>raro:</th><td></td><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Por que o TF-IDF final depende de todos os outros termos do documento? (Dica: norma L2.)</li><li>Em que situação a representação binária seria preferível ao BoW?</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 4</span>
-        <h3>Quantas dimensões bastam no LSA?</h3>
-        <div class="meta"><span class="pill on">Etapas 4 e 5</span><span class="pill">25 min</span></div>
-        <p><b>Objetivo.</b> Relacionar o número de temas latentes (k) com a qualidade das representações.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Com o corpus de exemplo e a predefinição “Básico”, varie k do LSA em 1, 2, 3, 4, 6, 10 e 15.</li>
-          <li>Para cada k, anote o índice de separação do LSA (etapa 4) e a pureza do LSA no k-means (etapa 5).</li>
-          <li>Faça um gráfico de linha com os dois indicadores em função de k.</li>
-          <li>Para k = 4, dê um nome a cada tema da tabela de temas latentes.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>k</th><th>1</th><th>2</th><th>3</th><th>4</th><th>6</th><th>10</th><th>15</th></tr></thead><tbody><tr><th>Separação</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><th>Pureza</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Por que um k muito pequeno perde informação e um k muito grande volta a se parecer com o TF-IDF?</li><li>Qual a relação entre o melhor k e o número de classes do corpus?</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 5</span>
-        <h3>Janela de contexto e vizinhos semânticos</h3>
-        <div class="meta"><span class="pill on">Etapa 4</span><span class="pill">20 min</span></div>
-        <p><b>Objetivo.</b> Entender como o tamanho da janela muda o que o modelo considera “palavras parecidas”.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Na etapa 4, digite “juros” no campo de vizinhos. Anote os 3 primeiros vizinhos PPMI-SVD com janela 1, 2, 4 e 6.</li>
-          <li>Repita para “hospital” e “time”.</li>
-          <li>Para cada janela, anote o índice de separação de “Vetores de palavras”.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Janela</th><th>vizinhos de “juros”</th><th>vizinhos de “hospital”</th><th>Separação</th></tr></thead><tbody><tr><th>1</th><td></td><td></td><td></td></tr><tr><th>2</th><td></td><td></td><td></td></tr><tr><th>4</th><td></td><td></td><td></td></tr><tr><th>6</th><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Janelas pequenas e grandes capturam tipos diferentes de semelhança. Descreva a diferença com exemplos.</li><li>Por que os vizinhos ficam ruidosos neste corpus e o que mudaria com milhões de textos?</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 6</span>
-        <h3>Sinônimos e o problema do vocabulário</h3>
-        <div class="meta"><span class="pill on">Etapas 1 e 4</span><span class="pill">25 min</span></div>
-        <p><b>Objetivo.</b> Mostrar a limitação das representações esparsas quando o mesmo assunto é escrito com palavras diferentes.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Use os quatro pares sugeridos na etapa 4 e anote a similaridade em cada representação.</li>
-          <li>Na etapa 1, crie dois novos documentos sobre o mesmo assunto, com o mesmo rótulo e sem nenhuma palavra de conteúdo em comum.</li>
-          <li>Compare esse novo par na etapa 4.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Par</th><th>BoW</th><th>TF-IDF</th><th>LSA</th><th>Vetores de palavras</th></tr></thead><tbody><tr><th>D13 × D17</th><td></td><td></td><td></td><td></td></tr><tr><th>D20 × D23</th><td></td><td></td><td></td><td></td></tr><tr><th>D15 × D7</th><td></td><td></td><td></td><td></td></tr><tr><th>D12 × D9</th><td></td><td></td><td></td><td></td></tr><tr><th>Seu par</th><td></td><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Em quais pares os embeddings superam o TF-IDF? Em quais erram (por exemplo, aproximando classes diferentes)?</li><li>De onde o LSA tira a semelhança entre documentos que não compartilham palavras?</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 7</span>
-        <h3>Avaliando um buscador</h3>
-        <div class="meta"><span class="pill on">Etapa 5</span><span class="pill">25 min</span></div>
-        <p><b>Objetivo.</b> Avaliar a busca por similaridade como um sistema de recuperação de informação.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Escreva 5 consultas próprias, uma ou duas por classe, incluindo ao menos uma com palavra ausente do corpus.</li>
-          <li>Para cada consulta e representação, verifique se o 1º resultado pertence à classe esperada.</li>
-          <li>Calcule a taxa de acerto do 1º resultado (precisão@1) de cada representação.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Consulta</th><th>Classe esperada</th><th>BoW</th><th>TF-IDF</th><th>LSA</th><th>Vetores</th></tr></thead><tbody><tr><th>1</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>2</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>3</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>4</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>5</th><td></td><td></td><td></td><td></td><td></td></tr><tr><th>Precisão@1</th><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Qual representação você usaria num buscador real? Considere qualidade, custo e explicabilidade.</li><li>Como sistemas atuais de busca semântica (RAG) resolvem a falta de dados que limita este laboratório?</li></ul>
-      </article>
-
-      <article class="panel act">
-        <span class="code">TAREFA 8</span>
-        <h3>Rótulos errados e robustez dos classificadores</h3>
-        <div class="meta"><span class="pill on">Etapas 1 e 5</span><span class="pill">20 min</span></div>
-        <p><b>Objetivo.</b> Observar como erros de rotulação afetam o aprendizado supervisionado e não afetam o agrupamento.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Anote a acurácia de todos os classificadores com o corpus original.</li>
-          <li>Na etapa 1, troque o rótulo de 2 documentos de classes diferentes entre si. Anote as acurácias.</li>
-          <li>Troque mais 2 (4 no total) e anote de novo.</li>
-          <li>Verifique se os grupos do k-means mudaram.</li>
-        </ol>
-        <h4>Registro</h4>
-        <div class="scroll"><table class="conf"><thead><tr><th>Rótulos trocados</th><th>kNN · TF-IDF</th><th>kNN · LSA</th><th>Naive Bayes</th></tr></thead><tbody><tr><th>0</th><td></td><td></td><td></td></tr><tr><th>2</th><td></td><td></td><td></td></tr><tr><th>4</th><td></td><td></td><td></td></tr></tbody></table></div>
-        <h4>Perguntas</h4>
-        <ul><li>Por que o k-means não muda quando os rótulos mudam, mas a pureza sim?</li><li>Que cuidados de anotação você adotaria num projeto real?</li></ul>
-      </article>
-
-      <article class="panel act" style="border-color:var(--accent)">
-        <span class="code">DESAFIO FINAL</span>
-        <h3>Seu próprio corpus</h3>
-        <div class="meta"><span class="pill on">Todas as etapas</span><span class="pill">em grupo</span></div>
-        <p><b>Objetivo.</b> Aplicar o pipeline completo a um problema escolhido pelo grupo.</p>
-        <h4>Procedimento</h4>
-        <ol>
-          <li>Monte um corpus com pelo menos 30 textos curtos e 3 classes (manchetes, avaliações de produtos, resumos de artigos, mensagens de atendimento).</li>
-          <li>Carregue os textos com “Colar em lote” na etapa 1, no formato <span class="mono">rótulo | texto</span>.</li>
-          <li>Teste ao menos 3 configurações de pipeline e 2 valores de k do LSA.</li>
-          <li>Escolha a melhor combinação de representação e classificador e justifique.</li>
-        </ol>
-        <h4>Perguntas</h4>
-        <ul><li>Quais classes se confundem mais e por quê?</li><li>Que palavras caracterizam cada classe (etapa 5, termos característicos)?</li><li>O que você mudaria para levar este sistema a produção?</li></ul>
-      </article>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head"><h3>Parte C · Orientações de entrega</h3></div>
+    <div class="panel howuse">
+      <h3>Como usar</h3>
       <ol class="howto">
-        <li>Relatório de 3 a 5 páginas com as tabelas preenchidas e capturas de tela que sustentem cada resposta.</li>
-        <li>Indique em cada tarefa a configuração usada (a faixa de pipeline no topo das abas 3, 4 e 5 resume isso).</li>
-        <li>Responda às perguntas com base nos números observados, não em definições de livro.</li>
-        <li>Para o desafio final, anexe o corpus em texto (um documento por linha, no formato <span class="mono">rótulo | texto</span>).</li>
+        <li>Escolha um roteiro e clique em <b>Começar roteiro</b>.</li>
+        <li>Uma barra de orientação aparece no rodapé da tela. Em cada passo ela prepara o painel sozinha (carrega textos, liga opções e abre a aba certa) e destaca o quadro que você deve observar.</li>
+        <li>Leia o que observar, explore à vontade e clique em <b>Próximo passo</b> quando quiser avançar.</li>
+        <li>Ao final, responda às perguntas de reflexão do roteiro.</li>
       </ol>
+      <p class="note">Ao começar um roteiro, o corpus de exemplo e as configurações padrão são restaurados. Se você editou textos na etapa 1, copie-os antes.</p>
+    </div>
+    <div class="rots" id="roteiros"></div>
+    <div class="grid2">
+      <article class="panel rot">
+        <div class="rot-head"><span class="code">PROJETO LIVRE</span><span class="pill">em grupo ou individual</span></div>
+        <h3>Seu próprio corpus</h3>
+        <p class="q">Uma pergunta de pesquisa sua, investigada com as ferramentas da bancada.</p>
+        <p>Algumas ideias: comparar gêneros textuais (notícia, receita, bula), registros (e-mail formal e mensagem de WhatsApp), variedades do português, autores ou épocas diferentes.</p>
+        <ol class="howto">
+          <li>Reúna de 20 a 40 trechos curtos, com pelo menos 3 categorias.</li>
+          <li>Na etapa 1, clique em <b>Colar em lote</b> e cole um trecho por linha, no formato <span class="mono">categoria | texto</span>. Use <b>Substituir o corpus</b>.</li>
+          <li>Repita, com o seu corpus, os roteiros 1 (palavras gramaticais), 7 (palavras-chave) e 8 (agrupamento).</li>
+          <li>Registre as palavras características de cada categoria, se o agrupamento recupera as categorias e quais textos confundem o classificador.</li>
+        </ol>
+        <div class="toolbar"><button class="btn" data-goto="corpus">Ir para a etapa 1</button></div>
+      </article>
+      <div class="panel">
+        <h3>Glossário</h3>
+        <dl class="gloss">
+          <dt>Token</dt><dd>Cada ocorrência de uma palavra no texto.</dd>
+          <dt>Termo / vocabulário</dt><dd>Cada forma distinta (tipo) e o conjunto de todas elas no corpus.</dd>
+          <dt>Stopwords</dt><dd>Lista de palavras gramaticais (artigos, preposições, conjunções) que podem ser descartadas.</dd>
+          <dt>Radicalização</dt><dd>Corte mecânico de terminações para aproximar formas da mesma família. Difere da lematização, que reduz cada forma ao lema do dicionário.</dd>
+          <dt>N-grama</dt><dd>Sequência de n palavras vizinhas; um bigrama tem duas (“taxa juros”).</dd>
+          <dt>Vetor</dt><dd>Lista de números que representa um texto ou uma palavra.</dd>
+          <dt>BoW</dt><dd>“Saco de palavras”: conta quantas vezes cada palavra aparece, sem considerar a ordem.</dd>
+          <dt>TF-IDF</dt><dd>Peso que combina a frequência no texto com a raridade no corpus. Aproxima a noção de saliência (keyness).</dd>
+          <dt>Similaridade cosseno</dt><dd>Nota de 0 a 1 que diz o quanto dois vetores apontam na mesma direção.</dd>
+          <dt>Embedding</dt><dd>Vetor denso, com poucas dimensões, aprendido a partir dos contextos de uso.</dd>
+          <dt>LSA</dt><dd>Análise Semântica Latente: resume o vocabulário em temas formados por palavras que aparecem nos mesmos textos.</dd>
+          <dt>Hipótese distribucional</dt><dd>Palavras usadas em contextos semelhantes tendem a ter sentidos semelhantes (Harris, 1954; Firth, 1957).</dd>
+          <dt>Agrupamento</dt><dd>Descoberta de grupos sem categorias prévias (aprendizado não supervisionado).</dd>
+          <dt>Classificação</dt><dd>Atribuição de categorias aprendidas a partir de exemplos rotulados (aprendizado supervisionado).</dd>
+        </dl>
+      </div>
     </div>
   </div>
 </section>
-
 </main>
+
+<div class="guidebar" id="guide" hidden role="region" aria-label="Orientação do roteiro">
+  <div class="wrap guide-in">
+    <div class="g-top"><span class="lbl" id="gMeta"></span><button class="icon-btn" id="gClose" aria-label="Sair do roteiro" title="Sair do roteiro">×</button></div>
+    <strong id="gTitle"></strong>
+    <p id="gText"></p>
+    <p id="gObs" class="g-obs"></p>
+    <div class="toolbar">
+      <button class="btn" id="gPrev">‹ Anterior</button>
+      <button class="btn" id="gRedo">Refazer este passo</button>
+      <button class="btn" id="gBack">Ver roteiro</button>
+      <button class="btn primary" id="gNext">Próximo passo ›</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (() => {
@@ -767,7 +825,7 @@ let saved = null;
 try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e) {}
 let docs = (saved && Array.isArray(saved.docs) && saved.docs.length) ? saved.docs : SAMPLE.map(d => ({...d}));
 let opts = Object.assign({}, DEFAULT_OPTS, saved && saved.opts || {});
-const ui = {tab:'corpus', preDoc:0, heatMode:'tfidf', heatOrder:'df', heatN:12, cell:null, vecDoc:0, nbWord:'celular', pairA:14, pairB:6, mapRep:'tfidf', kmK:4, kmRep:'tfidf', cls:'knn:tfidf', query:'vacina para idosos'};
+const ui = {tab:'corpus', preDoc:0, heatMode:'tfidf', heatOrder:'df', heatN:12, cell:null, vecDoc:0, nbWord:'celular', pairA:14, pairB:6, mapRep:'tfidf', kmK:4, kmRep:'tfidf', cls:'knn:tfidf', query:'vacina para idosos', app:'mapa', mapText:'O hospital usa inteligência artificial para analisar exames.', kmText:'A farmácia passou a vender remédios pelo aplicativo.', clsText:'O banco da praça foi pintado de verde.', kwText:''};
 function save(){ try { localStorage.setItem(KEY, JSON.stringify({docs, opts})); } catch(e) {} }
 
 /* ---------------- utilidades ---------------- */
@@ -917,7 +975,7 @@ function compute(){
   const sims = {}; REPS.forEach(r => sims[r] = cosMatrix(reps[r]));
   const sep = {}; REPS.forEach(r => sep[r] = separation(sims[r], labs));
 
-  M = {steps, N, P, labs, labels, stepStats, vocab, idx, V, counts, df, idf, tf, tfidfRaw, tfidf, lsa, wv, widx, wordVec, row, avgWords, reps, sims, sep};
+  M = {steps, N, P, labs, labels, stepStats, vocab, idx, V, counts, df, idf, tf, tfidfRaw, tfidf, lsa, wv, widx, wordVec, row, avgWords, reps, sims, sep, C, PM};
   computeApps();
 }
 function separation(S, labs){
@@ -928,7 +986,7 @@ function separation(S, labs){
 
 /* ---------------- aprendizado de máquina ---------------- */
 function kmeans(X, k, seed){
-  const n = X.length; if (!n) return []; k = Math.min(k, n);
+  const n = X.length; if (!n) return {lab:[], C:[]}; k = Math.min(k, n);
   const d2 = (a,b) => { let s = 0; for (let i = 0; i < a.length; i++){ const t = a[i]-b[i]; s += t*t; } return s; };
   const rng = mulberry32(seed); let best = null, bestIn = Infinity;
   for (let r = 0; r < 12; r++){
@@ -942,7 +1000,7 @@ function kmeans(X, k, seed){
       if (!changed) break;
     }
     const inertia = sum(X.map((x,i) => d2(x, C[lab[i]])));
-    if (inertia < bestIn - 1e-12){ bestIn = inertia; best = lab; }
+    if (inertia < bestIn - 1e-12){ bestIn = inertia; best = {lab, C:C.map(c => Array.from(c))}; }
   }
   return best;
 }
@@ -973,10 +1031,10 @@ function nbLOO(X, labs, labels){
 }
 function computeApps(){
   const {N, labs, labels, reps, sims} = M;
-  M.km = {}; M.purity = {}; M.pred = {}; M.acc = {};
+  M.km = {}; M.kmC = {}; M.purity = {}; M.pred = {}; M.acc = {};
   if (N < 2) return;
   const k = Math.max(2, Math.min(ui.kmK, N));
-  REPS.forEach(r => { const a = kmeans(reps[r].map(l2), k, 42); M.km[r] = a; M.purity[r] = purity(a, labs); });
+  REPS.forEach(r => { const res = kmeans(reps[r].map(l2), k, 42); M.km[r] = res.lab; M.kmC[r] = res.C; M.purity[r] = purity(res.lab, labs); });
   if (labels.length >= 2 && N >= 3){
     REPS.forEach(r => { M.pred['knn:' + r] = knnLOO(sims[r], labs, 3); });
     M.pred['nb:bow'] = nbLOO(M.counts, labs, labels);
@@ -990,9 +1048,9 @@ function pca2(X){
   const d = X[0].length; const mean = new Array(d).fill(0); X.forEach(x => x.forEach((v,j) => mean[j] += v/n));
   const Xc = X.map(x => x.map((v,j) => v - mean[j]));
   const e = jacobi(gram(Xc)); const tot = sum(e.values.filter(v => v > 0)) || 1;
-  const comp = c => X.map((_, i) => (e.vectors[i][c] || 0)*Math.sqrt(Math.max(e.values[c] || 0, 0)));
-  const xs = comp(0), ys = n > 2 ? comp(1) : X.map(() => 0);
-  return {pts: xs.map((x,i) => [x, ys[i]]), ratio: [Math.max(e.values[0],0)/tot, Math.max(e.values[1] || 0, 0)/tot]};
+  const dirs = [0,1].map(c => { const lam = Math.max(e.values[c] || 0, 0); const dir = new Array(d).fill(0); if (lam < 1e-12 || n <= c + 1) return dir; const s = Math.sqrt(lam); for (let i = 0; i < n; i++){ const u = e.vectors[i][c]; if (!u) continue; for (let j = 0; j < d; j++) dir[j] += Xc[i][j]*u/s; } return dir; });
+  const project = x => dirs.map(dir => dot(x.map((v,j) => v - mean[j]), dir));
+  return {pts: Xc.map(x => dirs.map(dir => dot(x, dir))), ratio: [Math.max(e.values[0],0)/tot, Math.max(e.values[1] || 0, 0)/tot], project};
 }
 function queryVectors(text){
   const {steps, vocab, idx, V, idf, lsa, avgWords, widx} = M;
@@ -1163,9 +1221,10 @@ function renderEmb(){
   $('#vocabList').innerHTML = M.wv.slice(0, 400).map(w => `<option value="${esc(w)}">`).join('');
   const raw = (ui.nbWord || '').trim();
   const q = runPipeline(raw, M.steps).tokens[0] || raw;
-  const nl = neighbors(lsa.termEmb, M.vocab, q), nw = neighbors(M.wordVec, M.wv, q);
+  const nl = neighbors(lsa.termEmb, M.vocab, q), nw = neighbors(M.wordVec, M.wv, q), nc = neighbors(M.PM, M.wv, q);
+  const wi = M.widx.get(q); const ctx = wi === undefined ? [] : M.wv.map((t,j) => [t, M.C[wi][j]]).filter(x => x[1] > 0).sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt')).slice(0, 10);
   const block = (title, res, color) => `<div><span class="lbl">${title}</span>${res === null ? `<div class="empty">“${esc(q)}” não está no vocabulário.</div>` : res.length ? bars(res.map(([t,v]) => ({t, v, color})), {max:1}) : '<div class="empty">Palavra sem contexto suficiente.</div>'}</div>`;
-  $('#neighbors').innerHTML = (raw ? `<p class="note" style="grid-column:1/-1">Termo após o pipeline: <span class="tok">${esc(q)}</span></p>` : '') + block('LSA (termos)', nl) + block('PPMI-SVD (palavras)', nw, 'var(--c1)');
+  $('#neighbors').innerHTML = (raw ? `<p class="note" style="grid-column:1/-1">Termo após o pipeline: <span class="tok">${esc(q)}</span></p>` : '') + (raw ? `<p class="note" style="grid-column:1/-1">Contextos de <b>${esc(q)}</b> na janela de ±${opts.win} ${opts.win === 1 ? 'palavra' : 'palavras'}: ${ctx.length ? ctx.map(([t,c]) => `<span class="tok">${esc(t)} ${c}</span>`).join(' ') : 'nenhum'}</p>` : '') + block('LSA (documentos)', nl) + block('Contextos (PPMI)', nc, 'var(--c3)') + block('PPMI-SVD (embedding)', nw, 'var(--c1)');
 
   // par
   ui.pairA = +fillSelect($('#pairA'), docs.map(docOpt), ui.pairA);
@@ -1179,70 +1238,184 @@ function renderEmb(){
   $('#variance').innerHTML = lsa.ratio.length ? bars(lsa.ratio.map((v,i) => ({t:`dimensão ${i+1}`, v, vt:pct(v), cls:i < lsa.k ? 'best' : 'dim'})), {max:Math.max(...lsa.ratio)}) + `<p class="note">As ${lsa.k} dimensões usadas explicam ${pct(sum(lsa.ratio.slice(0, lsa.k)))} da variância.</p>` : '<div class="empty">Sem dados.</div>';
 }
 
+
 /* 5 aplicações */
+const APPS = ['mapa','busca','agrupamento','classificacao','palavras'];
+const APP_NAME = {mapa:'Mapa de documentos', busca:'Busca por similaridade', agrupamento:'Agrupamento', classificacao:'Classificação', palavras:'Palavras-chave'};
+const KW_TEXTS = {
+  kw1:'A campanha de vacinação nas escolas começou nesta semana. As escolas receberam equipes de saúde, e a vacina contra a gripe foi aplicada em crianças e professores. A secretaria espera vacinar os alunos de todas as escolas até o fim do mês.',
+  kw2:'O mercado imobiliário voltou a crescer. Com a queda dos juros, mais famílias buscam crédito para comprar imóveis, e as construtoras lançaram novos apartamentos. Os preços dos imóveis subiram nas capitais.',
+  kw3:'O time venceu a final do campeonato diante de um estádio lotado. O goleiro defendeu dois pênaltis e o técnico dedicou o título à torcida, que comemorou a conquista até de madrugada.'
+};
+const chipToks = toks => toks.length ? toks.map(t => `<span class="tok">${esc(t)}</span>`).join(' ') : '<i>nenhuma palavra restou</i>';
+function hiDoc(i, qset){
+  return docs[i].text.split(/(\s+)/).map(w => { if (!w.trim()) return esc(w); const t = runPipeline(w, M.steps).tokens[0]; return t && qset.has(t) ? `<mark>${esc(w)}</mark>` : esc(w); }).join('');
+}
+function simsTo(qvecs){ const out = {}; REPS.forEach(r => { const qv = l2(qvecs[r]); out[r] = M.reps[r].map(row => dot(qv, l2(row))); }); return out; }
+function knnPredict(row, k=3){
+  const nb = [...row.keys()].sort((a,b) => row[b] - row[a]).slice(0, k);
+  const sc = new Map(); nb.forEach(j => sc.set(M.labs[j], (sc.get(M.labs[j]) || 0) + Math.max(row[j], 0) + 1e-6));
+  return {label:[...sc.entries()].sort((a,b) => b[1] - a[1])[0][0], nb};
+}
+function nbModel(){
+  if (M.nb) return M.nb;
+  const {counts, labs, labels, V, N} = M;
+  M.nb = labels.map(l => { const mem = counts.filter((_, i) => labs[i] === l); const tc = new Array(V).fill(0); mem.forEach(m => m.forEach((v,j) => tc[j] += v)); const T = sum(tc); return {l, prior:Math.log(mem.length/N), lp:tc.map(c => Math.log((c + 1)/(T + V)))}; });
+  return M.nb;
+}
+function nbPredict(bow){
+  const cls = nbModel();
+  const scores = cls.map(c => c.prior + sum(bow.map((v,j) => v ? v*c.lp[j] : 0)));
+  const mx = Math.max(...scores); const ex = scores.map(s => Math.exp(s - mx)); const z = sum(ex);
+  const probs = cls.map((c,i) => ({l:c.l, p:ex[i]/z})).sort((a,b) => b.p - a.p);
+  const votes = [];
+  bow.forEach((v,j) => { if (!v) return; const lp = cls.map(c => c.lp[j]); const order = [...lp.keys()].sort((a,b) => lp[b] - lp[a]); votes.push({t:M.vocab[j], l:cls[order[0]].l, gap:lp[order[0]] - lp[order[1] ?? order[0]]}); });
+  return {label:probs[0].l, probs, votes};
+}
+function renderAppNav(){
+  if (!APPS.includes(ui.app)) ui.app = 'mapa';
+  document.querySelectorAll('#appNav button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.app === ui.app)));
+  APPS.forEach(a => { const el = document.getElementById('app-' + a); if (el) el.hidden = a !== ui.app; });
+  const i = APPS.indexOf(ui.app);
+  $('#appPrev').disabled = i === 0; $('#appNext').disabled = i === APPS.length - 1;
+  $('#appPrev').textContent = i > 0 ? `‹ ${APP_NAME[APPS[i-1]]}` : '‹ Aplicação anterior';
+  $('#appNext').textContent = i < APPS.length - 1 ? `${APP_NAME[APPS[i+1]]} ›` : 'Próxima aplicação ›';
+  $('#appPos').textContent = `Aplicação ${i+1} de ${APPS.length}`;
+}
 function renderApps(){
-  const {N, labs, labels} = M;
+  renderAppNav();
   const repOpts = REPS.map(r => ({v:r, t:REP_NAME[r]}));
   ui.mapRep = fillSelect($('#mapRep'), repOpts, ui.mapRep);
   ui.kmRep = fillSelect($('#kmRep'), repOpts, ui.kmRep);
-  $('#mapLegend').innerHTML = labels.map(l => `<span>${dotHtml(l)}${esc(l)}</span>`).join('');
-
-  // mapa
+  if (!M.N){ ['#map','#search','#clusters','#clsResult','#kwResult'].forEach(s => $(s).innerHTML = '<div class="empty">Corpus vazio. Adicione documentos na etapa 1.</div>'); return; }
+  ({mapa:appMapa, busca:appBusca, agrupamento:appCluster, classificacao:appCls, palavras:appKw})[ui.app]();
+}
+function appMapa(){
+  const {labs, labels} = M;
+  $('#mapLegend').innerHTML = labels.map(l => `<span>${dotHtml(l)}${esc(l)}</span>`).join('') + '<span><span class="star-key">★</span>seu texto</span>';
   const pc = pca2(M.reps[ui.mapRep].map(l2));
-  if (!pc){ $('#map').innerHTML = '<div class="empty">Dados insuficientes para projetar.</div>'; $('#mapCaption').textContent = ''; }
-  else {
-    const W = 640, H = 380, m = 34;
-    const xs = pc.pts.map(p => p[0]), ys = pc.pts.map(p => p[1]);
-    const [x0, x1] = [Math.min(...xs), Math.max(...xs)], [y0, y1] = [Math.min(...ys), Math.max(...ys)];
-    const sx = v => x1 - x0 < 1e-12 ? W/2 : m + (v - x0)/(x1 - x0)*(W - 2*m);
-    const sy = v => y1 - y0 < 1e-12 ? H/2 : H - m - (v - y0)/(y1 - y0)*(H - 2*m);
-    $('#map').innerHTML = `<div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:100%;display:block" role="img" aria-label="Projeção 2D dos documentos">
-      <rect x="0" y="0" width="${W}" height="${H}" fill="var(--bg)" rx="8"></rect>
-      <line x1="${m}" y1="${H-m+10}" x2="${W-m}" y2="${H-m+10}" stroke="var(--line)"></line><line x1="${m-10}" y1="${m}" x2="${m-10}" y2="${H-m}" stroke="var(--line)"></line>
-      <text x="${W-m}" y="${H-8}" text-anchor="end" font-size="11" fill="var(--muted)">componente 1 (${pct(pc.ratio[0])})</text>
-      <text x="12" y="${m-12}" font-size="11" fill="var(--muted)">componente 2 (${pct(pc.ratio[1])})</text>
-      ${pc.pts.map((p,i) => `<g><title>D${i+1} · ${esc(labs[i])}: ${esc(docs[i].text)}</title><circle cx="${sx(p[0]).toFixed(1)}" cy="${sy(p[1]).toFixed(1)}" r="8" fill="${labelColor(labs[i])}" stroke="var(--surface)" stroke-width="2"></circle><text x="${(sx(p[0])+11).toFixed(1)}" y="${(sy(p[1])+4).toFixed(1)}" font-size="11" fill="var(--fg)">D${i+1}</text></g>`).join('')}
-    </svg></div>`;
-    $('#mapCaption').textContent = `Os dois primeiros componentes explicam ${pct(pc.ratio[0] + pc.ratio[1])} da variância desta representação.`;
+  if (!pc){ $('#map').innerHTML = '<div class="empty">Dados insuficientes para projetar.</div>'; $('#mapCaption').textContent = ''; $('#mapNear').innerHTML = ''; return; }
+  const txt = (ui.mapText || '').trim();
+  const q = txt ? queryVectors(txt) : null;
+  const qv = q ? q.vecs[ui.mapRep] : null;
+  const qp = qv && norm(qv) > 1e-12 ? pc.project(l2(qv)) : null;
+  const W = 640, H = 380, m = 34;
+  const all = qp ? pc.pts.concat([qp]) : pc.pts;
+  const xs = all.map(p => p[0]), ys = all.map(p => p[1]);
+  const [x0, x1] = [Math.min(...xs), Math.max(...xs)], [y0, y1] = [Math.min(...ys), Math.max(...ys)];
+  const sx = v => x1 - x0 < 1e-12 ? W/2 : m + (v - x0)/(x1 - x0)*(W - 2*m);
+  const sy = v => y1 - y0 < 1e-12 ? H/2 : H - m - (v - y0)/(y1 - y0)*(H - 2*m);
+  let star = '';
+  if (qp){
+    const cx = sx(qp[0]), cy = sy(qp[1]); const pts = [];
+    for (let i = 0; i < 10; i++){ const r = i % 2 ? 6 : 14, a = -Math.PI/2 + i*Math.PI/5; pts.push(`${(cx + r*Math.cos(a)).toFixed(1)},${(cy + r*Math.sin(a)).toFixed(1)}`); }
+    star = `<g><title>Seu texto: ${esc(txt)}</title><polygon points="${pts.join(' ')}" fill="var(--fg)" stroke="var(--surface)" stroke-width="2"></polygon><text x="${(cx + 16).toFixed(1)}" y="${(cy + 4).toFixed(1)}" font-size="12" font-weight="600" fill="var(--fg)">seu texto</text></g>`;
   }
-
-  // busca
-  if (N){
-    const q = queryVectors(ui.query || '');
-    $('#queryInfo').innerHTML = `Consulta processada: ${q.tokens.length ? q.tokens.map(t => `<span class="tok">${esc(t)}</span>`).join(' ') : '<i>vazia</i>'}${q.oov.length ? ` · fora do vocabulário: ${q.oov.map(esc).join(', ')}` : ''}`;
-    $('#search').innerHTML = REPS.map(r => {
-      const qv = l2(q.vecs[r]);
-      const sc = M.reps[r].map((row, i) => [i, dot(qv, l2(row))]).sort((a,b) => b[1] - a[1]).slice(0, 4);
-      return `<div><span class="lbl">${REP_SHORT[r]}</span><div class="results">${sc.map(([i,s]) => `<div class="res-item"><span class="mono">${dotHtml(labs[i])} D${i+1}</span><span class="txt" title="${esc(docs[i].text)}">${esc(docs[i].text)}</span><span class="sc">${s > 1e-9 ? fmt(s) : '0'}</span></div>`).join('')}</div></div>`;
-    }).join('');
-  } else { $('#search').innerHTML = ''; $('#queryInfo').textContent = ''; }
-
-  // agrupamento
-  const a = M.km[ui.kmRep];
-  if (a){
-    const k = Math.max(...a) + 1;
-    $('#clusters').innerHTML = [...Array(k).keys()].map(c => { const mem = a.map((x,i) => x === c ? i : -1).filter(i => i >= 0); return `<div class="cluster"><h4>Grupo ${c+1} · ${mem.length} docs</h4>${mem.map(i => `<div>${dotHtml(labs[i])}<span class="mono">D${i+1}</span><span>${esc(docs[i].text)}</span></div>`).join('')}</div>`; }).join('');
-    const best = REPS.reduce((x,y) => M.purity[y] > M.purity[x] ? y : x);
-    $('#purity').innerHTML = bars(REPS.map(r => ({t:REP_SHORT[r], v:M.purity[r], vt:pct(M.purity[r]), cls:r === best ? 'best' : ''})), {max:1});
-  } else { $('#clusters').innerHTML = '<div class="empty">São necessários ao menos 2 documentos.</div>'; $('#purity').innerHTML = ''; }
-
-  // classificação
+  $('#map').innerHTML = `<div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:100%;display:block" role="img" aria-label="Mapa 2D dos documentos">
+    <rect x="0" y="0" width="${W}" height="${H}" fill="var(--bg)" rx="8"></rect>
+    <line x1="${m}" y1="${H-m+10}" x2="${W-m}" y2="${H-m+10}" stroke="var(--line)"></line><line x1="${m-10}" y1="${m}" x2="${m-10}" y2="${H-m}" stroke="var(--line)"></line>
+    <text x="${W-m}" y="${H-8}" text-anchor="end" font-size="11" fill="var(--muted)">eixo 1 (${pct(pc.ratio[0])} das diferenças)</text>
+    <text x="12" y="${m-12}" font-size="11" fill="var(--muted)">eixo 2 (${pct(pc.ratio[1])})</text>
+    ${pc.pts.map((p,i) => `<g><title>D${i+1} · ${esc(labs[i])}: ${esc(docs[i].text)}</title><circle cx="${sx(p[0]).toFixed(1)}" cy="${sy(p[1]).toFixed(1)}" r="8" fill="${labelColor(labs[i])}" stroke="var(--surface)" stroke-width="2"></circle><text x="${(sx(p[0])+11).toFixed(1)}" y="${(sy(p[1])+4).toFixed(1)}" font-size="11" fill="var(--fg)">D${i+1}</text></g>`).join('')}
+    ${star}
+  </svg></div>`;
+  $('#mapCaption').textContent = `Representação: ${REP_NAME[ui.mapRep]}. Os dois eixos preservam ${pct(pc.ratio[0] + pc.ratio[1])} das diferenças entre os textos. Passe o mouse sobre um ponto para ler o documento.`;
+  if (!txt) $('#mapNear').innerHTML = '<p class="note">Escreva um texto no campo ao lado para posicioná-lo no mapa.</p>';
+  else if (!qp) $('#mapNear').innerHTML = `<div class="callout warn">Nenhuma palavra do seu texto existe no vocabulário do corpus (${chipToks(q.tokens)}). Sem palavras conhecidas, o texto não pode ser posicionado.</div>`;
+  else {
+    const S = M.reps[ui.mapRep].map(r => dot(l2(qv), l2(r)));
+    const top = [...S.keys()].sort((a,b) => S[b] - S[a]).slice(0, 3);
+    $('#mapNear').innerHTML = `<div class="callout"><span class="lbl">Textos mais próximos do seu</span><div class="results">${top.map(i => `<div class="res-item"><span class="mono">${dotHtml(labs[i])} D${i+1}</span><span class="txt">${esc(docs[i].text)}</span><span class="sc">${fmt(S[i])}</span></div>`).join('')}</div>${q.oov.length ? `<p class="note">Palavras ignoradas por não existirem no corpus: ${q.oov.map(esc).join(', ')}.</p>` : ''}</div>`;
+  }
+}
+function appBusca(){
+  const {labs} = M;
+  const q = queryVectors(ui.query || '');
+  const qset = new Set(q.tokens);
+  $('#queryInfo').innerHTML = `Consulta depois do pré-processamento: ${chipToks(q.tokens)}${q.oov.length ? ` · <b>fora do vocabulário</b> (nenhum documento contém): ${q.oov.map(esc).join(', ')}` : ''}`;
+  $('#search').innerHTML = REPS.map(r => {
+    const qv = l2(q.vecs[r]);
+    const sc = M.reps[r].map((row, i) => [i, dot(qv, l2(row))]).sort((a,b) => b[1] - a[1]).slice(0, 4);
+    const none = sc[0][1] < 1e-9;
+    return `<div><span class="lbl">${REP_SHORT[r]}</span>${none ? '<div class="empty">Nenhum documento tem nota acima de zero: esta representação não encontrou nada.</div>' : `<div class="results">${sc.map(([i,s]) => `<div class="res-item"><span class="mono">${dotHtml(labs[i])} D${i+1}</span><span class="txt full">${hiDoc(i, qset)}</span><span class="sc">${s > 1e-9 ? fmt(s) : '0'}</span></div>`).join('')}</div>`}</div>`;
+  }).join('');
+}
+function appCluster(){
+  const {labs} = M;
+  const a = M.km[ui.kmRep], C = M.kmC[ui.kmRep];
+  if (!a){ $('#clusters').innerHTML = '<div class="empty">São necessários ao menos 2 documentos.</div>'; $('#purity').innerHTML = $('#kmInfo').innerHTML = ''; return; }
+  const k = C.length;
+  const names = [...Array(k).keys()].map(c => { const mem = M.tfidf.filter((_, i) => a[i] === c); if (!mem.length) return []; const mean = M.vocab.map((_, j) => sum(mem.map(r => r[j]))/mem.length); return [...mean.keys()].filter(j => mean[j] > 0).sort((x,y) => mean[y] - mean[x]).slice(0, 4).map(j => M.vocab[j]); });
+  let mine = -1; const txt = (ui.kmText || '').trim();
+  if (txt){
+    const q = queryVectors(txt); const v = q.vecs[ui.kmRep];
+    if (norm(v) < 1e-12) $('#kmInfo').innerHTML = `<div class="callout warn">Nenhuma palavra do seu texto existe no corpus (${chipToks(q.tokens)}), então ele não pode ser atribuído a um grupo.</div>`;
+    else {
+      const x = l2(v); const d = C.map(c => sum(c.map((cv,j) => (cv - x[j])**2)));
+      mine = d.indexOf(Math.min(...d));
+      const known = q.tokens.filter(t => M.idx.has(t));
+      $('#kmInfo').innerHTML = `<div class="callout">Seu texto entraria no <b>Grupo ${mine+1}</b>, definido por ${names[mine].map(t => `<span class="tok">${esc(t)}</span>`).join(' ')}.<br><span class="note">Palavras do seu texto que o modelo conhece: ${known.length ? known.map(esc).join(', ') : 'nenhuma'}${q.oov.length ? ` · desconhecidas: ${q.oov.map(esc).join(', ')}` : ''}.</span></div>`;
+    }
+  } else $('#kmInfo').innerHTML = '<p class="note">Escreva um texto no campo ao lado para ver em que grupo ele entraria.</p>';
+  $('#clusters').innerHTML = [...Array(k).keys()].map(c => { const mem = a.map((x,i) => x === c ? i : -1).filter(i => i >= 0); return `<div class="cluster${c === mine ? ' mine' : ''}"><h4>Grupo ${c+1} · ${mem.length} textos${c === mine ? ' · ★ seu texto' : ''}</h4><p class="cl-names">${names[c].map(t => `<span class="tok">${esc(t)}</span>`).join(' ')}</p>${mem.map(i => `<div title="${esc(docs[i].text)}">${dotHtml(labs[i])}<span class="mono">D${i+1}</span><span>${esc(docs[i].text)}</span></div>`).join('')}</div>`; }).join('');
+  const best = REPS.reduce((x,y) => M.purity[y] > M.purity[x] ? y : x);
+  $('#purity').innerHTML = bars(REPS.map(r => ({t:REP_SHORT[r] + (r === ui.kmRep ? ' (em uso)' : ''), v:M.purity[r], vt:pct(M.purity[r]), cls:r === best ? 'best' : ''})), {max:1});
+}
+function appCls(){
+  const {labs, labels, N} = M;
+  // texto do usuário
+  const txt = (ui.clsText || '').trim();
+  if (labels.length < 2) $('#clsResult').innerHTML = '<div class="empty">São necessárias ao menos 2 classes no corpus.</div>';
+  else if (!txt) $('#clsResult').innerHTML = '<p class="note">Escreva um texto no campo ao lado.</p>';
+  else {
+    const q = queryVectors(txt); const S = simsTo(q.vecs); const nb = nbPredict(q.vecs.bow);
+    const rows = REPS.map(r => {
+      const mx = Math.max(...S[r]);
+      if (mx < 1e-9) return `<tr><th>Vizinhos · ${REP_SHORT[r]}</th><td class="muted">sem decisão</td><td class="muted">nenhum documento parecido</td></tr>`;
+      const p = knnPredict(S[r]);
+      return `<tr><th>Vizinhos · ${REP_SHORT[r]}</th><td><span class="cls-tag" style="--c:${labelColor(p.label)}">${esc(p.label)}</span></td><td>${p.nb.map(j => `<span class="nbref" title="${esc(docs[j].text)}">${dotHtml(labs[j])}D${j+1} <span class="muted">${fmt(S[r][j])}</span></span>`).join(' ')}</td></tr>`;
+    });
+    rows.push(`<tr><th>Naive Bayes</th><td>${nb.votes.length ? `<span class="cls-tag" style="--c:${labelColor(nb.label)}">${esc(nb.label)}</span>` : '<span class="muted">sem decisão</span>'}</td><td>${nb.votes.length ? `${pct(nb.probs[0].p)} de probabilidade · votos abaixo` : 'nenhuma palavra conhecida'}</td></tr>`);
+    const known = new Set(nb.votes.map(v => v.t));
+    const voteChips = q.tokens.map(t => { const v = nb.votes.find(x => x.t === t); if (!v) return `<span class="tok vote none" title="Palavra ausente do corpus: não vota">${esc(t)}</span>`; if (v.gap < .05) return `<span class="tok vote" title="Aparece de forma equilibrada entre as classes">${esc(t)} <small>neutra</small></span>`; return `<span class="tok vote" style="--c:${labelColor(v.l)}" title="Vota em ${esc(v.l)}">${esc(t)} <small>→ ${esc(v.l)}</small></span>`; }).join(' ');
+    $('#clsResult').innerHTML = `<p class="note">Texto depois do pré-processamento: ${chipToks(q.tokens)}</p>
+      <div class="scroll"><table class="cls-table"><thead><tr><th>Método</th><th>Classe prevista</th><th>Por quê</th></tr></thead><tbody>${rows.join('')}</tbody></table></div>
+      <p class="note">Na coluna “Por quê”, os vizinhos mostram os 3 documentos mais parecidos e a nota de similaridade de cada um. Passe o mouse para ler o texto.</p>
+      <div class="stack" style="gap:8px"><span class="lbl">Como cada palavra votou no Naive Bayes</span><div class="toks">${voteChips || '<i>nenhuma palavra</i>'}</div>
+      ${nb.votes.length ? bars(nb.probs.map(p => ({t:p.l, html:`${dotHtml(p.l)} ${esc(p.l)}`, v:p.p, vt:pct(p.p), color:labelColor(p.l)})), {max:1}) : '<div class="callout warn">Nenhuma palavra do texto existe no corpus. Sem evidências, o modelo não tem como decidir.</div>'}</div>`;
+  }
+  // confiabilidade
   const keys = Object.keys(M.pred);
   if (keys.length){
     const best = keys.reduce((x,y) => M.acc[y] > M.acc[x] ? y : x);
     $('#accuracy').innerHTML = bars(keys.map(kk => ({t:CLS_NAME(kk), v:M.acc[kk], vt:pct(M.acc[kk]), cls:kk === best ? 'best' : '', color:kk.startsWith('nb') ? 'var(--c2)' : 'var(--accent)'})), {max:1});
     const maj = Math.max(...labels.map(l => labs.filter(x => x === l).length))/N;
-    $('#baseline').textContent = `Referência: chutar sempre a classe mais frequente acerta ${pct(maj)}. Com ${N} documentos, cada erro custa ${pct(1/N)} de acurácia.`;
+    $('#baseline').textContent = `Para comparar: chutar sempre a classe mais frequente acertaria ${pct(maj)}. Com ${N} documentos, cada erro custa ${pct(1/N)}.`;
     ui.cls = fillSelect($('#clsSel'), keys.map(kk => ({v:kk, t:CLS_NAME(kk)})), ui.cls);
     const pred = M.pred[ui.cls];
     const cm = labels.map(t => labels.map(p => labs.filter((x,i) => x === t && pred[i] === p).length));
     const cmx = Math.max(...cm.flat(), 1);
-    $('#confusion').innerHTML = `<table class="conf"><thead><tr><th>real ↓ · previsto →</th>${labels.map(l => `<th>${dotHtml(l)} ${esc(short(l, 12))}</th>`).join('')}</tr></thead><tbody>${cm.map((r,i) => `<tr><th style="text-align:left">${dotHtml(labels[i])} ${esc(short(labels[i], 14))}</th>${r.map((v,j) => `<td style="background:${v ? (i === j ? heatBg(v/cmx) : `color-mix(in srgb, var(--removed) ${Math.round(25 + 50*v/cmx)}%, var(--surface))`) : 'transparent'};color:${i === j ? heatFg(v/cmx) : 'var(--fg)'};font-weight:${i === j ? 600 : 400}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    $('#confusion').innerHTML = `<table class="conf"><thead><tr><th>classe real ↓ · prevista →</th>${labels.map(l => `<th>${dotHtml(l)} ${esc(short(l, 12))}</th>`).join('')}</tr></thead><tbody>${cm.map((r,i) => `<tr><th style="text-align:left">${dotHtml(labels[i])} ${esc(short(labels[i], 14))}</th>${r.map((v,j) => `<td style="background:${v ? (i === j ? heatBg(v/cmx) : `color-mix(in srgb, var(--removed) ${Math.round(25 + 50*v/cmx)}%, var(--surface))`) : 'transparent'};color:${i === j ? heatFg(v/cmx) : 'var(--fg)'};font-weight:${i === j ? 600 : 400}">${v}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
     const errs = pred.map((p,i) => p !== labs[i] ? i : -1).filter(i => i >= 0);
-    $('#errors').innerHTML = errs.length ? 'Erros: ' + errs.map(i => `<b>D${i+1}</b> (${esc(labs[i])} → ${esc(pred[i])})`).join(', ') : 'Nenhum erro.';
+    $('#errors').innerHTML = errs.length ? 'Textos classificados errado: ' + errs.map(i => `<b title="${esc(docs[i].text)}">D${i+1}</b> (${esc(labs[i])} → ${esc(pred[i])})`).join(', ') : 'Nenhum erro.';
   } else { $('#accuracy').innerHTML = '<div class="empty">São necessárias ao menos 2 classes e 3 documentos.</div>'; $('#confusion').innerHTML = $('#errors').innerHTML = $('#baseline').innerHTML = ''; }
-
-  // termos por classe
+}
+function appKw(){
+  const {labs, labels, N} = M;
+  const txt = (ui.kwText || '').trim();
+  if (!txt){ $('#kwResult').innerHTML = ''; $('#kwInfo').textContent = 'Cole um texto no campo ao lado.'; }
+  else {
+    const p = runPipeline(txt, M.steps); const f = features(p.tokens, opts.ngram);
+    const cnt = new Map(); f.forEach(t => cnt.set(t, (cnt.get(t) || 0) + 1));
+    const maxIdf = Math.log(1 + N) + 1;
+    const rows = [...cnt.entries()].map(([t,c]) => { const j = M.idx.get(t); return {t, c, isNew:j === undefined, w:c*(j === undefined ? maxIdf : M.idf[j])}; });
+    const byC = [...rows].sort((a,b) => b.c - a.c || a.t.localeCompare(b.t, 'pt')).slice(0, 10);
+    const byW = [...rows].sort((a,b) => b.w - a.w || a.t.localeCompare(b.t, 'pt')).slice(0, 10);
+    const lbl = r => `${esc(r.t)}${r.isNew ? ' <span class="tag-new">nova</span>' : ''}`;
+    $('#kwInfo').textContent = `${p.trace[0].tokens.length} palavras no texto · ${p.tokens.length} depois do pré-processamento · corpus de referência: ${N} documentos`;
+    $('#kwResult').innerHTML = `<div><span class="lbl">Mais frequentes no seu texto</span>${bars(byC.map(r => ({t:r.t, html:lbl(r), v:r.c, vt:String(r.c), color:'var(--c2)'})))}</div>
+      <div><span class="lbl">Palavras-chave (frequência × raridade)</span>${bars(byW.map(r => ({t:r.t, html:lbl(r), v:r.w, color:r.isNew ? 'var(--c4)' : 'var(--accent)'})))}</div>`;
+  }
   if (M.V){
     $('#classTerms').innerHTML = labels.map(l => {
       const mem = M.tfidf.filter((_, i) => labs[i] === l);
@@ -1254,7 +1427,7 @@ function renderApps(){
 }
 
 /* ---------------- orquestração ---------------- */
-const RENDER = {corpus:renderCorpus, preprocessamento:renderPre, vetorizacao:renderVec, embeddings:renderEmb, aplicacoes:renderApps, atividades:() => {}};
+const RENDER = {corpus:renderCorpus, preprocessamento:renderPre, vetorizacao:renderVec, embeddings:renderEmb, aplicacoes:renderApps, roteiros:() => {}};
 function pipeSummary(){
   const on = M.steps.filter(s => s.on).map(s => s.key === 'short' ? `mín. ${opts.minLen} caracteres` : s.name.toLowerCase());
   return `Pipeline da etapa 2 em uso: ${on.length ? on.join(' → ') : 'nenhuma etapa (texto bruto)'} · ${opts.ngram === 2 ? 'unigramas + bigramas' : 'unigramas'} · min df ${opts.minDf}`;
@@ -1272,7 +1445,7 @@ function setTab(t){
 }
 function syncControls(){
   document.querySelectorAll('[data-opt]').forEach(el => { const v = opts[el.dataset.opt]; if (el.type === 'checkbox') el.checked = !!v; else el.value = String(v); });
-  ['heatN','kmK','nbWord','query','heatOrder'].forEach(k => { const el = document.querySelector(`[data-ui="${k}"]`); if (el) el.value = String(ui[k]); });
+  ['heatN','kmK','nbWord','query','heatOrder','mapText','kmText','clsText','kwText'].forEach(k => { const el = document.querySelector(`[data-ui="${k}"]`); if (el) el.value = String(ui[k]); });
 }
 
 // navegação
@@ -1329,17 +1502,189 @@ document.querySelectorAll('[data-ui]').forEach(el => el.addEventListener(el.tagN
   else if (['preDoc','vecDoc','pairA','pairB'].includes(k)) ui[k] = +el.value;
   else ui[k] = el.value;
   if (k === 'kmK') schedule(false);
-  else if (el.type === 'text' || el.type === 'number') schedule(false);
-  else render();
+  else if (el.tagName === 'SELECT') render();
+  else { clearTimeout(timer); timer = setTimeout(render, 200); }
 }));
 $('#heatMode').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; ui.heatMode = b.dataset.mode; render(); });
 $('#heat').addEventListener('click', e => { const b = e.target.closest('button[data-d]'); if (!b) return; ui.cell = [+b.dataset.d, +b.dataset.j]; ui.vecDoc = +b.dataset.d; render(); });
 
 $('#pairSuggest').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; const a = +b.dataset.a, c = +b.dataset.b; if (a >= docs.length || c >= docs.length) return; ui.pairA = a; ui.pairB = c; render(); });
-$('#querySuggest').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; ui.query = b.dataset.q; $('#query').value = ui.query; render(); });
 document.addEventListener('click', e => { const b = e.target.closest('[data-goto]'); if (!b) return; setTab(b.dataset.goto); window.scrollTo({top:0}); });
 
+// roteiros
+const PRESET = {
+  none:{lower:false, accents:false, nums:false, punct:false, stop:false, minLen:1, stem:'none'},
+  basic:{lower:true, accents:false, nums:true, punct:true, stop:true, minLen:2, stem:'none'}
+};
+function afterCorpus(){ ui.cell = null; save(); syncControls(); renderDocList(); compute(); }
+const G = {
+  start(o = {}){ docs = SAMPLE.map(d => ({...d})); opts = {...DEFAULT_OPTS, ...o}; afterCorpus(); },
+  set(o){ Object.assign(opts, o); afterCorpus(); },
+  add(list){ const ids = list.map(d => { let i = docs.findIndex(x => x.text === d.text); if (i < 0){ docs.push({...d}); i = docs.length - 1; } return i; }); afterCorpus(); return ids; },
+  go(tab, sel, extra = {}){ const recalc = 'kmK' in extra; Object.assign(ui, extra); syncControls(); if (recalc) computeApps(); setTab(tab); if (sel) flash(sel); }
+};
+const reduceMotion = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){ return false; } })();
+function flash(sel){
+  if (quiet) return;
+  requestAnimationFrame(() => {
+    const el = document.querySelector(sel); if (!el) return;
+    const target = el.closest('.panel') || el;
+    target.scrollIntoView({block:'start', behavior:reduceMotion ? 'auto' : 'smooth'});
+    target.classList.remove('flash'); void target.offsetWidth; target.classList.add('flash');
+    setTimeout(() => target.classList.remove('flash'), 2800);
+  });
+}
+const T = {
+  morde: [{label:'Teste', text:'O cachorro mordeu o carteiro.'}, {label:'Teste', text:'O carteiro mordeu o cachorro.'}],
+  nega: [{label:'Teste', text:'O remédio funcionou bem.'}, {label:'Teste', text:'O remédio não funcionou bem.'}],
+  canta: [{label:'Teste', text:'As cantoras cantavam enquanto o cantor cantou uma cantiga antiga.'}],
+  gato: [{label:'Teste', text:'O gato bebeu leite na cozinha.'}, {label:'Teste', text:'O cachorro bebeu leite na cozinha.'}, {label:'Teste', text:'O gato dormiu no sofá da sala.'}, {label:'Teste', text:'O cachorro dormiu no sofá da sala.'}],
+  para: [{label:'Esporte', text:'O atacante fez o gol no último minuto.'}, {label:'Esporte', text:'O jogador marcou no fim da partida.'}]
+};
+const ROTEIROS = [
+ {title:'Palavras gramaticais e palavras de conteúdo', q:'Por que as palavras mais frequentes de um texto dizem tão pouco sobre o seu assunto?', time:'15 min', where:'Etapas 2 e 3',
+  concept:'Em qualquer corpus, um punhado de palavras gramaticais (artigos, preposições, conjunções) responde por grande parte das ocorrências, enquanto a maior parte do léxico aparece uma ou duas vezes. É a distribuição descrita pela lei de Zipf. Separar essas duas classes de palavras é uma das primeiras decisões do processamento automático.',
+  steps:[
+   {t:'O texto como ele chega', d:'O painel restaurou o corpus de exemplo (24 notícias curtas) e desligou todo o pré-processamento. O gráfico mostra as palavras mais frequentes do corpus.', o:'A lista “Texto bruto” é formada quase só por artigos e preposições. Elas aparecem em notícias de esporte, saúde e economia indistintamente.', act:() => { G.start(PRESET.none); G.go('preprocessamento', '#topCompare'); }},
+   {t:'Maiúsculas e minúsculas', d:'Agora apenas a conversão para minúsculas está ligada.', o:'Compare as barras 0 e 1 do gráfico de vocabulário. “O” e “o” passaram a contar como a mesma forma, e o número de formas distintas diminuiu.', act:() => { G.set({lower:true}); G.go('preprocessamento', '#funnel'); }},
+   {t:'Retirando as palavras gramaticais', d:'Ligamos a remoção da pontuação e de uma lista de cerca de 120 palavras gramaticais do português (stopwords).', o:'A lista “Depois do pipeline” passa a revelar os assuntos do corpus: aplicativo, campeonato, juros, médicos.', act:() => { G.set({punct:true, stop:true}); G.go('preprocessamento', '#topCompare'); }},
+   {t:'O que saiu de uma notícia', d:'O rastro mostra, palavra por palavra, o que aconteceu com a notícia D3.', o:'No cartão 5, as palavras riscadas são as gramaticais removidas. O que restou ainda permite entender a notícia?', act:() => G.go('preprocessamento', '#trace', {preDoc:2})},
+   {t:'O cálculo encontra as palavras gramaticais sozinho', d:'Desligamos de novo todo o pré-processamento e abrimos a etapa 3. O gráfico de IDF mede em quantos documentos cada palavra aparece: quanto mais espalhada, menor o peso.', o:'As palavras de peso mais baixo (lista da esquerda) são justamente as gramaticais. Sem nenhuma lista prévia, a distribuição no corpus já separa função de conteúdo.', act:() => { G.set(PRESET.none); G.go('vetorizacao', '#idf'); }}
+  ],
+  reflect:['“Não” é uma palavra gramatical? O que aconteceria com a frase “o remédio não funcionou” se ela fosse removida?', 'Num estudo de discurso político, você removeria pronomes como “nós” e “eles”? Por quê?', 'A lista de stopwords é uma decisão técnica ou teórica?']},
+
+ {title:'Flexão, derivação e radical', q:'O computador sabe que “treinam”, “treinos” e “treinaram” pertencem à mesma família?', time:'20 min', where:'Etapas 1 e 2',
+  concept:'Para o computador, cada forma diferente é uma palavra diferente. A radicalização (stemming) corta terminações para aproximar formas da mesma família. É uma regra mecânica, sem análise morfológica: une flexões úteis, mas também pode juntar palavras sem relação ou separar formas da mesma família. A lematização, que reduz cada forma ao lema do dicionário (“treinaram” → “treinar”), é a alternativa linguisticamente informada.',
+  steps:[
+   {t:'Formas diferentes, termos diferentes', d:'Corpus restaurado com o pré-processamento básico. O rastro mostra a notícia D4, sobre corredores que “treinam” com “treinos” longos.', o:'No resultado final, “treinam” e “treinos” continuam sendo dois termos distintos.', act:() => { G.start(); G.go('preprocessamento', '#trace', {preDoc:3}); }},
+   {t:'Ligando a radicalização', d:'Ligamos a etapa 7, radicalização.', o:'No cartão 7, as duas formas viram “trein”. Em destaque amarelo aparece o radical, com a forma original em letras pequenas.', act:() => { G.set({stem:'light'}); G.go('preprocessamento', '#trace', {preDoc:3}); }},
+   {t:'Quantas formas foram fundidas', d:'O gráfico mostra o tamanho do vocabulário depois de cada etapa.', o:'Compare as barras 6 e 7: a diferença é o número de formas que desapareceram ao serem reduzidas a um radical comum.', act:() => G.go('preprocessamento', '#funnel')},
+   {t:'Uma família, dois sentidos', d:'Agora a notícia D8, sobre pesquisadores que “treinaram” um modelo de computador.', o:'“Treinaram” também vira “trein”. Para a máquina, treinar atletas e treinar um programa passam a ser a mesma coisa.', act:() => G.go('preprocessamento', '#trace', {preDoc:7})},
+   {t:'Uma família de palavras', d:'Acrescentamos ao corpus uma frase com várias palavras da família de “cantar”. Ela é o último documento, na classe Teste.', o:'No cartão 7, os verbos “cantavam” e “cantou” viram “cant”; “cantoras” e “cantor” viram “cantor”; “cantiga” vira “cantig”. A regra uniu as flexões, mas a família de “cantar” continuou dividida em três termos.', act:() => { const [i] = G.add(T.canta); G.go('preprocessamento', '#trace', {preDoc:i}); }},
+   {t:'Sua vez', d:'Na etapa 1, reescreva o último documento com outra família de palavras (por exemplo: correr, corrida, corredor, correram) e volte à etapa 2 para ver o rastro.', o:'Procure um caso em que a regra une palavras sem relação e outro em que separa formas da mesma família.', act:() => G.go('corpus', '#docList')}
+  ],
+  reflect:['A radicalização trata flexão e derivação da mesma forma? Que critério linguístico ela ignora?', 'Em que pesquisa juntar formas seria um problema? Pense num estudo sobre tempos verbais ou sobre concordância.', 'Por que línguas de morfologia rica, como o português, se beneficiam mais desse recurso do que o inglês?']},
+
+ {title:'O saco de palavras: a ordem importa?', q:'“O cachorro mordeu o carteiro” e “O carteiro mordeu o cachorro” são o mesmo texto?', time:'15 min', where:'Etapas 3 e 4',
+  concept:'As representações BoW e TF-IDF tratam o texto como um saco de palavras: registram quais palavras aparecem e quantas vezes, mas descartam a ordem. Com isso perde-se boa parte da informação sintática. Os n-gramas, sequências de duas ou mais palavras vizinhas, recuperam um pouco dessa ordem.',
+  steps:[
+   {t:'Duas frases, as mesmas palavras', d:'Acrescentamos as duas frases ao corpus e as selecionamos na comparação de documentos da etapa 4.', o:'As quatro representações dão similaridade 1,00. Para todas elas as frases são idênticas, porque todas partem do saco de palavras.', act:() => { G.start(); const [a, b] = G.add(T.morde); G.go('embeddings', '#pair', {pairA:a, pairB:b}); }},
+   {t:'Bigramas: pares de palavras vizinhas', d:'Ligamos os bigramas na etapa 3. Além das palavras isoladas, o vocabulário passa a incluir pares de palavras vizinhas, como “cachorro mordeu”.', o:'A similaridade em BoW e TF-IDF cai para cerca de 0,6: os pares “cachorro mordeu” e “carteiro mordeu” distinguem quem fez a ação. O LSA e os vetores de palavras continuam em 1,00: o primeiro resume as duas frases num mesmo tema, e o segundo usa só palavras isoladas.', act:() => { G.set({ngram:2}); const [a, b] = G.add(T.morde); G.go('embeddings', '#pair', {pairA:a, pairB:b}); }},
+   {t:'Os pares no vocabulário', d:'Na etapa 3, a lista de termos de maior peso da primeira frase.', o:'Os bigramas aparecem como termos próprios, ao lado das palavras isoladas.', act:() => { const [a] = G.add(T.morde); G.go('vetorizacao', '#docTop', {vecDoc:a}); }},
+   {t:'Negação', d:'Voltamos às palavras isoladas e acrescentamos duas frases de sentido oposto, que diferem por uma única palavra.', o:'A similaridade continua alta (perto de 0,87 no BoW). A negação é apenas mais uma palavra no saco, com o mesmo peso de qualquer outra.', act:() => { G.set({ngram:1}); const [a, b] = G.add(T.nega); G.go('embeddings', '#pair', {pairA:a, pairB:b}); }},
+   {t:'Sua vez', d:'Na etapa 1, escreva dois documentos com as mesmas palavras em ordem diferente, ou uma frase na voz ativa e outra na passiva (“O júri condenou o réu” e “O réu foi condenado pelo júri”). Depois escolha-os nas listas A e B da comparação.', o:'Quais diferenças de sentido as representações conseguem captar e quais elas ignoram?', act:() => G.go('corpus', '#docList')}
+  ],
+  reflect:['Que fenômenos sintáticos se perdem no saco de palavras? Pense em ordem, negação, voz passiva e retomadas anafóricas.', 'Para que tipo de pergunta de pesquisa o saco de palavras é suficiente? Para qual não é?', 'Modelos de linguagem atuais, como o BERT, registram a posição de cada palavra. Que diferença isso faz?']},
+
+ {title:'Hipótese distribucional', q:'Uma palavra pode ser conhecida pelas companhias que mantém?', time:'20 min', where:'Etapas 1 e 4',
+  concept:'A hipótese distribucional (Harris, 1954; Firth, 1957) afirma que palavras usadas em contextos semelhantes tendem a ter sentidos semelhantes. Os vetores de palavras (embeddings) aplicam essa ideia: registram com quais palavras cada palavra aparece, dentro de uma janela de contexto, e aproximam palavras de contextos parecidos. O tamanho da janela muda o tipo de relação capturada.',
+  steps:[
+   {t:'Vizinhos com janela pequena', d:'Corpus restaurado. Na etapa 4, a janela de contexto foi ajustada para 1 (só a palavra imediatamente antes e a imediatamente depois) e buscamos os vizinhos de “juros”.', o:'A linha “Contextos de juros” lista as palavras que aparecem coladas a “juros” nas notícias (taxa, altos, corte). Na coluna Contextos estão as palavras que compartilham esses mesmos vizinhos.', act:() => { G.start({win:1}); G.go('embeddings', '#neighbors', {nbWord:'juros'}); }},
+   {t:'Janela ampliada', d:'A janela passou para 5 palavras de cada lado.', o:'Os contextos de “juros” passam a incluir palavras do assunto como um todo, como “inflação”, “mercado” e “empresas”. Com eles, os vizinhos também mudam.', act:() => { G.set({win:5}); G.go('embeddings', '#neighbors', {nbWord:'juros'}); }},
+   {t:'Palavras que nunca se encontram', d:'Acrescentamos quatro frases curtas em que “gato” e “cachorro” aparecem nos mesmos contextos (bebeu leite, dormiu no sofá), mas nunca na mesma frase. A janela voltou a 1.', o:'Na coluna Contextos, “cachorro” tem similaridade 1,00 com “gato”: as duas palavras têm exatamente os mesmos contextos (bebeu, dormiu), embora nunca apareçam juntas. É uma relação paradigmática, de substituição. Na coluna PPMI-SVD a compressão borra a distinção: num corpus tão pequeno, o embedding junta tudo o que pertence às quatro frases.', act:() => { G.set({win:1}); G.add(T.gato); G.go('embeddings', '#neighbors', {nbWord:'gato'}); }},
+   {t:'Companhias diretas', d:'Agora a janela é 3 e buscamos de novo os vizinhos de “gato”.', o:'Os contextos de “gato” passam a incluir “leite”, “cozinha” e “sofá”. Na coluna Contextos, palavras que se combinam com “gato” nas frases (bebeu, leite, dormiu) sobem para logo abaixo de “cachorro”: são relações sintagmáticas, de combinação.', act:() => { G.set({win:3}); G.add(T.gato); G.go('embeddings', '#neighbors', {nbWord:'gato'}); }},
+   {t:'Sua vez', d:'Digite outras palavras do corpus no campo “Palavra” e varie a janela de 1 a 6.', o:'Os vizinhos fazem sentido? Num corpus pequeno, coincidências de uma única frase pesam muito.', act:() => G.go('embeddings', '#neighbors')}
+  ],
+  reflect:['Nos resultados que você viu, identifique um exemplo de relação paradigmática (palavras substituíveis) e um de relação sintagmática (palavras que se combinam).', 'Antônimos como “subiu” e “caiu” aparecem em contextos muito parecidos. O que a hipótese distribucional diria sobre eles?', 'Por que modelos treinados com bilhões de palavras produzem vizinhos muito melhores do que estes?']},
+
+ {title:'Paráfrase e variação lexical', q:'Dois textos sobre o mesmo assunto, escritos com palavras diferentes, são parecidos para a máquina?', time:'20 min', where:'Etapas 4 e 5',
+  concept:'Um mesmo tema pode ser expresso com vocabulários diferentes (sinonímia, hiperonímia, paráfrase). BoW e TF-IDF só reconhecem palavras idênticas. O LSA (Análise Semântica Latente) agrupa em temas as palavras que costumam aparecer nos mesmos textos e, com isso, aproxima textos que tratam do mesmo tema sem repetir palavras.',
+  steps:[
+   {t:'Mesmo tema, nenhuma palavra em comum', d:'Na etapa 4, a comparação de documentos mostra D20 (exportações e balança comercial) e D23 (inflação e preço dos alimentos).', o:'BoW e TF-IDF dão 0: depois do pré-processamento, as notícias não compartilham nenhuma palavra. O LSA, porém, aponta similaridade alta.', act:() => { G.start(); G.go('embeddings', '#pair', {pairA:19, pairB:22}); }},
+   {t:'De onde vem a semelhança', d:'A tabela de temas latentes mostra as palavras que definem cada tema encontrado pelo LSA.', o:'Procure o tema de economia. Cada notícia se aproxima dele por caminhos diferentes: pelas palavras que compartilha com outras notícias econômicas.', act:() => G.go('embeddings', '#themes')},
+   {t:'Uma paráfrase', d:'Acrescentamos duas frases de esporte que dizem quase a mesma coisa com palavras diferentes.', o:'Compare as quatro barras. Qual representação percebe a paráfrase?', act:() => { const [a, b] = G.add(T.para); G.go('embeddings', '#pair', {pairA:a, pairB:b}); }},
+   {t:'Na busca', d:'Na busca da etapa 5, a consulta “atendimento médico para idosos”.', o:'As palavras destacadas mostram o que cada notícia compartilha com a consulta. Repare que “médico” não encontra “médicos”: sem radicalização, singular e plural são palavras diferentes. Na coluna do LSA, procure notícias de saúde que aparecem mesmo sem destaques.', act:() => G.go('aplicacoes', '#search', {app:'busca', query:'atendimento médico para idosos'})},
+   {t:'Sua vez', d:'Na etapa 1, escreva duas versões de uma mesma notícia, uma em registro formal e outra em registro informal, e compare-as na etapa 4.', o:'As representações tratam as duas versões como parecidas? O que mais pesou?', act:() => G.go('corpus', '#docList')}
+  ],
+  reflect:['O LSA aproxima sinônimos ou apenas palavras que aparecem nos mesmos textos? Qual a diferença?', 'Hiperônimos (“animal”) e hipônimos (“gato”) seriam aproximados por esse método? Em que condições?', 'Que implicações isso tem para buscar documentos num acervo histórico, com grafias e vocabulário de época?']},
+
+ {title:'Ambiguidade lexical', q:'Como a máquina lida com “banco”, “rede” e outras palavras de vários sentidos?', time:'15 min', where:'Etapas 4 e 5',
+  concept:'Na polissemia e na homonímia, uma mesma forma tem sentidos diferentes. Os métodos desta bancada atribuem uma única representação a cada forma, sem olhar o contexto da frase. Assim, o sentido dominante no corpus de treino decide a interpretação.',
+  steps:[
+   {t:'Banco de praça', d:'Na etapa 5, o classificador recebeu a frase “O banco da praça foi pintado de verde”.', o:'A frase é classificada como Economia. A única palavra que o modelo conhece é “banco”, que no corpus aparece em “Banco Central”.', act:() => { G.start(); G.go('aplicacoes', '#clsResult', {app:'classificacao', clsText:'O banco da praça foi pintado de verde.'}); }},
+   {t:'Rede de descanso', d:'Agora a frase “Deitei na rede depois do almoço”.', o:'“Rede” aparece no corpus em “rede 5G” e “rede social”, por isso a frase vai para Tecnologia.', act:() => G.go('aplicacoes', '#clsResult', {app:'classificacao', clsText:'Deitei na rede depois do almoço.'})},
+   {t:'Os sentidos de “rede” no corpus', d:'Na etapa 4, os vizinhos da palavra “rede”.', o:'Nas colunas Contextos e PPMI-SVD, os vizinhos misturam palavras da notícia sobre internet móvel (internet, rápida, promete) com as da notícia sobre a rede social invadida por hackers (social, usuários, expuseram): dois sentidos reunidos num único vetor.', act:() => G.go('embeddings', '#neighbors', {nbWord:'rede'})},
+   {t:'O contexto vence a votação', d:'De volta à classificação, com a frase “Sentei no banco do estádio para assistir ao jogo”.', o:'Agora “estádio” e “jogo” superam “banco” e a frase vai para Esporte. A máquina não desambiguou “banco”: a palavra apenas foi vencida pelas outras. Veja os votos no Naive Bayes.', act:() => G.go('aplicacoes', '#clsResult', {app:'classificacao', clsText:'Sentei no banco do estádio para assistir ao jogo.'})},
+   {t:'Sua vez', d:'Escreva frases com outras palavras do corpus que têm mais de um sentido, como “final”, “campanha”, “modelo”, “prova” ou “energia”.', o:'Observe os votos de cada palavra: o sentido que domina no corpus de treino decide.', act:() => G.go('aplicacoes', '#clsText', {app:'classificacao'})}
+  ],
+  reflect:['Um único vetor por forma consegue representar vários sentidos? O que se perde?', 'Que pistas do contexto um linguista usaria para desambiguar “banco”? Quais delas estão disponíveis para estes métodos?', 'Modelos contextuais, como o BERT, geram um vetor diferente para cada ocorrência de uma palavra. Como isso mudaria os resultados deste roteiro?']},
+
+ {title:'Palavras-chave de um texto', q:'Quais palavras caracterizam um texto em relação a um corpus de referência?', time:'15 min', where:'Etapas 2 e 5',
+  concept:'Na linguística de corpus, palavras-chave são as que aparecem num texto ou subcorpus com frequência incomum em relação a um corpus de referência (keyness). O TF-IDF é uma aproximação simples dessa ideia: valoriza palavras frequentes no texto e raras no restante do corpus.',
+  steps:[
+   {t:'Frequência não é saliência', d:'Na etapa 5, a aplicação de palavras-chave analisa um parágrafo sobre vacinação nas escolas, usando as 24 notícias como corpus de referência.', o:'Compare as duas listas. Quais palavras sobem e quais descem quando a raridade no corpus entra no cálculo? As marcadas como “nova” não existem no corpus de referência.', act:() => { G.start(); G.go('aplicacoes', '#kwResult', {app:'palavras', kwText:KW_TEXTS.kw1}); }},
+   {t:'Outro texto, outro retrato', d:'Trocamos o texto por um parágrafo sobre o mercado imobiliário.', o:'Palavras comuns no corpus de economia, como “juros” e “crédito”, perdem peso; as específicas do tema imobiliário sobem.', act:() => G.go('aplicacoes', '#kwResult', {app:'palavras', kwText:KW_TEXTS.kw2})},
+   {t:'Palavras características de cada classe', d:'Abaixo do resultado, a mesma medida é aplicada a cada classe do corpus.', o:'Cada coluna lista as palavras que mais distinguem uma classe: um retrato lexical de cada tema.', act:() => G.go('aplicacoes', '#classTerms', {app:'palavras'})},
+   {t:'Sem nenhum pré-processamento', d:'Desligamos todo o pré-processamento e voltamos ao parágrafo sobre vacinação.', o:'A lista de frequência passa a ser dominada por palavras gramaticais (de, a, e), que somem da lista de palavras-chave porque aparecem em todo o corpus. Algumas, como “as” e “até”, sobem como “novas”: sem a conversão para minúsculas, elas não existem nessa forma no corpus de referência. Cada etapa do pré-processamento interfere nas outras.', act:() => { G.set(PRESET.none); G.go('aplicacoes', '#kwResult', {app:'palavras', kwText:KW_TEXTS.kw1}); }},
+   {t:'Seu texto', d:'O pré-processamento básico foi restaurado. Cole no campo um texto seu: um parágrafo de notícia, um resumo de artigo, uma resenha.', o:'As palavras-chave refletem o assunto do texto ou apenas o quanto ele difere deste corpus de notícias?', act:() => { G.set(PRESET.basic); G.go('aplicacoes', '#kwText', {app:'palavras'}); }}
+  ],
+  reflect:['Por que a escolha do corpus de referência muda as palavras-chave de um mesmo texto?', 'Compare o TF-IDF com as medidas de keyness de ferramentas como AntConc, WordSmith e Sketch Engine (log-likelihood, razão de chances).', 'Que cuidados tomar ao interpretar palavras-chave de textos muito curtos?']},
+
+ {title:'A máquina descobre temas?', q:'Sem conhecer as categorias, a máquina consegue reunir os textos por assunto?', time:'20 min', where:'Etapa 5',
+  concept:'No agrupamento, o algoritmo recebe apenas os textos, sem as classes, e procura grupos de documentos parecidos (aprendizado não supervisionado). Na classificação, ele aprende com exemplos já rotulados (aprendizado supervisionado). Comparar os dois mostra até que ponto as categorias do analista emergem da própria distribuição das palavras.',
+  steps:[
+   {t:'Quatro grupos', d:'Na etapa 5, o k-means separou as 24 notícias em 4 grupos usando a representação LSA. As cores indicam a classe real de cada notícia, que o algoritmo não conhece.', o:'Os grupos coincidem com esporte, tecnologia, saúde e economia? As palavras de cada grupo ajudam a nomeá-lo.', act:() => { G.start(); G.go('aplicacoes', '#clusters', {app:'agrupamento', kmK:4, kmRep:'lsa', kmText:''}); }},
+   {t:'Mudando a representação', d:'Mesmos 4 grupos, agora com a representação BoW.', o:'A concordância com as classes cai. Quais notícias mudam de grupo, e o que elas têm em comum?', act:() => G.go('aplicacoes', '#clusters', {app:'agrupamento', kmRep:'bow'})},
+   {t:'Só dois grupos', d:'Voltamos ao LSA, agora com apenas 2 grupos.', o:'Quais temas o algoritmo junta? A divisão faz algum sentido?', act:() => G.go('aplicacoes', '#clusters', {app:'agrupamento', kmK:2, kmRep:'lsa'})},
+   {t:'Um texto novo', d:'Com 4 grupos de novo, perguntamos em que grupo entraria a frase “A farmácia passou a vender remédios pelo aplicativo”.', o:'O texto mistura saúde e tecnologia. Veja quais das suas palavras o modelo conhece e para qual grupo elas o levaram.', act:() => G.go('aplicacoes', '#kmInfo', {app:'agrupamento', kmK:4, kmRep:'lsa', kmText:'A farmácia passou a vender remédios pelo aplicativo.'})},
+   {t:'Da descoberta à classificação', d:'A mesma frase vai para a classificação, que aprende com os rótulos.', o:'Os classificadores concordam com o agrupamento? Os votos das palavras explicam a decisão?', act:() => G.go('aplicacoes', '#clsResult', {app:'classificacao', clsText:'A farmácia passou a vender remédios pelo aplicativo.'})}
+  ],
+  reflect:['As categorias de um corpus estão nos textos ou no olhar do analista?', 'Quando o agrupamento “erra” em relação às suas classes, ele pode estar revelando outra organização legítima dos textos?', 'Como você usaria o agrupamento para explorar um corpus que ainda não conhece?']}
+];
+
+function renderRoteiros(){
+  $('#roteiros').innerHTML = ROTEIROS.map((r, ri) => `<article class="panel rot" id="rot-${ri}">
+    <div class="rot-head"><span class="code">ROTEIRO ${ri+1}</span><span class="pill on">${esc(r.where)}</span><span class="pill">${esc(r.time)}</span><span class="pill">${r.steps.length} passos</span></div>
+    <h3>${esc(r.title)}</h3>
+    <p class="q">${esc(r.q)}</p>
+    <p>${esc(r.concept)}</p>
+    <div class="toolbar"><button class="btn primary" data-rot="${ri}">Começar roteiro</button></div>
+    <details${ri === 0 ? ' open' : ''}><summary>Ver os passos e as perguntas para refletir</summary>
+      <ol class="rot-steps">${r.steps.map((s, si) => `<li><b>${esc(s.t)}.</b> ${esc(s.d)} <span class="muted">Observe: ${esc(s.o)}</span> <button class="linkbtn" data-rot="${ri}" data-step="${si}">Ir para este passo</button></li>`).join('')}</ol>
+      <div class="reflect"><span class="lbl">Para refletir</span><ul>${r.reflect.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>
+    </details>
+  </article>`).join('');
+}
+let guide = null;
+let quiet = false;
+function runStep(replay){
+  const r = ROTEIROS[guide.r], s = r.steps[guide.s];
+  if (replay && guide.s > 0){ quiet = true; try { for (let i = 0; i < guide.s; i++) r.steps[i].act(); } catch(e){ console.error(e); } quiet = false; }
+  try { s.act(); } catch(e){ console.error(e); }
+  $('#gMeta').textContent = `Roteiro ${guide.r+1} · ${r.title} · passo ${guide.s+1} de ${r.steps.length}`;
+  $('#gTitle').textContent = s.t;
+  $('#gText').textContent = s.d;
+  $('#gObs').innerHTML = `<b>Observe:</b> ${esc(s.o)}`;
+  $('#gPrev').disabled = guide.s === 0;
+  $('#gNext').textContent = guide.s === r.steps.length - 1 ? 'Concluir e refletir ›' : 'Próximo passo ›';
+  $('#guide').hidden = false; padForGuide();
+}
+function padForGuide(){ const g = $('#guide'); document.querySelector('main').style.paddingBottom = g.hidden ? '' : (g.offsetHeight + 32) + 'px'; }
+function startGuide(ri, si = 0){ guide = {r:ri, s:si}; runStep(true); }
+function showRoteiro(ri, openReflect){
+  setTab('roteiros');
+  const card = document.getElementById('rot-' + ri); if (!card) return;
+  const det = card.querySelector('details'); if (det) det.open = true;
+  flash(openReflect ? `#rot-${ri} .reflect` : `#rot-${ri}`);
+}
+function endGuide(){ guide = null; $('#guide').hidden = true; padForGuide(); }
+$('#roteiros').addEventListener('click', e => { const b = e.target.closest('[data-rot]'); if (!b) return; startGuide(+b.dataset.rot, b.dataset.step ? +b.dataset.step : 0); });
+$('#gNext').addEventListener('click', () => { if (!guide) return; const r = ROTEIROS[guide.r]; if (guide.s < r.steps.length - 1){ guide.s++; runStep(); } else { const ri = guide.r; endGuide(); showRoteiro(ri, true); } });
+$('#gPrev').addEventListener('click', () => { if (!guide || guide.s === 0) return; guide.s--; runStep(true); });
+$('#gRedo').addEventListener('click', () => { if (guide) runStep(true); });
+$('#gBack').addEventListener('click', () => { if (guide) showRoteiro(guide.r); });
+$('#gClose').addEventListener('click', endGuide);
+window.addEventListener('resize', padForGuide);
+
+// aplicações: navegação interna e exemplos
+$('#appNav').addEventListener('click', e => { const b = e.target.closest('[data-app]'); if (!b) return; ui.app = b.dataset.app; render(); });
+$('#appPrev').addEventListener('click', () => { const i = APPS.indexOf(ui.app); if (i > 0){ ui.app = APPS[i-1]; render(); $('#appNav').scrollIntoView({block:'start'}); } });
+$('#appNext').addEventListener('click', () => { const i = APPS.indexOf(ui.app); if (i < APPS.length - 1){ ui.app = APPS[i+1]; render(); $('#appNav').scrollIntoView({block:'start'}); } });
+document.addEventListener('click', e => { const b = e.target.closest('[data-set]'); if (!b) return; const k = b.dataset.set; ui[k] = b.dataset.ref ? KW_TEXTS[b.dataset.ref] : b.dataset.val; const el = document.querySelector(`[data-ui="${k}"]`); if (el) el.value = ui[k]; render(); });
+renderRoteiros();
+
 // início
+ui.kwText = ui.kwText || KW_TEXTS.kw1;
 syncControls();
 renderDocList();
 compute();
